@@ -1,0 +1,55 @@
+{
+  "name": "command-runner",
+  "displayName": "Command Runner",
+  "description": "Run external shell command to edit the editor contents.",
+  "version": "0.0.1",
+  "publisher": "ryu1kn",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "icon": "images/command-runner.png",
+  "bugs": {
+    "url": "https://github.com/ryu1kn/vscode-command-runner/issues"
+  },
+  "homepage": "https://github.com/ryu1kn/vscode-command-runner/blob/master/README.md",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ryu1kn/vscode-command-runner.git"
+  },
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "shell"
+  ],
+  "activationEvents": [
+    "onCommand:commandrunner.runCommand"
+  ],
+  "main": "./extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "commandrunner.runCommand",
+        "title": "CommandRunner: Run command"
+      }
+    ]
+  },
+  "scripts": {
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- test --recursive --ui tdd",
+    "lint": "eslint .",
+    "test": "mocha test --recursive --ui tdd",
+    "test-mode": "mocha test --recursive --ui tdd --watch"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.6.0",
+    "eslint-config-xo": "^0.16.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0",
+    "vscode": "^1.0.0"
+  }
+}
