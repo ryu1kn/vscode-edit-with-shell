@@ -11,7 +11,7 @@ describe('CommandRunner', () => {
         return runner.run('COMMAND', 'SELECTED_TEXT').then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
             expect(childProcess.exec).to.have.been.calledWith(
-                'echo "$CR_SELECTION" | COMMAND',
+                'printf "$CR_SELECTION" | COMMAND',
                 {
                     env: {CR_SELECTION: 'SELECTED_TEXT'}
                 }
@@ -27,16 +27,6 @@ describe('CommandRunner', () => {
         return runner.run('COMMAND').then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
             expect(childProcess.exec).to.have.been.calledWith('COMMAND', {});
-        });
-    });
-
-    it('trims the last one newline character in the command output', () => {
-        const childProcess = {
-            exec: sinon.stub().callsArgWith(2, null, 'COMMAND_OUTPUT\n\n')
-        };
-        const runner = new CommandRunner({childProcess});
-        return runner.run('COMMAND').then(output => {
-            expect(output).to.eql('COMMAND_OUTPUT\n');
         });
     });
 
