@@ -7,13 +7,17 @@ describe('CommandRunner', () => {
         const childProcess = {
             exec: sinon.stub().callsArgWith(2, null, 'COMMAND_OUTPUT')
         };
-        const runner = new CommandRunner({childProcess});
+        const getEnvVars = () => ({SOME_ENV_VAR: '...'});
+        const runner = new CommandRunner({childProcess, getEnvVars});
         return runner.run('COMMAND', 'SELECTED_TEXT').then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
             expect(childProcess.exec).to.have.been.calledWith(
                 'printf "$CR_SELECTION" | COMMAND',
                 {
-                    env: {CR_SELECTION: 'SELECTED_TEXT'}
+                    env: {
+                        CR_SELECTION: 'SELECTED_TEXT',
+                        SOME_ENV_VAR: '...'
+                    }
                 }
             );
         });
@@ -23,10 +27,18 @@ describe('CommandRunner', () => {
         const childProcess = {
             exec: sinon.stub().callsArgWith(2, null, 'COMMAND_OUTPUT')
         };
-        const runner = new CommandRunner({childProcess});
+        const getEnvVars = () => ({SOME_ENV_VAR: '...'});
+        const runner = new CommandRunner({childProcess, getEnvVars});
         return runner.run('COMMAND').then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
-            expect(childProcess.exec).to.have.been.calledWith('COMMAND', {});
+            expect(childProcess.exec).to.have.been.calledWith(
+                'COMMAND',
+                {
+                    env: {
+                        SOME_ENV_VAR: '...'
+                    }
+                }
+            );
         });
     });
 
@@ -34,7 +46,8 @@ describe('CommandRunner', () => {
         const childProcess = {
             exec: sinon.stub().callsArgWith(2, new Error('EXEC_ERROR'))
         };
-        const runner = new CommandRunner({childProcess});
+        const getEnvVars = () => ({SOME_ENV_VAR: '...'});
+        const runner = new CommandRunner({childProcess, getEnvVars});
         return runner.run('COMMAND').then(
             throwError,
             e => {
