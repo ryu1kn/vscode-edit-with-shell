@@ -8,14 +8,25 @@ describe('CommandRunner', () => {
             exec: sinon.stub().callsArgWith(2, null, 'COMMAND_OUTPUT')
         };
         const runner = new CommandRunner({childProcess});
-        return runner.run('COMMAND').then(output => {
+        return runner.run('COMMAND', 'SELECTED_TEXT').then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
             expect(childProcess.exec).to.have.been.calledWith(
                 'echo "$CR_SELECTION" | COMMAND',
                 {
-                    env: {CR_SELECTION: undefined}
+                    env: {CR_SELECTION: 'SELECTED_TEXT'}
                 }
             );
+        });
+    });
+
+    it('does not give an input to the command if no text is selected in the editor', () => {
+        const childProcess = {
+            exec: sinon.stub().callsArgWith(2, null, 'COMMAND_OUTPUT')
+        };
+        const runner = new CommandRunner({childProcess});
+        return runner.run('COMMAND').then(output => {
+            expect(output).to.eql('COMMAND_OUTPUT');
+            expect(childProcess.exec).to.have.been.calledWith('COMMAND', {});
         });
     });
 
