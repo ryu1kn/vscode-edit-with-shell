@@ -37,10 +37,10 @@
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- test --recursive --ui tdd",
+    "coverage": "istanbul cover ./node_modules/.bin/_mocha -- test --recursive",
     "lint": "eslint .",
-    "test": "mocha test --recursive --ui tdd",
-    "test-mode": "mocha test --recursive --ui tdd --watch"
+    "test": "mocha test --recursive",
+    "test-mode": "mocha test --recursive --watch"
   },
   "devDependencies": {
     "chai": "^3.5.0",

@@ -3,8 +3,8 @@ globals:
   sinon: true
   stubWithArgs: true
   stubReturns: true
-  suite: true
-  test: true
+  describe: true
+  it: true
   throwError: true
 rules:
   max-len: off
