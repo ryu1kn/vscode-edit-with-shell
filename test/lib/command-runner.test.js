@@ -19,6 +19,16 @@ describe('CommandRunner', () => {
         });
     });
 
+    it('trims the last one newline character in the command output', () => {
+        const childProcess = {
+            exec: sinon.stub().callsArgWith(2, null, 'COMMAND_OUTPUT\n\n')
+        };
+        const runner = new CommandRunner({childProcess});
+        return runner.run('COMMAND').then(output => {
+            expect(output).to.eql('COMMAND_OUTPUT\n');
+        });
+    });
+
     it('throws an error if command failed', () => {
         const childProcess = {
             exec: sinon.stub().callsArgWith(2, new Error('EXEC_ERROR'))
