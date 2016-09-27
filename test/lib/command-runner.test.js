@@ -44,7 +44,7 @@ describe('CommandRunner', () => {
 
     it('throws an error if command failed', () => {
         const childProcess = {
-            exec: sinon.stub().callsArgWith(2, new Error('EXEC_ERROR'))
+            exec: sinon.stub().callsArgWith(2, new Error('EXEC_ERROR'), null, 'STDERR_OUTPUT')
         };
         const getEnvVars = () => ({SOME_ENV_VAR: '...'});
         const runner = new CommandRunner({childProcess, getEnvVars});
@@ -53,6 +53,7 @@ describe('CommandRunner', () => {
             e => {
                 expect(e).to.be.an('error');
                 expect(e.message).to.eql('EXEC_ERROR');
+                expect(e.errorOutput).to.eql('STDERR_OUTPUT');
             }
         );
     });

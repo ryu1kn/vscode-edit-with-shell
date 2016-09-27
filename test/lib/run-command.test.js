@@ -24,16 +24,33 @@ describe('RunCommand', () => {
         });
     });
 
-    it('logs an error', () => {
+    it('reports an error', () => {
         const logger = {error: sinon.spy()};
+        const showErrorMessage = sinon.spy();
         const command = new RunCommand({
             commandReader: {
                 read: () => Promise.reject(new Error('COMMAND_READER_ERROR'))
             },
-            logger
+            logger,
+            showErrorMessage
         });
         return command.execute().then(() => {
+            expect(showErrorMessage).to.have.been.calledWith('COMMAND_READER_ERROR');
             expect(logger.error.args[0][0]).to.have.string('Error: COMMAND_READER_ERROR');
+        });
+    });
+
+    it('escape newline characters to show all lines when showing an error message', () => {
+        const showErrorMessage = sinon.spy();
+        const command = new RunCommand({
+            commandReader: {
+                read: () => Promise.reject(new Error('MESSAGE\nCONTAINS\nNEWLINES\n'))
+            },
+            logger: {error: () => {}},
+            showErrorMessage
+        });
+        return command.execute().then(() => {
+            expect(showErrorMessage).to.have.been.calledWith('MESSAGE\\nCONTAINS\\nNEWLINES');
         });
     });
 
