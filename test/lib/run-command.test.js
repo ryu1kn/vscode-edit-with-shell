@@ -1,5 +1,5 @@
 
-const RunCommand = require('../../../lib/command/run');
+const RunCommand = require('../../lib/run-command');
 
 describe('RunCommand', () => {
 
