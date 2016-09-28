@@ -1,18 +1,18 @@
 {
-  "name": "command-runner",
-  "displayName": "Command Runner",
-  "description": "Run external shell command to edit the editor contents.",
+  "name": "edit-with-shell",
+  "displayName": "Edit with Shell Command",
+  "description": "Levarage shell commands to edit text",
   "version": "0.0.1",
   "publisher": "ryu1kn",
   "license": "SEE LICENSE IN LICENSE.txt",
   "icon": "images/command-runner.png",
   "bugs": {
-    "url": "https://github.com/ryu1kn/vscode-command-runner/issues"
+    "url": "https://github.com/ryu1kn/vscode-edit-with-shell/issues"
   },
-  "homepage": "https://github.com/ryu1kn/vscode-command-runner/blob/master/README.md",
+  "homepage": "https://github.com/ryu1kn/vscode-edit-with-shell/blob/master/README.md",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ryu1kn/vscode-command-runner.git"
+    "url": "git@github.com:ryu1kn/vscode-edit-with-shell.git"
   },
   "engines": {
     "vscode": "^1.0.0"
@@ -21,17 +21,18 @@
     "Other"
   ],
   "keywords": [
-    "shell"
+    "shell",
+    "command"
   ],
   "activationEvents": [
-    "onCommand:commandrunner.runCommand"
+    "onCommand:editWithShell.runCommand"
   ],
   "main": "./extension",
   "contributes": {
     "commands": [
       {
-        "command": "commandrunner.runCommand",
-        "title": "CommandRunner: Run command"
+        "command": "editWithShell.runCommand",
+        "title": "EditWithShell: Run command"
       }
     ]
   },
