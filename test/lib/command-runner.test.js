@@ -5,55 +5,63 @@ describe('CommandRunner', () => {
 
     it('Runs a given command and collects the command output', () => {
         const childProcess = {
-            exec: sinon.stub().callsArgWith(2, null, 'COMMAND_OUTPUT')
+            spawn: sinon.stub().returns('COMMAND')
+        };
+        const processRunner = {
+            run: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
         };
         const getEnvVars = () => ({SOME_ENV_VAR: '...'});
-        const runner = new CommandRunner({childProcess, getEnvVars});
-        return runner.run('COMMAND', 'SELECTED_TEXT').then(output => {
+
+        const runner = new CommandRunner({childProcess, getEnvVars, processRunner});
+        return runner.run('COMMAND_STRING', 'SELECTED_TEXT').then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
-            expect(childProcess.exec).to.have.been.calledWith(
-                'printf "$CR_SELECTION" | COMMAND',
+            expect(childProcess.spawn).to.have.been.calledWith(
+                'COMMAND_STRING',
                 {
-                    env: {
-                        CR_SELECTION: 'SELECTED_TEXT',
-                        SOME_ENV_VAR: '...'
-                    }
+                    env: {SOME_ENV_VAR: '...'},
+                    shell: true
                 }
             );
+            expect(processRunner.run).to.have.been.calledWith('COMMAND', 'SELECTED_TEXT');
         });
     });
 
     it('does not give an input to the command if no text is selected in the editor', () => {
         const childProcess = {
-            exec: sinon.stub().callsArgWith(2, null, 'COMMAND_OUTPUT')
+            spawn: sinon.stub().returns('COMMAND')
+        };
+        const processRunner = {
+            run: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
         };
         const getEnvVars = () => ({SOME_ENV_VAR: '...'});
-        const runner = new CommandRunner({childProcess, getEnvVars});
-        return runner.run('COMMAND').then(output => {
+        const runner = new CommandRunner({childProcess, getEnvVars, processRunner});
+        return runner.run('COMMAND_STRING').then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
-            expect(childProcess.exec).to.have.been.calledWith(
-                'COMMAND',
+            expect(childProcess.spawn).to.have.been.calledWith(
+                'COMMAND_STRING',
                 {
-                    env: {
-                        SOME_ENV_VAR: '...'
-                    }
+                    env: {SOME_ENV_VAR: '...'},
+                    shell: true
                 }
             );
+            expect(processRunner.run).to.have.been.calledWith('COMMAND');
         });
     });
 
     it('throws an error if command failed', () => {
         const childProcess = {
-            exec: sinon.stub().callsArgWith(2, new Error('EXEC_ERROR'), null, 'STDERR_OUTPUT')
+            spawn: sinon.stub().returns('COMMAND')
         };
-        const getEnvVars = () => ({SOME_ENV_VAR: '...'});
-        const runner = new CommandRunner({childProcess, getEnvVars});
+        const processRunner = {
+            run: sinon.stub().returns(Promise.reject(new Error('EXEC_ERROR')))
+        };
+        const getEnvVars = () => {};
+        const runner = new CommandRunner({childProcess, getEnvVars, processRunner});
         return runner.run('COMMAND').then(
             throwError,
             e => {
                 expect(e).to.be.an('error');
                 expect(e.message).to.eql('EXEC_ERROR');
-                expect(e.errorOutput).to.eql('STDERR_OUTPUT');
             }
         );
     });
