@@ -1,7 +1,7 @@
 
-const CommandRunner = require('../../lib/command-runner');
+const ShellCommandService = require('../../lib/shell-command-service');
 
-describe('CommandRunner', () => {
+describe('ShellCommandService', () => {
 
     it('Runs a given command and collects the command output', () => {
         const childProcess = {
@@ -12,8 +12,8 @@ describe('CommandRunner', () => {
         };
         const getEnvVars = () => ({SOME_ENV_VAR: '...'});
 
-        const runner = new CommandRunner({childProcess, getEnvVars, processRunner});
-        return runner.run('COMMAND_STRING', 'SELECTED_TEXT').then(output => {
+        const service = new ShellCommandService({childProcess, getEnvVars, processRunner});
+        return service.runCommand('COMMAND_STRING', 'SELECTED_TEXT').then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
             expect(childProcess.spawn).to.have.been.calledWith(
                 'COMMAND_STRING',
@@ -34,8 +34,8 @@ describe('CommandRunner', () => {
             run: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
         };
         const getEnvVars = () => ({SOME_ENV_VAR: '...'});
-        const runner = new CommandRunner({childProcess, getEnvVars, processRunner});
-        return runner.run('COMMAND_STRING').then(output => {
+        const service = new ShellCommandService({childProcess, getEnvVars, processRunner});
+        return service.runCommand('COMMAND_STRING').then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
             expect(childProcess.spawn).to.have.been.calledWith(
                 'COMMAND_STRING',
@@ -56,8 +56,8 @@ describe('CommandRunner', () => {
             run: sinon.stub().returns(Promise.reject(new Error('EXEC_ERROR')))
         };
         const getEnvVars = () => {};
-        const runner = new CommandRunner({childProcess, getEnvVars, processRunner});
-        return runner.run('COMMAND').then(
+        const service = new ShellCommandService({childProcess, getEnvVars, processRunner});
+        return service.runCommand('COMMAND').then(
             throwError,
             e => {
                 expect(e).to.be.an('error');

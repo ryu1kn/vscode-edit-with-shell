@@ -4,14 +4,14 @@ const RunCommand = require('../../lib/run-command');
 describe('RunCommand', () => {
 
     it('runs command with editor contents', () => {
-        const commandRunner = {
-            run: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
+        const shellCommandService = {
+            runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
         };
         const command = new RunCommand({
             commandReader: {
                 read: () => Promise.resolve('COMMAND_STRING')
             },
-            commandRunner
+            shellCommandService
         });
 
         const editor = fakeEditor('SELECTED_TEXT');
@@ -20,7 +20,7 @@ describe('RunCommand', () => {
                 editor.selection,
                 'COMMAND_OUTPUT'
             );
-            expect(commandRunner.run).to.have.been.calledWith('COMMAND_STRING', 'SELECTED_TEXT');
+            expect(shellCommandService.runCommand).to.have.been.calledWith('COMMAND_STRING', 'SELECTED_TEXT');
         });
     });
 
