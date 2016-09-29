@@ -4,9 +4,8 @@ Levarage your favourite shell commands to edit text.
 
 ## Features
 
-* Insert shell command output into cursor position
-* Replace selected text with shell command output
 * Edit selected text with shell command
+* Insert shell command output into cursor position
 
 ![Edit with Shell Command](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/edit-with-shell.gif)
 
@@ -33,6 +32,6 @@ You can quickly open a command input box by registering the extension command to
 
 ## Changelog
 
-### 0.0.1: XX Sep 2016
+### 0.0.1: 29 Sep 2016
 
 * Initial release of the extension
