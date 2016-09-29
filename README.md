@@ -1,12 +1,16 @@
 # Edit with Shell Command
 
-Levarage shell commands to edit text.
+Levarage your favourite shell commands to edit text.
 
 ## Features
 
 * Insert shell command output into cursor position
 * Replace selected text with shell command output
 * Edit selected text with shell command
+
+![Edit with Shell Command](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/edit-with-shell.gif)
+
+![Insert command output](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/insert-command-output.gif)
 
 ## Commands
 
