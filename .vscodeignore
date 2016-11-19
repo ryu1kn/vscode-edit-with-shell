@@ -9,4 +9,5 @@ __*
 .editorconfig
 .eslintrc.yaml
 .eslintignore
+.codeclimate.yml
 jsconfig.json
