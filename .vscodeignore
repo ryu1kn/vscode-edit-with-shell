@@ -10,5 +10,6 @@ __*
 .eslintrc.yaml
 .eslintignore
 .codeclimate.yml
+.travis.yml
 .nvmrc
 jsconfig.json

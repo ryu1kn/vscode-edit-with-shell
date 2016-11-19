@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "6.5"
+addons:
+  code_climate:
+    repo_token:
+      secure: "EXHuvB3ZvlJBW1YhvW0AocSfIKmcT8Y4dh1YCDX6XOMEvLyYo3NyXebM3pJlkWwqIU8vDXc2Crg4Yd1bMErf62esCo2oxQXZWr6th95kbbnhQjvIG84ITia7VXYHNrZa16g/z+1ogFcPPJOwbiPTaDgnMwhlezd3Q0ip8bwM3cRWOCy+MK7DUUEQI6UWTQ9856ail+rWgkIK/jKnDFtavuXFfdWx8UXS9n0q6nnKO3UaOFysC2X+udyNIwBvg/L0J3BddPIy3MsSTFH5nabV5DWOzsx2F7UgCpAqD5kaQmzWUiPBc+mpM+xhwu6WUO2JE1jwD4lokepjiXZkHIdt/JQDFQpAIFQ1WAOZVdXHhmoo6cUNgn7xVFb6JxhE+nK0cnNfF/lRr7dB+c07jUe2QR0KwPl31DkK61DYyuj3WmoleEWlddiG2UvG3LFLoxmca1/7+XfQoMPeNZx6bmziD2C39DUV4C9PMPv4Hz9ByIr0rd9WalYv7y19HMiCrSbZh0CTrSIL3AuSd+qh3WfYv75wJJ4ZmEnA+qlnPIDQ7CQP4/6sHcOAkGhcRPeJOzBijKI9pGjAFnbPZXkGpfdQCyxrJyCzcmeFRJckpuKoxX9GuHXuShfw8Ibl++mbMKMNYGxYeddzzEoK1kMIaDF0CTaZK0HUVYuNtev9ptBrWlw="
+install:
+  - npm install
+script:
+  - npm run lint
+  - npm run coverage  # coverage also runs unit tests internally
+after_script:
+  - codeclimate-test-reporter < coverage/lcov.info
