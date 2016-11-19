@@ -34,6 +34,4 @@ You can quickly open a command input box by registering the extension command to
 
 ## Changelog
 
-### 0.0.1: 29 Sep 2016
-
-* Initial release of the extension
+* https://github.com/ryu1kn/vscode-edit-with-shell/blob/master/CHANGELOG.md
