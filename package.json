@@ -26,6 +26,7 @@
     "filter"
   ],
   "activationEvents": [
+    "onCommand:editWithShell.reuseCommand",
     "onCommand:editWithShell.runCommand"
   ],
   "main": "./extension",
