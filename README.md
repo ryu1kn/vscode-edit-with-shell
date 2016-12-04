@@ -18,11 +18,7 @@ Levarage your favourite shell commands to edit text.
 
 * `EditWithShell: Run command` (**Command ID:** `editWithShell.runCommand`)
 
-    Open an input box to enter shell command
-
-* `EditWithShell: Reuse command` (**Command ID:** `editWithShell.reuseCommand`)
-
-    Show command history and let you modify before you execute them
+    Show command history and let you select, modify & run a command
 
 ## Keyboard Shortcuts
 
@@ -30,8 +26,6 @@ You can quickly open a command input box by registering the extension command to
 
 ```json
   { "key": "ctrl+r ctrl+r", "command": "editWithShell.runCommand",
-                            "when": "editorTextFocus" }
-  { "key": "ctrl+r ctrl+u", "command": "editWithShell.reuseCommand",
                             "when": "editorTextFocus" }
 ```
 

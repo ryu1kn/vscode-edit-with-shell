@@ -1,7 +1,7 @@
 
-const HistoricalCommandReader = require('../../../lib/command-readers/historical');
+const CommandReader = require('../../lib/command-reader');
 
-describe('HistoricalCommandReader', () => {
+describe('CommandReader', () => {
 
     it('allows user to pick and modify a past command. Commands shown last one first', () => {
         const vscodeWindow = {
@@ -9,7 +9,7 @@ describe('HistoricalCommandReader', () => {
             showQuickPick: sinon.stub().returns(Promise.resolve('COMMAND_1'))
         };
         const historyStore = {getAll: () => ['COMMAND_1', 'COMMAND_2']};
-        const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
+        const reader = new CommandReader({historyStore, vsWindow: vscodeWindow});
         return reader.read().then(command => {
             expect(command).to.eql('COMMAND_FINAL');
             expect(vscodeWindow.showQuickPick).to.have.been.calledWith(
@@ -30,7 +30,7 @@ describe('HistoricalCommandReader', () => {
             showQuickPick: sinon.spy()
         };
         const historyStore = {getAll: () => []};
-        const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
+        const reader = new CommandReader({historyStore, vsWindow: vscodeWindow});
         return reader.read().then(command => {
             expect(command).to.eql('COMMAND');
             expect(vscodeWindow.showQuickPick).to.not.have.been.called;
@@ -47,7 +47,7 @@ describe('HistoricalCommandReader', () => {
             showQuickPick: () => Promise.resolve()
         };
         const historyStore = {getAll: () => ['COMMAND_1', 'COMMAND_2']};
-        const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
+        const reader = new CommandReader({historyStore, vsWindow: vscodeWindow});
         return reader.read().then(command => {
             expect(command).to.eql('COMMAND');
             expect(vscodeWindow.showInputBox).to.have.been.calledWith({

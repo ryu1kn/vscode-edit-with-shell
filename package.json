@@ -26,7 +26,6 @@
     "filter"
   ],
   "activationEvents": [
-    "onCommand:editWithShell.reuseCommand",
     "onCommand:editWithShell.runCommand"
   ],
   "main": "./extension",
@@ -35,10 +34,6 @@
       {
         "command": "editWithShell.runCommand",
         "title": "EditWithShell: Run command"
-      },
-      {
-        "command": "editWithShell.reuseCommand",
-        "title": "EditWithShell: Reuse command"
       }
     ]
   },
