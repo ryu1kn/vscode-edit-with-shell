@@ -14,9 +14,10 @@ describe('HistoricalCommandReader', () => {
             expect(command).to.eql('COMMAND_FINAL');
             expect(vscodeWindow.showQuickPick).to.have.been.calledWith(
                 ['COMMAND_2', 'COMMAND_1'],
-                {placeHolder: 'Select a command to reuse'}
+                {placeHolder: 'Select a command to reuse or Cancel (Esc) to write a new command'}
             );
             expect(vscodeWindow.showInputBox).to.have.been.calledWith({
+                placeHolder: 'Enter a command',
                 prompt: 'Edit the command if necessary',
                 value: 'COMMAND_1'
             });
@@ -34,21 +35,24 @@ describe('HistoricalCommandReader', () => {
             expect(command).to.eql('COMMAND');
             expect(vscodeWindow.showQuickPick).to.not.have.been.called;
             expect(vscodeWindow.showInputBox).to.have.been.calledWith({
-                prompt: 'No history available. Enter a new command'
+                placeHolder: 'Enter a command',
+                prompt: 'No history available yet'
             });
         });
     });
 
-    it('does not show inputBox if history command picker is dismissed', () => {
+    it('shows inputBox if history command picker is dismissed', () => {
         const vscodeWindow = {
-            showInputBox: sinon.spy(),
+            showInputBox: sinon.stub().returns(Promise.resolve('COMMAND')),
             showQuickPick: () => Promise.resolve()
         };
         const historyStore = {getAll: () => ['COMMAND_1', 'COMMAND_2']};
         const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
         return reader.read().then(command => {
-            expect(command).to.be.undefined;
-            expect(vscodeWindow.showInputBox).to.not.have.been.called;
+            expect(command).to.eql('COMMAND');
+            expect(vscodeWindow.showInputBox).to.have.been.calledWith({
+                placeHolder: 'Enter a command'
+            });
         });
     });
 
