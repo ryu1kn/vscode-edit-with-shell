@@ -8,6 +8,7 @@ Levarage your favourite shell commands to edit text.
 
 * Edit selected text with shell command
 * Insert shell command output into cursor position
+* It records command history. You can edit a past command before you use it
 
 ![Edit with Shell Command](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/edit-with-shell.gif)
 
@@ -19,12 +20,18 @@ Levarage your favourite shell commands to edit text.
 
     Open an input box to enter shell command
 
+* `EditWithShell: Reuse command` (**Command ID:** `editWithShell.reuseCommand`)
+
+    Show command history and let you modify before you execute them
+
 ## Keyboard Shortcuts
 
 You can quickly open a command input box by registering the extension command to your keyboard shortcut settings. For example:
 
 ```json
   { "key": "ctrl+r ctrl+r", "command": "editWithShell.runCommand",
+                            "when": "editorTextFocus" }
+  { "key": "ctrl+r ctrl+u", "command": "editWithShell.reuseCommand",
                             "when": "editorTextFocus" }
 ```
 
