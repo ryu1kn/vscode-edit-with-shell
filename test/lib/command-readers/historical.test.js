@@ -26,8 +26,21 @@ describe('HistoricalCommandReader', () => {
         const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
         return reader.read().then(command => {
             expect(command).to.eql('COMMAND');
-            expect(vscodeWindow.showQuickPick).to.have.been.not.called;
+            expect(vscodeWindow.showQuickPick).to.not.have.been.called;
             expect(vscodeWindow.showInputBox).to.have.been.calledWith();
+        });
+    });
+
+    it('does not show inputBox if history command picker is dismissed', () => {
+        const vscodeWindow = {
+            showInputBox: sinon.spy(),
+            showQuickPick: () => Promise.resolve()
+        };
+        const historyStore = {getAll: () => ['COMMAND_1', 'COMMAND_2']};
+        const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
+        return reader.read().then(command => {
+            expect(command).to.be.undefined;
+            expect(vscodeWindow.showInputBox).to.not.have.been.called;
         });
     });
 
