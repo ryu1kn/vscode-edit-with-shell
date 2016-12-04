@@ -12,8 +12,22 @@ describe('HistoricalCommandReader', () => {
         const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
         return reader.read().then(command => {
             expect(command).to.eql('COMMAND_FINAL');
-            expect(vscodeWindow.showQuickPick.args[0][0]).to.eql(['COMMAND_1', 'COMMAND_2']);
-            expect(vscodeWindow.showInputBox.args[0][0]).to.eql({value: 'COMMAND_1'});
+            expect(vscodeWindow.showQuickPick).to.have.been.calledWith(['COMMAND_1', 'COMMAND_2']);
+            expect(vscodeWindow.showInputBox).to.have.been.calledWith({value: 'COMMAND_1'});
+        });
+    });
+
+    it('shows inputBox right away if there is no commands recorded in the history', () => {
+        const vscodeWindow = {
+            showInputBox: sinon.stub().returns(Promise.resolve('COMMAND')),
+            showQuickPick: sinon.spy()
+        };
+        const historyStore = {getAll: () => []};
+        const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
+        return reader.read().then(command => {
+            expect(command).to.eql('COMMAND');
+            expect(vscodeWindow.showQuickPick).to.have.been.not.called;
+            expect(vscodeWindow.showInputBox).to.have.been.calledWith();
         });
     });
 
