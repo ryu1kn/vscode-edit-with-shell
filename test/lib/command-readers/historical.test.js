@@ -1,5 +1,5 @@
 
-const HistoricalCommandReader = require('../../lib/historical-command-reader');
+const HistoricalCommandReader = require('../../../lib/command-readers/historical');
 
 describe('HistoricalCommandReader', () => {
 
