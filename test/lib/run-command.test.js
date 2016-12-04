@@ -32,14 +32,14 @@ describe('RunCommand', () => {
         const showErrorMessage = sinon.spy();
         const command = new RunCommand({
             commandReader: {
-                read: () => Promise.reject(new Error('COMMAND_READER_ERROR'))
+                read: () => Promise.reject(new Error('UNEXPECTED_ERROR'))
             },
             logger,
             showErrorMessage
         });
         return command.execute().then(() => {
-            expect(showErrorMessage).to.have.been.calledWith('COMMAND_READER_ERROR');
-            expect(logger.error.args[0][0]).to.have.string('Error: COMMAND_READER_ERROR');
+            expect(showErrorMessage).to.have.been.calledWith('UNEXPECTED_ERROR');
+            expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
         });
     });
 
