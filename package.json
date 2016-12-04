@@ -34,6 +34,10 @@
       {
         "command": "editWithShell.runCommand",
         "title": "EditWithShell: Run command"
+      },
+      {
+        "command": "editWithShell.reuseCommand",
+        "title": "EditWithShell: Reuse command"
       }
     ]
   },

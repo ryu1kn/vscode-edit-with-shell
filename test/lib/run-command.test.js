@@ -4,6 +4,7 @@ const RunCommand = require('../../lib/run-command');
 describe('RunCommand', () => {
 
     it('runs command with editor contents', () => {
+        const historyStore = {add: sinon.spy()};
         const shellCommandService = {
             runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
         };
@@ -11,6 +12,7 @@ describe('RunCommand', () => {
             commandReader: {
                 read: () => Promise.resolve('COMMAND_STRING')
             },
+            historyStore,
             shellCommandService
         });
 
@@ -21,6 +23,7 @@ describe('RunCommand', () => {
                 'COMMAND_OUTPUT'
             );
             expect(shellCommandService.runCommand).to.have.been.calledWith('COMMAND_STRING', 'SELECTED_TEXT');
+            expect(historyStore.add).to.have.been.calledWith('COMMAND_STRING');
         });
     });
 
