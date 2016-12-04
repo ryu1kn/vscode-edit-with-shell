@@ -12,8 +12,14 @@ describe('HistoricalCommandReader', () => {
         const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
         return reader.read().then(command => {
             expect(command).to.eql('COMMAND_FINAL');
-            expect(vscodeWindow.showQuickPick).to.have.been.calledWith(['COMMAND_2', 'COMMAND_1']);
-            expect(vscodeWindow.showInputBox).to.have.been.calledWith({value: 'COMMAND_1'});
+            expect(vscodeWindow.showQuickPick).to.have.been.calledWith(
+                ['COMMAND_2', 'COMMAND_1'],
+                {placeHolder: 'Select a command to reuse'}
+            );
+            expect(vscodeWindow.showInputBox).to.have.been.calledWith({
+                prompt: 'Edit the command if necessary',
+                value: 'COMMAND_1'
+            });
         });
     });
 
@@ -27,7 +33,9 @@ describe('HistoricalCommandReader', () => {
         return reader.read().then(command => {
             expect(command).to.eql('COMMAND');
             expect(vscodeWindow.showQuickPick).to.not.have.been.called;
-            expect(vscodeWindow.showInputBox).to.have.been.calledWith();
+            expect(vscodeWindow.showInputBox).to.have.been.calledWith({
+                prompt: 'No history available. Enter a new command'
+            });
         });
     });
 
