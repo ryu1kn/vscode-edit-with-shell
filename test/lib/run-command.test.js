@@ -3,15 +3,13 @@ const RunCommand = require('../../lib/run-command');
 
 describe('RunCommand', () => {
 
-    it('runs command with editor contents', () => {
+    it('runs command with editor contents and add commands to the history', () => {
         const historyStore = {add: sinon.spy()};
         const shellCommandService = {
             runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
         };
         const command = new RunCommand({
-            commandReader: {
-                read: () => Promise.resolve('COMMAND_STRING')
-            },
+            commandReader: {read: () => Promise.resolve('COMMAND_STRING')},
             historyStore,
             shellCommandService
         });
@@ -24,6 +22,25 @@ describe('RunCommand', () => {
             );
             expect(shellCommandService.runCommand).to.have.been.calledWith('COMMAND_STRING', 'SELECTED_TEXT');
             expect(historyStore.add).to.have.been.calledWith('COMMAND_STRING');
+        });
+    });
+
+    it('does not try to run a command if one is not given', () => {
+        const historyStore = {add: sinon.spy()};
+        const shellCommandService = {
+            runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
+        };
+        const command = new RunCommand({
+            commandReader: {read: () => Promise.resolve()},
+            historyStore,
+            shellCommandService
+        });
+
+        const editor = fakeEditor('SELECTED_TEXT');
+        return command.execute(editor).then(() => {
+            expect(editor._editBuilder.replace).to.have.been.not.called;
+            expect(shellCommandService.runCommand).to.have.been.not.called;
+            expect(historyStore.add).to.have.been.not.called;
         });
     });
 
