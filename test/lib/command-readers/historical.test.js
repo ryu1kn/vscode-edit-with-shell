@@ -3,7 +3,7 @@ const HistoricalCommandReader = require('../../../lib/command-readers/historical
 
 describe('HistoricalCommandReader', () => {
 
-    it('allows user to pick and modify a past command', () => {
+    it('allows user to pick and modify a past command. Commands shown last one first', () => {
         const vscodeWindow = {
             showInputBox: sinon.stub().returns(Promise.resolve('COMMAND_FINAL')),
             showQuickPick: sinon.stub().returns(Promise.resolve('COMMAND_1'))
@@ -12,7 +12,7 @@ describe('HistoricalCommandReader', () => {
         const reader = new HistoricalCommandReader({historyStore, vsWindow: vscodeWindow});
         return reader.read().then(command => {
             expect(command).to.eql('COMMAND_FINAL');
-            expect(vscodeWindow.showQuickPick).to.have.been.calledWith(['COMMAND_1', 'COMMAND_2']);
+            expect(vscodeWindow.showQuickPick).to.have.been.calledWith(['COMMAND_2', 'COMMAND_1']);
             expect(vscodeWindow.showInputBox).to.have.been.calledWith({value: 'COMMAND_1'});
         });
     });
