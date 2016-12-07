@@ -1,5 +1,4 @@
 
-const Editor = require('../../lib/editor');
 const RunCommand = require('../../lib/run-command');
 
 describe('RunCommand', () => {
@@ -9,19 +8,22 @@ describe('RunCommand', () => {
         const shellCommandService = {
             runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
         };
+        const replaceSelectedTextWith = sinon.stub().returns(Promise.resolve());
+        const wrapEditor = sinon.stub().returns({
+            selectedText: 'SELECTED_TEXT',
+            filePath: 'FILE_NAME',
+            replaceSelectedTextWith
+        });
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve('COMMAND_STRING')},
             historyStore,
             shellCommandService,
-            wrapEditor: editor => new Editor(editor)
+            wrapEditor
         });
 
-        const editor = fakeEditor('SELECTED_TEXT');
-        return command.execute(editor).then(() => {
-            expect(editor._editBuilder.replace).to.have.been.calledWith(
-                editor.selection,
-                'COMMAND_OUTPUT'
-            );
+        return command.execute('EDITOR').then(() => {
+            expect(wrapEditor).to.have.been.calledWith('EDITOR');
+            expect(replaceSelectedTextWith).to.have.been.calledWith('COMMAND_OUTPUT');
             expect(shellCommandService.runCommand).to.have.been.calledWith({
                 command: 'COMMAND_STRING',
                 input: 'SELECTED_TEXT',
@@ -36,16 +38,16 @@ describe('RunCommand', () => {
         const shellCommandService = {
             runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
         };
+        const replaceSelectedTextWith = sinon.stub().returns(Promise.resolve());
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve()},
             historyStore,
             shellCommandService,
-            wrapEditor: editor => new Editor(editor)
+            wrapEditor: () => ({})
         });
 
-        const editor = fakeEditor('SELECTED_TEXT');
-        return command.execute(editor).then(() => {
-            expect(editor._editBuilder.replace).to.have.been.not.called;
+        return command.execute('EDITOR').then(() => {
+            expect(replaceSelectedTextWith).to.have.been.not.called;
             expect(shellCommandService.runCommand).to.have.been.not.called;
             expect(historyStore.add).to.have.been.not.called;
         });
@@ -60,7 +62,7 @@ describe('RunCommand', () => {
             },
             logger,
             showErrorMessage,
-            wrapEditor: editor => new Editor(editor)
+            wrapEditor: () => {}
         });
         return command.execute().then(() => {
             expect(showErrorMessage).to.have.been.calledWith('UNEXPECTED_ERROR');
@@ -76,31 +78,11 @@ describe('RunCommand', () => {
             },
             logger: {error: () => {}},
             showErrorMessage,
-            wrapEditor: editor => new Editor(editor)
+            wrapEditor: () => {}
         });
         return command.execute().then(() => {
             expect(showErrorMessage).to.have.been.calledWith('MESSAGE\\nCONTAINS\\nNEWLINES');
         });
     });
-
-    function fakeEditor(selectedText) {
-        return {
-            selection: {
-                text: selectedText,
-                isEmpty: !selectedText
-            },
-            document: {
-                getText: sinon.stub().returns(selectedText),
-                uri: {
-                    scheme: 'file',
-                    fsPath: 'FILE_NAME'
-                }
-            },
-            edit: function (callback) {
-                callback(this._editBuilder);
-            },
-            _editBuilder: {replace: sinon.spy()}
-        };
-    }
 
 });
