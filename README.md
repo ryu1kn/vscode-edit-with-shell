@@ -26,6 +26,12 @@ Levarage your favourite shell commands to edit text.
 
     The project root will be used as a current directory when executing a shell command. HOME path will be used in case project root is not available.
 
+## Configurations
+
+* `editWithShell.currentDirectoryKind` (default: `currentFile`)
+
+    Current directory for shell commands. If the target directory is not available, HOME directory will be used. Possible values: `currentFile` or `workspaceRoot`
+
 ## Keyboard Shortcuts
 
 You can quickly open a command input box by registering the extension command to your keyboard shortcut settings. For example:

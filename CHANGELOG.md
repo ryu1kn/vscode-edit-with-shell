@@ -1,7 +1,7 @@
 
 ### 0.2.0: X Dec 2016
 
-* Specify a project root as a current directory when executing shell commands
+* Introduced a configuration for choosing the current directory of shell command execution
 
 ### 0.1.0: 4 Dec 2016
 

@@ -6,35 +6,62 @@ describe('ShellCommandExecContext', () => {
     it('has environment variables', () => {
         const execContext = new ShellCommandExecContext({
             process: {
-                env: {
-                    HOME: 'USER_HOME_DIR',
-                    OTHER_VARS: '..'
-                }
+                env: {VAR: '..'}
             }
         });
-        expect(execContext.env).to.eql({
-            HOME: 'USER_HOME_DIR',
-            OTHER_VARS: '..'
-        });
+        expect(execContext.env).to.eql({VAR: '..'});
     });
 
-    it("returns project root directory as command's current working directory", () => {
+    it('returns the directory of the current file if currentDirectoryKind is set to "currentFile"', () => {
         const execContext = new ShellCommandExecContext({
             vsWorkspace: {
-                rootPath: 'PROJECT_ROOT_PATH'
+                getConfiguration: getConfigurationMock('currentFile')
             }
         });
-        expect(execContext.cwd).to.eql('PROJECT_ROOT_PATH');
+        expect(execContext.getCwd('DIR/FILE')).to.eql('DIR');
     });
 
-    it("returns user's home directory as command's current working directory if project root is not available", () => {
+    it('returns user\'s home directory if currentDirectoryKind is set to "currentFile" but not available', () => {
         const execContext = new ShellCommandExecContext({
             process: {
                 env: {HOME: 'USER_HOME_DIR'}
             },
-            vsWorkspace: {}
+            vsWorkspace: {
+                getConfiguration: getConfigurationMock('currentFile')
+            }
         });
-        expect(execContext.cwd).to.eql('USER_HOME_DIR');
+        expect(execContext.getCwd()).to.eql('USER_HOME_DIR');
     });
+
+    it('returns project root directory if currentDirectoryKind is set to "workspaceRoot"', () => {
+        const execContext = new ShellCommandExecContext({
+            vsWorkspace: {
+                rootPath: 'PROJECT_ROOT_PATH',
+                getConfiguration: getConfigurationMock('workspaceRoot')
+            }
+        });
+        expect(execContext.getCwd()).to.eql('PROJECT_ROOT_PATH');
+    });
+
+    it('returns user\'s home directory if currentDirectoryKind is set to "workspaceRoot" but not available', () => {
+        const execContext = new ShellCommandExecContext({
+            process: {
+                env: {HOME: 'USER_HOME_DIR'}
+            },
+            vsWorkspace: {
+                getConfiguration: getConfigurationMock('workspaceRoot')
+            }
+        });
+        expect(execContext.getCwd()).to.eql('USER_HOME_DIR');
+    });
+
+    function getConfigurationMock(currentDirectoryKind) {
+        return extName => {
+            if (extName !== 'editWithShell') return null;
+            return {
+                get: cfgName => cfgName === 'currentDirectoryKind' ? currentDirectoryKind : null
+            };
+        };
+    }
 
 });

@@ -20,7 +20,11 @@ describe('RunCommand', () => {
                 editor.selection,
                 'COMMAND_OUTPUT'
             );
-            expect(shellCommandService.runCommand).to.have.been.calledWith('COMMAND_STRING', 'SELECTED_TEXT');
+            expect(shellCommandService.runCommand).to.have.been.calledWith({
+                command: 'COMMAND_STRING',
+                input: 'SELECTED_TEXT',
+                filePath: 'FILE_NAME'
+            });
             expect(historyStore.add).to.have.been.calledWith('COMMAND_STRING');
         });
     });
@@ -81,7 +85,11 @@ describe('RunCommand', () => {
                 isEmpty: !selectedText
             },
             document: {
-                getText: sinon.stub().returns(selectedText)
+                getText: sinon.stub().returns(selectedText),
+                uri: {
+                    scheme: 'file',
+                    fsPath: 'FILE_NAME'
+                }
             },
             edit: function (callback) {
                 callback(this._editBuilder);

@@ -12,11 +12,16 @@ describe('ShellCommandService', () => {
         };
         const shellCommandExecContext = {
             env: {SOME_ENV_VAR: '...'},
-            cwd: 'COMMAND_EXEC_DIR'
+            getCwd: stubWithArgs(['FILE_PATH'], 'COMMAND_EXEC_DIR')
         };
 
         const service = new ShellCommandService({childProcess, processRunner, shellCommandExecContext});
-        return service.runCommand('COMMAND_STRING', 'SELECTED_TEXT').then(output => {
+        const params = {
+            command: 'COMMAND_STRING',
+            input: 'SELECTED_TEXT',
+            filePath: 'FILE_PATH'
+        };
+        return service.runCommand(params).then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
             expect(childProcess.spawn).to.have.been.calledWith(
                 'COMMAND_STRING',
@@ -39,11 +44,15 @@ describe('ShellCommandService', () => {
         };
         const shellCommandExecContext = {
             env: {SOME_ENV_VAR: '...'},
-            cwd: 'COMMAND_EXEC_DIR'
+            getCwd: stubWithArgs(['FILE_PATH'], 'COMMAND_EXEC_DIR')
         };
 
         const service = new ShellCommandService({childProcess, processRunner, shellCommandExecContext});
-        return service.runCommand('COMMAND_STRING').then(output => {
+        const params = {
+            command: 'COMMAND_STRING',
+            filePath: 'FILE_PATH'
+        };
+        return service.runCommand(params).then(output => {
             expect(output).to.eql('COMMAND_OUTPUT');
             expect(childProcess.spawn).to.have.been.calledWith(
                 'COMMAND_STRING',
@@ -66,11 +75,15 @@ describe('ShellCommandService', () => {
         };
         const shellCommandExecContext = {
             env: {SOME_ENV_VAR: '...'},
-            cwd: 'COMMAND_EXEC_DIR'
+            getCwd: stubWithArgs(['FILE_PATH'], 'COMMAND_EXEC_DIR')
         };
 
         const service = new ShellCommandService({childProcess, processRunner, shellCommandExecContext});
-        return service.runCommand('COMMAND').then(
+        const params = {
+            command: 'COMMAND_STRING',
+            filePath: 'FILE_PATH'
+        };
+        return service.runCommand(params).then(
             throwError,
             e => {
                 expect(e).to.be.an('error');

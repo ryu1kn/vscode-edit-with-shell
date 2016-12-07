@@ -35,7 +35,22 @@
         "command": "editWithShell.runCommand",
         "title": "EditWithShell: Run command"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Edit with Shell Command configurations",
+      "properties": {
+        "editWithShell.currentDirectoryKind": {
+          "type": "string",
+          "description": "Current directory for shell commands",
+          "enum": [
+            "currentFile",
+            "workspaceRoot"
+          ],
+          "default": "currentFile"
+        }
+      }
+    }
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",

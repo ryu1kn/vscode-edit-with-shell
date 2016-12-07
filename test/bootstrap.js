@@ -9,6 +9,7 @@ global.throwError = () => {
     throw new Error('Should not have been called');
 };
 
+// stubWithArgs([arg11, arg12, ...], return1, [arg21, ...], return2)
 global.stubWithArgs = function () {
     'use strict';
 
@@ -20,6 +21,7 @@ global.stubWithArgs = function () {
     return stub;
 };
 
+// stubReturns(return1, return2, ...)
 global.stubReturns = function () {
     const args = Array.prototype.slice.call(arguments);
     return args.reduce((stub, arg, index) => {
