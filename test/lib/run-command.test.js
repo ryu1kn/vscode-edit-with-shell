@@ -1,4 +1,5 @@
 
+const Editor = require('../../lib/editor');
 const RunCommand = require('../../lib/run-command');
 
 describe('RunCommand', () => {
@@ -11,7 +12,8 @@ describe('RunCommand', () => {
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve('COMMAND_STRING')},
             historyStore,
-            shellCommandService
+            shellCommandService,
+            wrapEditor: editor => new Editor(editor)
         });
 
         const editor = fakeEditor('SELECTED_TEXT');
@@ -37,7 +39,8 @@ describe('RunCommand', () => {
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve()},
             historyStore,
-            shellCommandService
+            shellCommandService,
+            wrapEditor: editor => new Editor(editor)
         });
 
         const editor = fakeEditor('SELECTED_TEXT');
@@ -56,7 +59,8 @@ describe('RunCommand', () => {
                 read: () => Promise.reject(new Error('UNEXPECTED_ERROR'))
             },
             logger,
-            showErrorMessage
+            showErrorMessage,
+            wrapEditor: editor => new Editor(editor)
         });
         return command.execute().then(() => {
             expect(showErrorMessage).to.have.been.calledWith('UNEXPECTED_ERROR');
@@ -71,7 +75,8 @@ describe('RunCommand', () => {
                 read: () => Promise.reject(new Error('MESSAGE\nCONTAINS\nNEWLINES\n'))
             },
             logger: {error: () => {}},
-            showErrorMessage
+            showErrorMessage,
+            wrapEditor: editor => new Editor(editor)
         });
         return command.execute().then(() => {
             expect(showErrorMessage).to.have.been.calledWith('MESSAGE\\nCONTAINS\\nNEWLINES');
