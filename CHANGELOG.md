@@ -1,5 +1,5 @@
 
-### 0.2.0: X Dec 2016
+### 0.2.0: 7 Dec 2016
 
 * Introduced a configuration for choosing the current directory of shell command execution
 
