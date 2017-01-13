@@ -22,10 +22,6 @@ Levarage your favourite shell commands to edit text.
 
     Show command history and let you select, modify & run a command
 
-    **Note:**
-
-    The project root will be used as a current directory when executing a shell command. HOME path will be used in case project root is not available.
-
 ## Configurations
 
 * `editWithShell.currentDirectoryKind` (default: `currentFile`)
