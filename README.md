@@ -10,7 +10,7 @@ Levarage your favourite shell commands to edit text.
 * Insert shell command output into cursor position
 * It records command history. You can edit and reuse past commands
 
-![Edit with Shell Command](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/edit-with-shell.gif)
+![Edit with Shell Command](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/public.gif)
 
 ![Insert command output](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/insert-command-output.gif)
 
