@@ -1,4 +1,8 @@
 
+### 0.2.1: 14 September 2017
+
+* Fixed the link to the gif animation
+
 ### 0.2.0: 7 Dec 2016
 
 * Introduced a configuration for choosing the current directory of shell command execution
