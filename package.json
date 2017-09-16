@@ -33,7 +33,8 @@
     "commands": [
       {
         "command": "editWithShell.runCommand",
-        "title": "EditWithShell: Run command"
+        "title": "Run command",
+        "category": "EditWithShell"
       }
     ],
     "configuration": {
