@@ -70,19 +70,4 @@ describe('RunCommand', () => {
         });
     });
 
-    it('escape newline characters to show all lines when showing an error message', () => {
-        const showErrorMessage = sinon.spy();
-        const command = new RunCommand({
-            commandReader: {
-                read: () => Promise.reject(new Error('MESSAGE\nCONTAINS\nNEWLINES\n'))
-            },
-            logger: {error: () => {}},
-            showErrorMessage,
-            wrapEditor: () => {}
-        });
-        return command.execute().then(() => {
-            expect(showErrorMessage).to.have.been.calledWith('MESSAGE\\nCONTAINS\\nNEWLINES');
-        });
-    });
-
 });
