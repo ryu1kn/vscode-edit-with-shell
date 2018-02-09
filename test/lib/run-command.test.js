@@ -65,7 +65,7 @@ describe('RunCommand', () => {
             wrapEditor: () => {}
         });
         return command.execute().then(() => {
-            expect(showErrorMessage).to.have.been.calledWith('UNEXPECTED_ERROR');
+            expect(showErrorMessage).to.have.been.calledWith('UNEXPECTED\\_ERROR');
             expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
         });
     });

@@ -15,4 +15,24 @@ describe('ErrorMessageFormatter', () => {
         expect(formattedText).to.eql('MESSAGE\\nCONTAINS\\nNEWLINES');
     });
 
+    it('escape `*` character', () => {
+        const formattedText = formatter.format('**bold**');
+        expect(formattedText).to.eql('\\*\\*bold\\*\\*');
+    });
+
+    it('escape `_` character', () => {
+        const formattedText = formatter.format('__italic__');
+        expect(formattedText).to.eql('\\_\\_italic\\_\\_');
+    });
+
+    it('escape `[` character', () => {
+        const formattedText = formatter.format('[[');
+        expect(formattedText).to.eql('\\[\\[');
+    });
+
+    it('escape `]` character', () => {
+        const formattedText = formatter.format(']]');
+        expect(formattedText).to.eql('\\]\\]');
+    });
+
 });
