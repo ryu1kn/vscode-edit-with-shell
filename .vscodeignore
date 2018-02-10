@@ -1,5 +1,6 @@
 .idea/**
 .vscode/**
+.nyc_output/**
 typings/**
 test/**
 coverage/**

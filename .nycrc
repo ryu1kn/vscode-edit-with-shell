@@ -1,0 +1,11 @@
+{
+  "exclude": [
+    "**/__*"
+  ],
+  "all": true,
+  "reporter": [
+    "lcov",
+    "text-summary"
+  ],
+  "report-dir": "./coverage"
+}
