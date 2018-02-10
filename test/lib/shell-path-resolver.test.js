@@ -3,10 +3,11 @@ const ShellPathResolver = require('../../lib/shell-path-resolver');
 
 describe('ShellPathResolver', () => {
 
-    const workspace = {getConfiguration: configName => {
-        const os = configName.replace('terminal.integrated.shell.', '');
-        return `${os}_SHELL_PATH`;
-    }};
+    const workspace = {
+        getConfiguration: configName =>
+            configName === 'terminal.integrated.shell' &&
+                {get: os => `${os}_SHELL_PATH`}
+    };
 
     it('it returns Linux shell path user specified in their config when run on Linux', () => {
         const shellPathResolver = createShellPathResolver('linux');
