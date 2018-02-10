@@ -3,7 +3,7 @@ const RunCommand = require('../../lib/run-command');
 
 describe('RunCommand', () => {
 
-    it('runs command with editor contents and add commands to the history', () => {
+    it('runs command with editor contents and add commands to the history', async () => {
         const historyStore = {add: sinon.spy()};
         const shellCommandService = {
             runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
@@ -21,19 +21,19 @@ describe('RunCommand', () => {
             wrapEditor
         });
 
-        return command.execute('EDITOR').then(() => {
-            expect(wrapEditor).to.have.been.calledWith('EDITOR');
-            expect(replaceSelectedTextWith).to.have.been.calledWith('COMMAND_OUTPUT');
-            expect(shellCommandService.runCommand).to.have.been.calledWith({
-                command: 'COMMAND_STRING',
-                input: 'SELECTED_TEXT',
-                filePath: 'FILE_NAME'
-            });
-            expect(historyStore.add).to.have.been.calledWith('COMMAND_STRING');
+        await command.execute('EDITOR');
+
+        expect(wrapEditor).to.have.been.calledWith('EDITOR');
+        expect(replaceSelectedTextWith).to.have.been.calledWith('COMMAND_OUTPUT');
+        expect(shellCommandService.runCommand).to.have.been.calledWith({
+            command: 'COMMAND_STRING',
+            input: 'SELECTED_TEXT',
+            filePath: 'FILE_NAME'
         });
+        expect(historyStore.add).to.have.been.calledWith('COMMAND_STRING');
     });
 
-    it('does not try to run a command if one is not given', () => {
+    it('does not try to run a command if one is not given', async () => {
         const historyStore = {add: sinon.spy()};
         const shellCommandService = {
             runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
@@ -46,14 +46,14 @@ describe('RunCommand', () => {
             wrapEditor: () => ({})
         });
 
-        return command.execute('EDITOR').then(() => {
-            expect(replaceSelectedTextWith).to.have.been.not.called;
-            expect(shellCommandService.runCommand).to.have.been.not.called;
-            expect(historyStore.add).to.have.been.not.called;
-        });
+        await command.execute('EDITOR');
+
+        expect(replaceSelectedTextWith).to.have.been.not.called;
+        expect(shellCommandService.runCommand).to.have.been.not.called;
+        expect(historyStore.add).to.have.been.not.called;
     });
 
-    it('reports an error', () => {
+    it('reports an error', async () => {
         const logger = {error: sinon.spy()};
         const showErrorMessage = sinon.spy();
         const command = new RunCommand({
@@ -64,10 +64,11 @@ describe('RunCommand', () => {
             showErrorMessage,
             wrapEditor: () => {}
         });
-        return command.execute().then(() => {
-            expect(showErrorMessage).to.have.been.calledWith('UNEXPECTED\\_ERROR');
-            expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
-        });
+
+        await command.execute();
+
+        expect(showErrorMessage).to.have.been.calledWith('UNEXPECTED\\_ERROR');
+        expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
     });
 
 });
