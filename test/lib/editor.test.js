@@ -21,16 +21,16 @@ describe('Editor', () => {
         expect(editor.filePath).to.be.null;
     });
 
-    it('replaces selected text with command given text', () => {
+    it('replaces selected text with command given text', async () => {
         const vsEditor = fakeEditor({selectedText: 'SELECTED_TEXT'});
         const editor = new Editor(vsEditor);
 
-        return editor.replaceSelectedTextWith('NEW_TEXT').then(() => {
-            expect(vsEditor._editBuilder.replace).to.have.been.calledWith(
-                vsEditor.selection,
-                'NEW_TEXT'
-            );
-        });
+        await editor.replaceSelectedTextWith('NEW_TEXT');
+
+        expect(vsEditor._editBuilder.replace).to.have.been.calledWith(
+            vsEditor.selection,
+            'NEW_TEXT'
+        );
     });
 
     function fakeEditor(params) {
