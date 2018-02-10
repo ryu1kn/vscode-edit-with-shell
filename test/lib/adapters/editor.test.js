@@ -1,5 +1,5 @@
 
-const Editor = require('../../lib/editor');
+const Editor = require('../../../lib/adapters/editor');
 
 describe('Editor', () => {
 
