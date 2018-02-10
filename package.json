@@ -15,7 +15,7 @@
     "url": "https://github.com/ryu1kn/vscode-edit-with-shell.git"
   },
   "engines": {
-    "vscode": "^1.0.0"
+    "vscode": "^1.19.0"
   },
   "categories": [
     "Other"
