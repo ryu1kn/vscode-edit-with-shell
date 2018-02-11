@@ -88,8 +88,8 @@ describe('ShellCommandService', () => {
             childProcess,
             processRunner,
             shellCommandExecContext,
-            shellPathResolver: {resolve: () => 'SHELL_PATH'},
-            shellArgsResolver: {resolve: () => 'SHELL_ARGS'}
+            shellProgrammeResolver: {resolve: () => 'SHELL_PATH'},
+            shellArgsRetriever: {retrieve: () => 'SHELL_ARGS'}
         });
     }
 });
