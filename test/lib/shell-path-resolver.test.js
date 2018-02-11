@@ -1,7 +1,7 @@
 
 const ShellPathResolver = require('../../lib/shell-path-resolver');
 
-describe('ShellPathResolver', () => {
+describe('ShellProgrammeResolver', () => {
 
     const config = {
         'terminal.integrated.shell.linux': 'linux_SHELL_PATH',
