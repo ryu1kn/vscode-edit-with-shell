@@ -5,6 +5,7 @@ globals:
   stubReturns: true
   describe: true
   it: true
+  beforeEach: true
   throwError: true
 rules:
   max-len: off
