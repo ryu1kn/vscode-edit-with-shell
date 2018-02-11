@@ -3,11 +3,12 @@ const ShellPathResolver = require('../../lib/shell-path-resolver');
 
 describe('ShellPathResolver', () => {
 
-    const workspace = {
-        getConfiguration: configName =>
-            configName === 'terminal.integrated.shell' &&
-                {get: os => `${os}_SHELL_PATH`}
+    const config = {
+        'terminal.integrated.shell.linux': 'linux_SHELL_PATH',
+        'terminal.integrated.shell.osx': 'osx_SHELL_PATH',
+        'terminal.integrated.shell.windows': 'windows_SHELL_PATH'
     };
+    const workspaceAdapter = {getConfig: path => config[path]};
 
     it('it returns Linux shell path user specified in their config when run on Linux', () => {
         const shellPathResolver = createShellPathResolver('linux');
@@ -30,10 +31,7 @@ describe('ShellPathResolver', () => {
     });
 
     function createShellPathResolver(platform) {
-        return new ShellPathResolver({
-            vsWorkspace: workspace,
-            platform
-        });
+        return new ShellPathResolver({workspaceAdapter, platform});
     }
 
 });
