@@ -11,9 +11,9 @@ describe('ShellCommandService', () => {
     beforeEach(() => {
         childProcess = {
             spawn: stubWithArgs(
-                ['SHELL_PATH', ['SHELL_ARGS', 'COMMAND_STRING']], 'COMMAND',
-                ['SHELL_PATH', ['SHELL_ARGS', 'COMMAND_TEST_WITH_ENVVARS'], sinon.match({env: {SOME_ENV_VAR: '...'}})], 'COMMAND',
-                ['SHELL_PATH', ['SHELL_ARGS', 'COMMAND_TEST_WITH_EXEC_DIR'], sinon.match({cwd: 'COMMAND_EXEC_DIR'})], 'COMMAND'
+                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING']], 'COMMAND',
+                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_ENVVARS'], sinon.match({env: {SOME_ENV_VAR: '...'}})], 'COMMAND',
+                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_EXEC_DIR'], sinon.match({cwd: 'COMMAND_EXEC_DIR'})], 'COMMAND'
             )
         };
         processRunner = {
@@ -89,7 +89,7 @@ describe('ShellCommandService', () => {
             processRunner,
             shellCommandExecContext,
             shellProgrammeResolver: {resolve: () => 'SHELL_PATH'},
-            shellArgsRetriever: {retrieve: () => 'SHELL_ARGS'}
+            shellArgsRetriever: {retrieve: () => ['SHELL_ARG']}
         });
     }
 });
