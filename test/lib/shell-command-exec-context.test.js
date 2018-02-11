@@ -13,11 +13,7 @@ describe('ShellCommandExecContext', () => {
     });
 
     it('returns the directory of the current file if currentDirectoryKind is set to "currentFile"', () => {
-        const execContext = new ShellCommandExecContext({
-            vsWorkspace: {
-                getConfiguration: getConfigurationMock('currentFile')
-            }
-        });
+        const execContext = new ShellCommandExecContext({workspaceAdapter: fakeWorkspaceAdapter('currentFile')});
         expect(execContext.getCwd('DIR/FILE')).to.eql('DIR');
     });
 
@@ -26,19 +22,14 @@ describe('ShellCommandExecContext', () => {
             process: {
                 env: {HOME: 'USER_HOME_DIR'}
             },
-            vsWorkspace: {
-                getConfiguration: getConfigurationMock('currentFile')
-            }
+            workspaceAdapter: fakeWorkspaceAdapter('currentFile')
         });
         expect(execContext.getCwd()).to.eql('USER_HOME_DIR');
     });
 
     it('returns project root directory if currentDirectoryKind is set to "workspaceRoot"', () => {
         const execContext = new ShellCommandExecContext({
-            vsWorkspace: {
-                rootPath: 'PROJECT_ROOT_PATH',
-                getConfiguration: getConfigurationMock('workspaceRoot')
-            }
+            workspaceAdapter: fakeWorkspaceAdapter('workspaceRoot', 'PROJECT_ROOT_PATH')
         });
         expect(execContext.getCwd()).to.eql('PROJECT_ROOT_PATH');
     });
@@ -48,19 +39,15 @@ describe('ShellCommandExecContext', () => {
             process: {
                 env: {HOME: 'USER_HOME_DIR'}
             },
-            vsWorkspace: {
-                getConfiguration: getConfigurationMock('workspaceRoot')
-            }
+            workspaceAdapter: fakeWorkspaceAdapter('workspaceRoot')
         });
         expect(execContext.getCwd()).to.eql('USER_HOME_DIR');
     });
 
-    function getConfigurationMock(currentDirectoryKind) {
-        return extName => {
-            if (extName !== 'editWithShell') return null;
-            return {
-                get: cfgName => cfgName === 'currentDirectoryKind' ? currentDirectoryKind : null
-            };
+    function fakeWorkspaceAdapter(currentDirectoryKind, rootPath) {
+        return {
+            rootPath,
+            getConfig: path => path === 'editWithShell.currentDirectoryKind' && currentDirectoryKind
         };
     }
 

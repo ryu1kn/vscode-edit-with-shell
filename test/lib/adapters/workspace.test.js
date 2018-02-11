@@ -3,14 +3,18 @@ const WorkspaceAdapter = require('../../../lib/adapters/workspace');
 
 describe('WorkspaceAdapter', () => {
 
+    const workspaceAdapter = new WorkspaceAdapter({vsWorkspace: fakeVscodeWorkspace()});
+
     it('gets config value of specified 2 level path', () => {
-        const workspaceAdapter = new WorkspaceAdapter({vsWorkspace: fakeVscodeWorkspace()});
         expect(workspaceAdapter.getConfig('A.B')).to.eql('VALUE1');
     });
 
     it('gets config value of specified 4 level path', () => {
-        const workspaceAdapter = new WorkspaceAdapter({vsWorkspace: fakeVscodeWorkspace()});
         expect(workspaceAdapter.getConfig('C.D.E.F')).to.eql('VALUE2');
+    });
+
+    it('returns the project root path', () => {
+        expect(workspaceAdapter.rootPath).to.eql('PROJECT_ROOT_PATH');
     });
 
     function fakeVscodeWorkspace() {
@@ -28,7 +32,8 @@ describe('WorkspaceAdapter', () => {
                 default:
                     return {get: () => {}};
                 }
-            }
+            },
+            rootPath: 'PROJECT_ROOT_PATH'
         };
     }
 
