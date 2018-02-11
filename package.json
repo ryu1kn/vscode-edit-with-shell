@@ -49,6 +49,30 @@
             "workspaceRoot"
           ],
           "default": "currentFile"
+        },
+        "editWithShell.shellArgs.linux": {
+          "description": "Arguments to be used when executing shell commands on the shell specified in `terminal.integrated.shell.linux`",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["-c"]
+        },
+        "editWithShell.shellArgs.osx": {
+          "description": "Arguments to be used when executing shell commands on the shell specified in `terminal.integrated.shell.osx`",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["-c"]
+        },
+        "editWithShell.shellArgs.windows": {
+          "description": "Arguments to be used when executing shell commands on the shell specified in `terminal.integrated.shell.windows`",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["/d", "/s", "/c"]
         }
       }
     }
