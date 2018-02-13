@@ -2,17 +2,13 @@
 const ShellCommandService = require('../../lib/shell-command-service');
 
 describe('ShellCommandService', () => {
-
-    let childProcess;
+    let processBuilder;
     let processRunner;
-    let shellCommandExecContext;
     let service;
 
     beforeEach(() => {
-        childProcess = {
-            spawn: stubWithArgs(
-                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING']], 'COMMAND'
-            )
+        processBuilder = {
+            build: stubWithArgs([sinon.match({command: 'COMMAND_STRING'})], 'COMMAND')
         };
         processRunner = {
             run: stubWithArgs(
@@ -20,11 +16,7 @@ describe('ShellCommandService', () => {
                 ['COMMAND', 'SELECTED_TEXT'], Promise.resolve('COMMAND_OUTPUT_TEST_WITH_INPUT')
             )
         };
-        shellCommandExecContext = {
-            env: {SOME_ENV_VAR: '...'},
-            getCwd: stubWithArgs(['FILE_PATH'], 'COMMAND_EXEC_DIR')
-        };
-        service = createShellCommandService({childProcess, processRunner, shellCommandExecContext});
+        service = createShellCommandService({processBuilder, processRunner});
     });
 
     it('runs a given command on shell', async () => {
@@ -50,7 +42,7 @@ describe('ShellCommandService', () => {
         const processRunner = {
             run: stubWithArgs(['COMMAND', 'CAUSE_ERROR_INPUT'], Promise.reject(new Error('UNEXPECTED_ERROR')))
         };
-        const service = createShellCommandService({childProcess, processRunner, shellCommandExecContext});
+        const service = createShellCommandService({processBuilder, processRunner});
         const params = {
             command: 'COMMAND_STRING',
             input: 'CAUSE_ERROR_INPUT'
@@ -64,13 +56,7 @@ describe('ShellCommandService', () => {
         }
     });
 
-    function createShellCommandService({childProcess, processRunner, shellCommandExecContext}) {
-        return new ShellCommandService({
-            childProcess,
-            processRunner,
-            shellCommandExecContext,
-            shellProgrammeResolver: {resolve: () => 'SHELL_PATH'},
-            shellArgsRetriever: {retrieve: () => ['SHELL_ARG']}
-        });
+    function createShellCommandService({processBuilder, processRunner}) {
+        return new ShellCommandService({processBuilder, processRunner});
     }
 });
