@@ -4,9 +4,9 @@ const ShellProgrammeResolver = require('../../lib/shell-programme-resolver');
 describe('ShellProgrammeResolver', () => {
 
     const config = {
-        'terminal.integrated.shell.linux': 'linux_SHELL_PATH',
-        'terminal.integrated.shell.osx': 'osx_SHELL_PATH',
-        'terminal.integrated.shell.windows': 'windows_SHELL_PATH'
+        'editWithShell.shell.linux': 'linux_SHELL_PATH',
+        'editWithShell.shell.osx': 'osx_SHELL_PATH',
+        'editWithShell.shell.windows': 'windows_SHELL_PATH'
     };
     const workspaceAdapter = {getConfig: path => config[path]};
 

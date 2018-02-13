@@ -50,24 +50,39 @@
           ],
           "default": "currentFile"
         },
+        "editWithShell.shell.linux": {
+          "description": "The path of the shell that this extension uses on Linux",
+          "type": "string",
+          "default": "/bin/sh"
+        },
         "editWithShell.shellArgs.linux": {
-          "description": "Arguments to be used when executing shell commands on the shell specified in `terminal.integrated.shell.linux`",
+          "description": "Arguments to the shell to be used on Linux",
           "type": "array",
           "items": {
             "type": "string"
           },
           "default": ["-c"]
+        },
+        "editWithShell.shell.osx": {
+          "description": "The path of the shell that this extension uses on OS X",
+          "type": "string",
+          "default": "/bin/sh"
         },
         "editWithShell.shellArgs.osx": {
-          "description": "Arguments to be used when executing shell commands on the shell specified in `terminal.integrated.shell.osx`",
+          "description": "Arguments to the shell to be used on OS X",
           "type": "array",
           "items": {
             "type": "string"
           },
           "default": ["-c"]
         },
+        "editWithShell.shell.windows": {
+          "description": "The path of the shell that this extension uses on Windows",
+          "type": "string",
+          "default": "cmd.exe"
+        },
         "editWithShell.shellArgs.windows": {
-          "description": "Arguments to be used when executing shell commands on the shell specified in `terminal.integrated.shell.windows`",
+          "description": "Arguments to the shell to be used on Windows",
           "type": "array",
           "items": {
             "type": "string"
