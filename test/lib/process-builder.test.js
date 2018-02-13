@@ -1,7 +1,7 @@
 
 const ProcessBuilder = require('../../lib/process-builder');
 
-describe('ProcessBuilder', () => {
+describe('ProcessBuilderProvider', () => {
     let childProcess;
     let shellCommandExecContext;
     let processBuilder;

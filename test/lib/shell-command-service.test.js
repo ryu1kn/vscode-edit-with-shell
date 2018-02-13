@@ -57,6 +57,9 @@ describe('ShellCommandService', () => {
     });
 
     function createShellCommandService({processBuilder, processRunner}) {
-        return new ShellCommandService({processBuilder, processRunner});
+        return new ShellCommandService({
+            processRunner,
+            processBuilderProvider: {provide: () => processBuilder}
+        });
     }
 });
