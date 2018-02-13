@@ -1,4 +1,8 @@
 
+### 0.3.0: 13 Feb 2018
+
+* Support non-default shells. `bash` on Windows is now possible. [#1](https://github.com/ryu1kn/vscode-edit-with-shell/issues/1)
+
 ### 0.2.2: 9 Feb 2018
 
 * Fixed the problem that error messages were not shown on shell command failure if they contain certain character sequences. [#2](https://github.com/ryu1kn/vscode-edit-with-shell/issues/2)
