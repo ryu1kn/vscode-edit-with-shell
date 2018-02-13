@@ -11,9 +11,7 @@ describe('ShellCommandService', () => {
     beforeEach(() => {
         childProcess = {
             spawn: stubWithArgs(
-                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING']], 'COMMAND',
-                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_ENVVARS'], sinon.match({env: {SOME_ENV_VAR: '...'}})], 'COMMAND',
-                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_EXEC_DIR'], sinon.match({cwd: 'COMMAND_EXEC_DIR'})], 'COMMAND'
+                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING']], 'COMMAND'
             )
         };
         processRunner = {
@@ -44,23 +42,6 @@ describe('ShellCommandService', () => {
         const output = await service.runCommand(params);
 
         expect(output).to.eql('COMMAND_OUTPUT_TEST_WITH_INPUT');
-    });
-
-    it('inherits environment variables on executing a command', async () => {
-        const params = {command: 'COMMAND_TEST_WITH_ENVVARS'};
-        const output = await service.runCommand(params);
-
-        expect(output).to.eql('COMMAND_OUTPUT');
-    });
-
-    it('executes a command on a specific directory', async () => {
-        const params = {
-            command: 'COMMAND_TEST_WITH_EXEC_DIR',
-            filePath: 'FILE_PATH'
-        };
-        const output = await service.runCommand(params);
-
-        expect(output).to.eql('COMMAND_OUTPUT');
     });
 
     it('throws an error if command failed', async () => {
