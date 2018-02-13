@@ -1,7 +1,7 @@
 
-const DefaultProcessBuilder = require('../../lib/default-process-builder');
+const CustomShellProcessBuilder = require('../../lib/custom-shell-process-builder');
 
-describe('DefaultProcessBuilder', () => {
+describe('CustomShellProcessBuilder', () => {
     let childProcess;
     let shellCommandExecContext;
     let processBuilder;
@@ -9,18 +9,20 @@ describe('DefaultProcessBuilder', () => {
     beforeEach(() => {
         childProcess = {
             spawn: stubWithArgs(
-                ['COMMAND_STRING'], 'COMMAND',
-                ['COMMAND_STRING_TEST_WITH_ENVVARS', sinon.match({env: {SOME_ENV_VAR: '...'}})], 'COMMAND_TEST_WITH_ENVVARS',
-                ['COMMAND_STRING_TEST_WITH_EXEC_DIR', sinon.match({cwd: 'COMMAND_EXEC_DIR'})], 'COMMAND_TEST_WITH_EXEC_DIR'
+                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING']], 'COMMAND',
+                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING_TEST_WITH_ENVVARS'], sinon.match({env: {SOME_ENV_VAR: '...'}})], 'COMMAND_TEST_WITH_ENVVARS',
+                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING_TEST_WITH_EXEC_DIR'], sinon.match({cwd: 'COMMAND_EXEC_DIR'})], 'COMMAND_TEST_WITH_EXEC_DIR'
             )
         };
         shellCommandExecContext = {
             env: {SOME_ENV_VAR: '...'},
             getCwd: stubWithArgs(['FILE_PATH'], 'COMMAND_EXEC_DIR')
         };
-        processBuilder = new DefaultProcessBuilder({
+        processBuilder = new CustomShellProcessBuilder({
             childProcess,
-            shellCommandExecContext
+            shellCommandExecContext,
+            shellProgrammeResolver: {resolve: () => 'SHELL_PATH'},
+            shellArgsRetriever: {retrieve: () => ['SHELL_ARG']}
         });
     });
 

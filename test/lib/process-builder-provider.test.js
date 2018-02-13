@@ -16,11 +16,9 @@ describe('ProcessBuilderProvider', () => {
     });
 
     function createProcessBuilder(shellProgrammeResolver) {
-        const customProcessBuilder = 'CUSTOM_PROCESS_BUILDER';
-        const defaultProcessBuilder = 'DEFAULT_PROCESS_BUILDER';
         const provider = new ProcessBuilderProvider({
-            customProcessBuilder,
-            defaultProcessBuilder,
+            customShellProcessBuilder: 'CUSTOM_PROCESS_BUILDER',
+            defaultShellProcessBuilder: 'DEFAULT_PROCESS_BUILDER',
             shellProgrammeResolver
         });
         return provider.provide();
