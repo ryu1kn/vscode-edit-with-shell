@@ -6,10 +6,10 @@ Leverage your favourite shell commands to edit text.
 
 ## Features
 
-* Edit selected text with shell command
-* Insert shell command output into cursor position
-* It records command history. You can edit and reuse past commands
-* Use the shell you like. For example, if you have `bash` on Windows, you can specify bash for your shell on this extension!
+* Edit the selected text by piping it through shell commands.
+* Insert the output of shell commands at the cursor position.
+* Records command history: you can edit and reuse past commands.
+* Use the shell you like. For example, if you have Bash on Windows, you can specify Bash as your shell for this extension.
 
 ![Edit with Shell Command](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/public.gif)
 
@@ -31,7 +31,7 @@ Leverage your favourite shell commands to edit text.
 
 * `editWithShell.shell.linux` (default: `/bin/sh`)
 
-    CThe path of the shell that this extension uses on Linux
+    The path of the shell that this extension uses on Linux
 
 * `editWithShell.shellArgs.linux` (default: `["-c"]`)
 
@@ -39,7 +39,7 @@ Leverage your favourite shell commands to edit text.
 
 * `editWithShell.shell.osx` (default: `/bin/sh`)
 
-    CThe path of the shell that this extension uses on macOS
+    The path of the shell that this extension uses on macOS
 
 * `editWithShell.shellArgs.osx` (default: `["-c"]`)
 
@@ -47,7 +47,7 @@ Leverage your favourite shell commands to edit text.
 
 * `editWithShell.shell.windows` (default: `cmd.exe`)
 
-    CThe path of the shell that this extension uses on Windows
+    The path of the shell that this extension uses on Windows
 
 * `editWithShell.shellArgs.windows` (default: `["/d", "/s", "/c"]`)
 
