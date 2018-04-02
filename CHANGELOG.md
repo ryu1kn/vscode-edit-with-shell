@@ -5,6 +5,10 @@ All notable changes to "Edit with Shell Command" extension will be documented in
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2018-04-02
+### Added
+- Introduced a command to clear command history. [#4](https://github.com/ryu1kn/vscode-edit-with-shell/issues/4)
+
 ## [0.3.0] - 2018-02-13
 ### Added
 - Support non-default shells. `bash` on Windows is now possible. [#1](https://github.com/ryu1kn/vscode-edit-with-shell/issues/1)

@@ -2,7 +2,7 @@
   "name": "edit-with-shell",
   "displayName": "Edit with Shell Command",
   "description": "Leverage your favourite shell commands to edit text",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "publisher": "ryu1kn",
   "license": "SEE LICENSE IN LICENSE.txt",
   "icon": "images/edit-with-shell.png",
@@ -34,7 +34,7 @@
     "commands": [
       {
         "command": "editWithShell.clearCommandHistory",
-        "title": "Clear Command History",
+        "title": "Clear command history",
         "category": "EditWithShell"
       },
       {

@@ -23,6 +23,10 @@ Leverage your favourite shell commands to edit text.
 
     Show command history and let you select, modify & run a command
 
+* `EditWithShell: Clear Command History` (**Command ID:** `editWithShell.clearCommandHistory`)
+
+    Clear command history
+
 ## Configurations
 
 * `editWithShell.currentDirectoryKind` (default: `currentFile`)
