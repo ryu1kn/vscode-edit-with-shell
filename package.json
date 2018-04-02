@@ -26,11 +26,17 @@
     "filter"
   ],
   "activationEvents": [
+    "onCommand:editWithShell.clearCommandHistory",
     "onCommand:editWithShell.runCommand"
   ],
   "main": "./extension",
   "contributes": {
     "commands": [
+      {
+        "command": "editWithShell.clearCommandHistory",
+        "title": "Clear Command History",
+        "category": "EditWithShell"
+      },
       {
         "command": "editWithShell.runCommand",
         "title": "Run command",
