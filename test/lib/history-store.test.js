@@ -30,4 +30,12 @@ describe('HistoryStore', () => {
         expect(historyStore.getAll()).to.eql([]);
     });
 
+    it('clears all history', () => {
+        const historyStore = new HistoryStore();
+        historyStore.add('COMMAND_1');
+        historyStore.add('COMMAND_2');
+        historyStore.clear();
+        expect(historyStore.getAll()).to.eql([]);
+    });
+
 });
