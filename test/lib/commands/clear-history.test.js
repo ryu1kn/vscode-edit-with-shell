@@ -1,5 +1,5 @@
 
-const ClearHistoryCommand = require('../../lib/clear-history-command');
+const ClearHistoryCommand = require('../../../lib/commands/clear-history');
 
 describe('ClearHistoryCommand', () => {
 
