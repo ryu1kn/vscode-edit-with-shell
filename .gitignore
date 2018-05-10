@@ -1,7 +1,9 @@
-/.vscode
+/.idea
 /.nyc_output
+/.vscode
 /coverage
 /node_modules
 /typings
 npm-debug.log
+*.vsix
 __*
