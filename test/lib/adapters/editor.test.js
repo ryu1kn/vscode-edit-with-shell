@@ -9,6 +9,12 @@ describe('Editor', () => {
         expect(editor.selectedText).to.eql('SELECTED_TEXT');
     });
 
+    it('holds the entire text', () => {
+        const vsEditor = fakeEditor({});
+        const editor = new Editor(vsEditor);
+        expect(editor.entireText).to.eql('ENTIRE_TEXT');
+    });
+
     it('holds a file path', () => {
         const vsEditor = fakeEditor({uriScheme: 'file'});
         const editor = new Editor(vsEditor);
@@ -21,7 +27,7 @@ describe('Editor', () => {
         expect(editor.filePath).to.be.null;
     });
 
-    it('replaces selected text with command given text', async () => {
+    it('replaces the selected text with given text', async () => {
         const vsEditor = fakeEditor({selectedText: 'SELECTED_TEXT'});
         const editor = new Editor(vsEditor);
 
@@ -42,7 +48,7 @@ describe('Editor', () => {
                 isEmpty: !selectedText
             },
             document: {
-                getText: sinon.stub().returns(selectedText),
+                getText: sinon.stub().returns(selectedText || 'ENTIRE_TEXT'),
                 uri: {
                     scheme: uriScheme || 'untitled',
                     fsPath: 'FILE_PATH'
