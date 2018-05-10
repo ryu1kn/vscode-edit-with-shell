@@ -67,7 +67,9 @@
           "items": {
             "type": "string"
           },
-          "default": ["-c"]
+          "default": [
+            "-c"
+          ]
         },
         "editWithShell.shell.osx": {
           "description": "The path of the shell that this extension uses on OS X",
@@ -80,7 +82,9 @@
           "items": {
             "type": "string"
           },
-          "default": ["-c"]
+          "default": [
+            "-c"
+          ]
         },
         "editWithShell.shell.windows": {
           "description": "The path of the shell that this extension uses on Windows",
@@ -93,7 +97,11 @@
           "items": {
             "type": "string"
           },
-          "default": ["/d", "/s", "/c"]
+          "default": [
+            "/d",
+            "/s",
+            "/c"
+          ]
         }
       }
     }
@@ -107,13 +115,12 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "codeclimate-test-reporter": "^0.5.0",
-    "eslint": "^4.17.0",
-    "eslint-config-xo": "^0.19.0",
-    "mocha": "^5.0.0",
-    "nyc": "^11.4.1",
-    "sinon": "^4.2.2",
-    "sinon-chai": "^2.14.0",
-    "vscode": "^1.1.10"
+    "eslint": "^4.19.1",
+    "eslint-config-xo": "^0.22.1",
+    "mocha": "^5.1.1",
+    "nyc": "^11.7.3",
+    "sinon": "^5.0.7",
+    "sinon-chai": "^3.0.0",
+    "vscode": "^1.1.17"
   }
 }
