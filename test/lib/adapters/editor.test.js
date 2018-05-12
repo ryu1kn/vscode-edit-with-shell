@@ -12,7 +12,7 @@ describe('Editor', () => {
     it('holds the entire text', () => {
         const vsEditor = fakeEditor({});
         const editor = new Editor(vsEditor);
-        expect(editor.entireText).to.eql('ENTIRE_TEXT');
+        expect(editor.entireText).to.eql('FOO\n\nBAR');
     });
 
     it('holds a file path', () => {
@@ -39,8 +39,22 @@ describe('Editor', () => {
         );
     });
 
+    it('replaces the entire text with the command output', async () => {
+        const vsEditor = fakeEditor({});
+        const locationFactory = {createPosition, createRange};
+        const editor = new Editor(vsEditor, locationFactory);
+
+        await editor.replaceEntireTextWith('NEW_TEXT');
+
+        expect(vsEditor._editBuilder.replace).to.have.been.calledWith(
+            createRange(createPosition(0, 0), createPosition(2, 24)),
+            'NEW_TEXT'
+        );
+    });
+
     function fakeEditor(params) {
         const selectedText = params.selectedText;
+        const entireText = `FOO\n${selectedText || ''}\nBAR`;
         const uriScheme = params.uriScheme;
         return {
             selection: {
@@ -48,17 +62,32 @@ describe('Editor', () => {
                 isEmpty: !selectedText
             },
             document: {
-                getText: sinon.stub().returns(selectedText || 'ENTIRE_TEXT'),
+                getText: sinon.stub().returns(selectedText || entireText),
                 uri: {
                     scheme: uriScheme || 'untitled',
                     fsPath: 'FILE_PATH'
-                }
+                },
+                lineCount: entireText.split('\n').length,
+                lineAt: lineIndex => ({
+                    range: createRange(createPosition(lineIndex, 0), createPosition(lineIndex, 24))
+                })
             },
             edit: function (callback) {
                 callback(this._editBuilder);
                 return Promise.resolve(true);
             },
             _editBuilder: {replace: sinon.spy()}
+        };
+    }
+
+    function createPosition(line, column) {
+        return {line, column};
+    }
+
+    function createRange(position1, position2) {
+        return {
+            start: position1,
+            end: position2
         };
     }
 
