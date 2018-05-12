@@ -13,7 +13,7 @@ describe('RunCommand', () => {
             filePath: 'FILE_NAME',
             replaceSelectedTextWith
         });
-        const workspaceAdapter = {getConfig: key => key === 'editWithShell.processWholeTextIfNoneSelected' && false};
+        const workspaceAdapter = {getConfig: key => key === 'editWithShell.processEntireTextIfNoneSelected' && false};
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve('COMMAND_STRING')},
             historyStore,
@@ -45,7 +45,7 @@ describe('RunCommand', () => {
             filePath: 'FILE_NAME',
             replaceEntireTextWith
         });
-        const workspaceAdapter = {getConfig: key => key === 'editWithShell.processWholeTextIfNoneSelected'};
+        const workspaceAdapter = {getConfig: key => key === 'editWithShell.processEntireTextIfNoneSelected'};
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve('COMMAND_STRING')},
             historyStore,

@@ -2,7 +2,7 @@
   "name": "edit-with-shell",
   "displayName": "Edit with Shell Command",
   "description": "Leverage your favourite shell commands to edit text",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "publisher": "ryu1kn",
   "license": "SEE LICENSE IN LICENSE.txt",
   "icon": "images/edit-with-shell.png",
@@ -56,8 +56,8 @@
           ],
           "default": "currentFile"
         },
-        "editWithShell.processWholeTextIfNoneSelected": {
-          "description": "Pipe the entire text to the command if no text is selected",
+        "editWithShell.processEntireTextIfNoneSelected": {
+          "description": "Pipe the entire text to the shell command if no text is selected",
           "type": "boolean",
           "default": false
         },

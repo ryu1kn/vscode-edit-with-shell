@@ -5,6 +5,10 @@ All notable changes to "Edit with Shell Command" extension will be documented in
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2018-05-12
+### Added
+- Introduced a configuration to pass the entire text to the shell command if no text is selected. [#5](https://github.com/ryu1kn/vscode-edit-with-shell/issues/5)
+
 ## [0.4.0] - 2018-04-02
 ### Added
 - Introduced a command to clear command history. [#4](https://github.com/ryu1kn/vscode-edit-with-shell/issues/4)

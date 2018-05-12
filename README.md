@@ -29,11 +29,15 @@ Leverage your favourite shell commands to edit text.
 
 ## Configurations
 
-* `editWithShell.currentDirectoryKind` (default: `currentFile`)
+* `editWithShell.currentDirectoryKind` (default: `"currentFile"`)
 
     Current directory for shell commands. If the target directory is not available, HOME directory will be used. Possible values: `currentFile` or `workspaceRoot`
+    
+* `editWithShell.processEntireTextIfNoneSelected` (default: `false`)
 
-* `editWithShell.shell.linux` (default: `/bin/sh`)
+    Pipe the entire text to the shell command if no text is selected
+
+* `editWithShell.shell.linux` (default: `"/bin/sh"`)
 
     The path of the shell that this extension uses on Linux
 
@@ -41,7 +45,7 @@ Leverage your favourite shell commands to edit text.
 
     Arguments to the shell to be used on Linux
 
-* `editWithShell.shell.osx` (default: `/bin/sh`)
+* `editWithShell.shell.osx` (default: `"/bin/sh"`)
 
     The path of the shell that this extension uses on macOS
 
@@ -49,7 +53,7 @@ Leverage your favourite shell commands to edit text.
 
     Arguments to the shell to be used on macOS
 
-* `editWithShell.shell.windows` (default: `cmd.exe`)
+* `editWithShell.shell.windows` (default: `"cmd.exe"`)
 
     The path of the shell that this extension uses on Windows
 
