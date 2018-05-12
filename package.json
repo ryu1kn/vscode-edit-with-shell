@@ -48,13 +48,18 @@
       "title": "Edit with Shell Command configurations",
       "properties": {
         "editWithShell.currentDirectoryKind": {
-          "type": "string",
           "description": "Current directory for shell commands",
+          "type": "string",
           "enum": [
             "currentFile",
             "workspaceRoot"
           ],
           "default": "currentFile"
+        },
+        "editWithShell.processWholeTextIfNoneSelected": {
+          "description": "Pipe the entire text to the command if no text is selected",
+          "type": "boolean",
+          "default": false
         },
         "editWithShell.shell.linux": {
           "description": "The path of the shell that this extension uses on Linux",

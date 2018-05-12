@@ -1,4 +1,3 @@
-
 const RunCommand = require('../../../lib/commands/run');
 
 describe('RunCommand', () => {
@@ -14,11 +13,13 @@ describe('RunCommand', () => {
             filePath: 'FILE_NAME',
             replaceSelectedTextWith
         });
+        const workspaceAdapter = {getConfig: key => key === 'editWithShell.processWholeTextIfNoneSelected' && false};
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve('COMMAND_STRING')},
             historyStore,
             shellCommandService,
-            wrapEditor
+            wrapEditor,
+            workspaceAdapter
         });
 
         await command.execute('EDITOR');
@@ -31,6 +32,36 @@ describe('RunCommand', () => {
             filePath: 'FILE_NAME'
         });
         expect(historyStore.add).to.have.been.calledWith('COMMAND_STRING');
+    });
+
+    it('processes the entire text', async () => {
+        const historyStore = {add: sinon.spy()};
+        const shellCommandService = {
+            runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
+        };
+        const replaceEntireTextWith = sinon.stub().returns(Promise.resolve());
+        const wrapEditor = sinon.stub().returns({
+            entireText: 'ENTIRE_TEXT',
+            filePath: 'FILE_NAME',
+            replaceEntireTextWith
+        });
+        const workspaceAdapter = {getConfig: key => key === 'editWithShell.processWholeTextIfNoneSelected'};
+        const command = new RunCommand({
+            commandReader: {read: () => Promise.resolve('COMMAND_STRING')},
+            historyStore,
+            shellCommandService,
+            wrapEditor,
+            workspaceAdapter,
+            logger: console
+        });
+
+        await command.execute('EDITOR');
+
+        expect(shellCommandService.runCommand).to.have.been.calledWith({
+            command: 'COMMAND_STRING',
+            input: 'ENTIRE_TEXT',
+            filePath: 'FILE_NAME'
+        });
     });
 
     it('does not try to run a command if one is not given', async () => {
