@@ -1,3 +1,4 @@
+/* eslint-disable capitalized-comments */
 
 const chai = require('chai');
 chai.use(require('sinon-chai'));
