@@ -9,7 +9,8 @@
 .nycrc
 .travis.yml
 .vscode/**/*
-**/__*
+__*
+__*/**/*
 *.vsix
 cli-test-mocha.opts
 coverage/**/*
