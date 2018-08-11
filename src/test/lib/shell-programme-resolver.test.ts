@@ -36,7 +36,7 @@ describe('ShellProgrammeResolver', () => {
     });
 
     function createShellProgrammeResolver(platform: string) {
-        return new ShellProgrammeResolver({workspaceAdapter, platform});
+        return new ShellProgrammeResolver(workspaceAdapter, platform);
     }
 
 });

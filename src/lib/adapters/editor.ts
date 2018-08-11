@@ -1,5 +1,7 @@
 import {Position, Range, TextEditor as VsTextEditor} from 'vscode';
 
+export type WrapEditor = (editor: VsTextEditor, lf?: LocationFactory) => Editor;
+
 export interface LocationFactory {
     createPosition(line: number, character: number): Position;
     createRange(start: Position, end: Position): Range;

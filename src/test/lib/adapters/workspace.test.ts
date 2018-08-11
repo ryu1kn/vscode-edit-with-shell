@@ -6,7 +6,7 @@ import * as vscode from 'vscode';
 
 describe('WorkspaceAdapter', () => {
 
-    const workspaceAdapter = new WorkspaceAdapter({vsWorkspace: fakeVscodeWorkspace()});
+    const workspaceAdapter = new WorkspaceAdapter(fakeVscodeWorkspace());
 
     it('gets config value of specified 2 level path', () => {
         assert.deepEqual(workspaceAdapter.getConfig('A.B'), 'VALUE1');

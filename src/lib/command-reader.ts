@@ -5,9 +5,9 @@ export default class CommandReader {
     private _historyStore: HistoryStore;
     private _vsWindow: typeof vscode.window;
 
-    constructor(params: any) {
-        this._historyStore = params.historyStore;
-        this._vsWindow = params.vsWindow;
+    constructor(historyStore: HistoryStore, vsWindow: typeof vscode.window) {
+        this._historyStore = historyStore;
+        this._vsWindow = vsWindow;
     }
 
     async read() {

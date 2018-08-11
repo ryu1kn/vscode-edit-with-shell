@@ -1,13 +1,15 @@
 import ClearHistoryCommand from '../../../lib/commands/clear-history';
 import HistoryStore from '../../../lib/history-store';
-import {contains, mockFunction, mockMethods, verify} from '../../helper';
+import {contains, mock, mockFunction, mockMethods, mockType, verify, when} from '../../helper';
 import {Logger} from '../../../lib/logger';
+import {ShowErrorMessage} from '../../../lib/types/vscode';
 
 describe('ClearHistoryCommand', () => {
 
     it('clears command history', async () => {
         const historyStore = mockMethods<HistoryStore>(['clear']);
-        const command = new ClearHistoryCommand({historyStore});
+        const showErrorMessage = mockFunction() as ShowErrorMessage;
+        const command = new ClearHistoryCommand(historyStore, showErrorMessage, mockType<Logger>());
 
         await command.execute();
 
@@ -16,12 +18,10 @@ describe('ClearHistoryCommand', () => {
 
     it('reports an error', async () => {
         const logger = mockMethods<Logger>(['error']);
-        const showErrorMessage = mockFunction();
-        const command = new ClearHistoryCommand({
-            historyStore: {clear: () => { throw new Error('UNEXPECTED_ERROR'); }},
-            logger,
-            showErrorMessage
-        });
+        const historyStore = mock(HistoryStore);
+        when(historyStore.clear()).thenThrow(new Error('UNEXPECTED_ERROR'));
+        const showErrorMessage = mockFunction() as ShowErrorMessage;
+        const command = new ClearHistoryCommand(historyStore, showErrorMessage, logger);
 
         await command.execute();
 

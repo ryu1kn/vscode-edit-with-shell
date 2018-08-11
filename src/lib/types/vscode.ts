@@ -12,3 +12,5 @@ export interface RangeLike {
     start: PositionLike;
     end: PositionLike;
 }
+
+export type ShowErrorMessage = (message: string) => Thenable<string | undefined>;

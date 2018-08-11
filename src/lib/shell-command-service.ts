@@ -21,12 +21,16 @@ export default class ShellCommandService {
     private _shellProgrammeResolver: ShellProgrammeResolver;
     private _shellArgsRetriever: ShellArgsRetriever;
 
-    constructor(params: any) {
-        this._childProcess = params.childProcess;
-        this._processRunner = params.processRunner;
-        this._shellCommandExecContext = params.shellCommandExecContext;
-        this._shellProgrammeResolver = params.shellProgrammeResolver;
-        this._shellArgsRetriever = params.shellArgsRetriever;
+    constructor(processRunner: ProcessRunner,
+                shellProgrammeResolver: ShellProgrammeResolver,
+                shellArgsRetriever: ShellArgsRetriever,
+                shellCommandExecContext: ShellCommandExecContext,
+                childProcess: SpawnWrapper) {
+        this._childProcess = childProcess;
+        this._processRunner = processRunner;
+        this._shellCommandExecContext = shellCommandExecContext;
+        this._shellProgrammeResolver = shellProgrammeResolver;
+        this._shellArgsRetriever = shellArgsRetriever;
     }
 
     runCommand(params: CommandParams): Promise<string> {

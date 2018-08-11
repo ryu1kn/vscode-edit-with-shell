@@ -1,13 +1,14 @@
 import * as assert from 'assert';
-import {any, mockMethods, verify, when} from '../helper';
+import {any, mockMethods, mockType, verify, when} from '../helper';
 
 import CommandReader from '../../lib/command-reader';
 import * as vscode from 'vscode';
+import HistoryStore from '../../lib/history-store';
 
 describe('CommandReader', () => {
 
     it('allows user to pick and modify a past command. Commands shown last one first', async () => {
-        const historyStore = {getAll: () => ['COMMAND_1', 'COMMAND_2']};
+        const historyStore = mockType<HistoryStore>({getAll: () => ['COMMAND_1', 'COMMAND_2']});
         const vscodeWindow = mockMethods<typeof vscode.window>(['showInputBox', 'showQuickPick']);
         when(vscodeWindow.showQuickPick(
             ['COMMAND_2', 'COMMAND_1'],
@@ -18,7 +19,7 @@ describe('CommandReader', () => {
             prompt: 'Edit the command if necessary',
             value: 'COMMAND_1'
         })).thenResolve('COMMAND_FINAL');
-        const reader = new CommandReader({historyStore, vsWindow: vscodeWindow});
+        const reader = new CommandReader(historyStore, vscodeWindow);
         const command = await reader.read();
 
         assert.deepEqual(command, 'COMMAND_FINAL');
@@ -30,8 +31,8 @@ describe('CommandReader', () => {
             placeHolder: 'Enter a command',
             prompt: 'No history available yet'
         })).thenResolve('COMMAND');
-        const historyStore = {getAll: () => []};
-        const reader = new CommandReader({historyStore, vsWindow: vscodeWindow});
+        const historyStore = mockType<HistoryStore>({getAll: () => []});
+        const reader = new CommandReader(historyStore, vscodeWindow);
         const command = await reader.read();
 
         assert.deepEqual(command, 'COMMAND');
@@ -44,8 +45,8 @@ describe('CommandReader', () => {
         });
         when(vscodeWindow.showInputBox({placeHolder: 'Enter a command'})).thenResolve('COMMAND');
 
-        const historyStore = {getAll: () => ['COMMAND_1', 'COMMAND_2']};
-        const reader = new CommandReader({historyStore, vsWindow: vscodeWindow});
+        const historyStore = mockType<HistoryStore>({getAll: () => ['COMMAND_1', 'COMMAND_2']});
+        const reader = new CommandReader(historyStore, vscodeWindow);
         const command = await reader.read();
 
         assert.deepEqual(command, 'COMMAND');

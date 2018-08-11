@@ -32,7 +32,7 @@ describe('ShellArgsRetriever', () => {
     });
 
     function createShellArgsRetriever(platform: string) {
-        return new ShellArgsRetriever({workspaceAdapter, platform});
+        return new ShellArgsRetriever(workspaceAdapter, platform);
     }
 
 });

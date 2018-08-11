@@ -13,9 +13,9 @@ export default class ShellCommandExecContext {
     private _workspaceAdapter: Workspace;
     private _process: EnvVars;
 
-    constructor(params: any) {
-        this._process = params.process;
-        this._workspaceAdapter = params.workspaceAdapter;
+    constructor(workspaceAdapter: Workspace, process: EnvVars) {
+        this._process = process;
+        this._workspaceAdapter = workspaceAdapter;
     }
 
     get env() {

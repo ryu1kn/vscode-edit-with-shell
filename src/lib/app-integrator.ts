@@ -8,10 +8,10 @@ export default class AppIntegrator {
     private _runCommand: RunCommand;
     private _clearHistoryCommand: ClearHistoryCommand;
 
-    constructor(params: any) {
-        this._vscode = params.vscode;
-        this._runCommand = params.runCommand;
-        this._clearHistoryCommand = params.clearHistoryCommand;
+    constructor(runCommand: RunCommand, clearHistoryCommand: ClearHistoryCommand, vscode: any) {
+        this._vscode = vscode;
+        this._runCommand = runCommand;
+        this._clearHistoryCommand = clearHistoryCommand;
     }
 
     integrate(context: ExecutionContextLike) {

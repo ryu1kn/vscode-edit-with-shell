@@ -5,28 +5,35 @@ import ShellCommandService from '../shell-command-service';
 import CommandReader from '../command-reader';
 import HistoryStore from '../history-store';
 import Workspace from '../adapters/workspace';
-import Editor, {LocationFactory} from '../adapters/editor';
+import Editor, {LocationFactory, WrapEditor} from '../adapters/editor';
 import {TextEditor as VsTextEditor} from 'vscode';
 import CommandExecutionError from '../errors/command';
+import {ShowErrorMessage} from '../types/vscode';
 
 export default class RunCommand {
     private _logger: Logger;
     private _shellCommandService: ShellCommandService;
     private _commandReader: CommandReader;
     private _historyStore: HistoryStore;
-    private _showErrorMessage: (message: string) => Promise<void>;
+    private _showErrorMessage: ShowErrorMessage;
     private _wrapEditor: (editor: VsTextEditor, lf?: LocationFactory) => Editor;
     private _workspaceAdapter: Workspace;
     private _errorMessageFormatter: ErrorMessageFormatter;
 
-    constructor(params: any) {
-        this._logger = params.logger;
-        this._shellCommandService = params.shellCommandService;
-        this._commandReader = params.commandReader;
-        this._historyStore = params.historyStore;
-        this._showErrorMessage = params.showErrorMessage;
-        this._wrapEditor = params.wrapEditor;
-        this._workspaceAdapter = params.workspaceAdapter;
+    constructor(shellCommandService: ShellCommandService,
+                commandReader: CommandReader,
+                historyStore: HistoryStore,
+                wrapEditor: WrapEditor,
+                workspaceAdapter: Workspace,
+                showErrorMessage: ShowErrorMessage,
+                logger: Logger) {
+        this._logger = logger;
+        this._shellCommandService = shellCommandService;
+        this._commandReader = commandReader;
+        this._historyStore = historyStore;
+        this._showErrorMessage = showErrorMessage;
+        this._wrapEditor = wrapEditor;
+        this._workspaceAdapter = workspaceAdapter;
         this._errorMessageFormatter = new ErrorMessageFormatter();
     }
 

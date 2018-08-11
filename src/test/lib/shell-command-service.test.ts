@@ -4,6 +4,8 @@ import ShellCommandService, {SpawnWrapper} from '../../lib/shell-command-service
 import ShellCommandExecContext from '../../lib/shell-command-exec-context';
 import ProcessRunner from '../../lib/process-runner';
 import {ChildProcess} from 'child_process';
+import ShellProgrammeResolver from '../../lib/shell-programme-resolver';
+import ShellArgsRetriever from '../../lib/shell-args-retriever';
 
 describe('ShellCommandService', () => {
 
@@ -30,7 +32,7 @@ describe('ShellCommandService', () => {
         });
         when(shellCommandExecContext.getCwd('FILE_PATH')).thenReturn('COMMAND_EXEC_DIR');
 
-        service = createShellCommandService({childProcess, processRunner, shellCommandExecContext});
+        service = createShellCommandService(processRunner, shellCommandExecContext, childProcess);
     });
 
     it('runs a given command on shell', async () => {
@@ -69,7 +71,6 @@ describe('ShellCommandService', () => {
     });
 
     it('throws an error if command failed', async () => {
-        const service = createShellCommandService({childProcess, processRunner, shellCommandExecContext});
         const params = {
             command: 'COMMAND_STRING',
             input: 'CAUSE_ERROR_INPUT'
@@ -83,13 +84,13 @@ describe('ShellCommandService', () => {
         }
     });
 
-    function createShellCommandService({childProcess, processRunner, shellCommandExecContext}: any) {
-        return new ShellCommandService({
-            childProcess,
+    function createShellCommandService(processRunner: ProcessRunner, shellCommandExecContext: ShellCommandExecContext, childProcess: SpawnWrapper) {
+        return new ShellCommandService(
             processRunner,
+            mockType<ShellProgrammeResolver>({resolve: () => 'SHELL_PATH'}),
+            mockType<ShellArgsRetriever>({retrieve: () => ['SHELL_ARG']}),
             shellCommandExecContext,
-            shellProgrammeResolver: {resolve: () => 'SHELL_PATH'},
-            shellArgsRetriever: {retrieve: () => ['SHELL_ARG']}
-        });
+            childProcess,
+        );
     }
 });

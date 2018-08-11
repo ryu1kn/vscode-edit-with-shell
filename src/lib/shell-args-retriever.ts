@@ -6,9 +6,9 @@ export default class ShellArgsRetriever {
     private _workspaceAdapter: Workspace;
     private _platform: string;
 
-    constructor(params: any) {
-        this._workspaceAdapter = params.workspaceAdapter;
-        this._platform = params.platform;
+    constructor(workspaceAdapter: Workspace, platform: string) {
+        this._workspaceAdapter = workspaceAdapter;
+        this._platform = platform;
     }
 
     retrieve(): string[] {

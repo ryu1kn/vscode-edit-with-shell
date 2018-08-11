@@ -5,7 +5,7 @@ const CONFIG_PATH_DELIMITER = '.';
 export default class Workspace {
     private _vsWorkspace: typeof vscode.workspace;
 
-    constructor({vsWorkspace}: {vsWorkspace: typeof vscode.workspace}) {
+    constructor(vsWorkspace: typeof vscode.workspace) {
         this._vsWorkspace = vsWorkspace;
     }
 
