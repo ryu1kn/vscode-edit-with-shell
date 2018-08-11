@@ -1,5 +1,6 @@
 import * as td from 'testdouble';
 import * as assert from 'assert';
+import {ObjectMap} from '../lib/types/collection';
 
 export function mock<T>(c: new (...args: any[]) => T): T {
     return new (td.constructor(c));
@@ -22,7 +23,7 @@ export const when = td.when;
 export const contains = td.matchers.contains;
 export const any = td.matchers.anything;
 
-export function wrapVerify(invokeCallback: (...args: any[]) => void, expectedCalls: any[][] | { [key: string]: any[] }) {
+export function wrapVerify(invokeCallback: (...args: any[]) => void, expectedCalls: any[][] | ObjectMap<any[]>) {
     const captors = [td.matchers.captor(), td.matchers.captor(), td.matchers.captor()];
 
     invokeCallback(...captors.map(captor => captor.capture));

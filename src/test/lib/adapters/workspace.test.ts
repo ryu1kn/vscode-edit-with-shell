@@ -3,6 +3,7 @@ import {mockType} from '../../helper';
 
 import WorkspaceAdapter from '../../../lib/adapters/workspace';
 import * as vscode from 'vscode';
+import {ObjectMap} from '../../../lib/types/collection';
 
 describe('WorkspaceAdapter', () => {
 
@@ -24,7 +25,7 @@ describe('WorkspaceAdapter', () => {
         const config = {
             'A.B': 'VALUE1',
             'C.D.E.F': 'VALUE2'
-        } as {[key: string]: string | undefined};
+        } as ObjectMap<string | undefined>;
         return mockType<typeof vscode.workspace>({
             getConfiguration: (oneAbove: any) => {
                 switch (oneAbove) {
