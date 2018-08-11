@@ -12,7 +12,7 @@ import ClearHistoryCommand from './commands/clear-history';
 import WorkspaceAdapter from './adapters/workspace';
 import * as vscode from 'vscode';
 import {Position, Range, TextEditor as VsTextEditor} from 'vscode';
-import {EnvVars} from './types/env-vars';
+import {EnvVarWrap} from './types/env-vars';
 import {ExtensionCommand} from './commands/extension-command';
 import CommandWrap from './command-wrap';
 
@@ -65,7 +65,7 @@ export default class AppIntegratorFactory {
             new ProcessRunner(),
             new ShellProgrammeResolver(workspaceAdapter, process.platform),
             new ShellArgsRetriever(workspaceAdapter, process.platform),
-            new ShellCommandExecContext(workspaceAdapter, process as EnvVars),
+            new ShellCommandExecContext(workspaceAdapter, process as EnvVarWrap),
             childProcess
         );
     }

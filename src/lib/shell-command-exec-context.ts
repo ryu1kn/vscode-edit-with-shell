@@ -1,6 +1,6 @@
 import {EXTENSION_NAME} from './const';
 import Workspace from './adapters/workspace';
-import {EnvVars} from './types/env-vars';
+import {EnvVarWrap} from './types/env-vars';
 
 const path = require('path');
 
@@ -11,9 +11,9 @@ const CurrentDirectoryKind = {
 
 export default class ShellCommandExecContext {
     private readonly workspaceAdapter: Workspace;
-    private readonly process: EnvVars;
+    private readonly process: EnvVarWrap;
 
-    constructor(workspaceAdapter: Workspace, process: EnvVars) {
+    constructor(workspaceAdapter: Workspace, process: EnvVarWrap) {
         this.process = process;
         this.workspaceAdapter = workspaceAdapter;
     }
