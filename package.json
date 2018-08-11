@@ -113,14 +113,14 @@
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "coverage": "nyc npm test",
+    "coverage": "nyc yarn test",
     "lint": "tslint -p .",
     "test": "mocha --opts cli-test-mocha.opts",
     "test-mode": "mocha --opts cli-test-mocha.opts --watch",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "prep": "npm run lint && npm test",
-    "vscode:prepublish": "npm run compile",
+    "prep": "yarn run lint && yarn test",
+    "vscode:prepublish": "yarn run compile",
     "vscode:postpublish": "./tag-release.sh"
   },
   "devDependencies": {

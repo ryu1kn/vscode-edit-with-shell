@@ -13,7 +13,8 @@ __*/**/*
 cli-test-mocha.opts
 coverage/**/*
 images/animations/**/*
-package-lock.json
+yarn.lock
+yarn-*.log
 tag-release.sh
 src/**/*
 out/test/**/*
