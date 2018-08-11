@@ -1,18 +1,21 @@
 import * as assert from 'assert';
 import {any, contains, mock, mockMethods, mockType, when} from '../helper';
 import ShellCommandService, {SpawnWrapper} from '../../lib/shell-command-service';
-import ShellCommandExecContext from '../../lib/shell-command-exec-context';
 import ProcessRunner from '../../lib/process-runner';
 import {ChildProcess} from 'child_process';
 import ShellProgrammeResolver from '../../lib/shell-programme-resolver';
 import ShellArgsRetriever from '../../lib/shell-args-retriever';
+import Workspace from '../../lib/adapters/workspace';
+import {EXTENSION_NAME} from '../../lib/const';
+import ShellCommandExecContext from '../../lib/shell-command-exec-context';
 
 describe('ShellCommandService', () => {
 
     let childProcess: SpawnWrapper;
     let processRunner: ProcessRunner;
-    let shellCommandExecContext: ShellCommandExecContext;
     let service: ShellCommandService;
+    const currentPath = 'CURRENT_DIR/CURRENT_FILE';
+    const platform = 'linux';
 
     beforeEach(() => {
         const process = mockType<ChildProcess>();
@@ -20,19 +23,25 @@ describe('ShellCommandService', () => {
         childProcess = mockMethods(['spawn']);
         when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING'], any())).thenReturn(process);
         when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_ENVVARS'], contains({env: {SOME_ENV_VAR: '...'}}))).thenReturn(process);
-        when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_EXEC_DIR'], contains({cwd: 'COMMAND_EXEC_DIR'}))).thenReturn(process);
+        when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_EXEC_DIR'], contains({cwd: 'CURRENT_DIR'}))).thenReturn(process);
 
         processRunner = mock(ProcessRunner);
         when(processRunner.run(process, '')).thenResolve('COMMAND_OUTPUT');
         when(processRunner.run(process, 'SELECTED_TEXT')).thenResolve('COMMAND_OUTPUT_TEST_WITH_INPUT');
         when(processRunner.run(process, 'CAUSE_ERROR_INPUT')).thenReject(new Error('UNEXPECTED_ERROR'));
 
-        shellCommandExecContext = mockMethods<ShellCommandExecContext>(['getCwd'], {
-            env: {SOME_ENV_VAR: '...'}
-        });
-        when(shellCommandExecContext.getCwd('FILE_PATH')).thenReturn('COMMAND_EXEC_DIR');
+        const workspace = mock(Workspace);
+        when(workspace.getConfig(`${EXTENSION_NAME}.shell.${platform}`)).thenReturn('SHELL_PATH');
+        when(workspace.getConfig(`${EXTENSION_NAME}.shellArgs.${platform}`)).thenReturn(['SHELL_ARG']);
+        when(workspace.getConfig(`${EXTENSION_NAME}.currentDirectoryKind`)).thenReturn('currentFile');
 
-        service = createShellCommandService(processRunner, shellCommandExecContext, childProcess);
+        service = new ShellCommandService(
+            processRunner,
+            new ShellProgrammeResolver(workspace, platform),
+            new ShellArgsRetriever(workspace, platform),
+            new ShellCommandExecContext(workspace, {env: {SOME_ENV_VAR: '...'}}),
+            childProcess,
+        );
     });
 
     it('runs a given command on shell', async () => {
@@ -63,7 +72,7 @@ describe('ShellCommandService', () => {
         const params = {
             command: 'COMMAND_TEST_WITH_EXEC_DIR',
             input: '',
-            filePath: 'FILE_PATH'
+            filePath: currentPath
         };
         const output = await service.runCommand(params);
 
@@ -83,14 +92,4 @@ describe('ShellCommandService', () => {
             assert.deepEqual(e.message, 'UNEXPECTED_ERROR');
         }
     });
-
-    function createShellCommandService(processRunner: ProcessRunner, shellCommandExecContext: ShellCommandExecContext, childProcess: SpawnWrapper) {
-        return new ShellCommandService(
-            processRunner,
-            mockType<ShellProgrammeResolver>({resolve: () => 'SHELL_PATH'}),
-            mockType<ShellArgsRetriever>({retrieve: () => ['SHELL_ARG']}),
-            shellCommandExecContext,
-            childProcess,
-        );
-    }
 });

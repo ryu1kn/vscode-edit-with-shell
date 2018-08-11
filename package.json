@@ -119,7 +119,7 @@
     "test-mode": "mocha --opts cli-test-mocha.opts --watch",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "prep": "yarn run lint && yarn test",
+    "prep": "yarn run lint && yarn run compile && yarn test",
     "vscode:prepublish": "yarn run compile",
     "vscode:postpublish": "./tag-release.sh"
   },
