@@ -11,14 +11,14 @@ import CommandExecutionError from '../errors/command';
 import {ShowErrorMessage} from '../types/vscode';
 
 export default class RunCommand {
-    private _logger: Logger;
-    private _shellCommandService: ShellCommandService;
-    private _commandReader: CommandReader;
-    private _historyStore: HistoryStore;
-    private _showErrorMessage: ShowErrorMessage;
-    private _wrapEditor: (editor: VsTextEditor, lf?: LocationFactory) => Editor;
-    private _workspaceAdapter: Workspace;
-    private _errorMessageFormatter: ErrorMessageFormatter;
+    private readonly _logger: Logger;
+    private readonly _shellCommandService: ShellCommandService;
+    private readonly _commandReader: CommandReader;
+    private readonly _historyStore: HistoryStore;
+    private readonly _showErrorMessage: ShowErrorMessage;
+    private readonly _wrapEditor: (editor: VsTextEditor, lf?: LocationFactory) => Editor;
+    private readonly _workspaceAdapter: Workspace;
+    private readonly _errorMessageFormatter: ErrorMessageFormatter;
 
     constructor(shellCommandService: ShellCommandService,
                 commandReader: CommandReader,

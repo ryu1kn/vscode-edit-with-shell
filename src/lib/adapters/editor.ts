@@ -8,8 +8,8 @@ export interface LocationFactory {
 }
 
 export default class Editor {
-    private _vsEditor: VsTextEditor;
-    private _locationFactory: LocationFactory;
+    private readonly _vsEditor: VsTextEditor;
+    private readonly _locationFactory: LocationFactory;
 
     constructor(vsEditor: VsTextEditor, locationFactory: LocationFactory) {
         this._vsEditor = vsEditor;

@@ -4,9 +4,9 @@ import ClearHistoryCommand from './commands/clear-history';
 import {ExecutionContextLike} from './types/vscode';
 
 export default class AppIntegrator {
-    private _vscode: any;
-    private _runCommand: RunCommand;
-    private _clearHistoryCommand: ClearHistoryCommand;
+    private readonly _vscode: any;
+    private readonly _runCommand: RunCommand;
+    private readonly _clearHistoryCommand: ClearHistoryCommand;
 
     constructor(runCommand: RunCommand, clearHistoryCommand: ClearHistoryCommand, vscode: any) {
         this._vscode = vscode;

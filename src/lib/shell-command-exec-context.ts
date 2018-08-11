@@ -10,8 +10,8 @@ const CurrentDirectoryKind = {
 };
 
 export default class ShellCommandExecContext {
-    private _workspaceAdapter: Workspace;
-    private _process: EnvVars;
+    private readonly _workspaceAdapter: Workspace;
+    private readonly _process: EnvVars;
 
     constructor(workspaceAdapter: Workspace, process: EnvVars) {
         this._process = process;

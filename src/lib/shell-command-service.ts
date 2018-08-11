@@ -15,11 +15,11 @@ export interface CommandParams {
 }
 
 export default class ShellCommandService {
-    private _childProcess: SpawnWrapper;
-    private _processRunner: ProcessRunner;
-    private _shellCommandExecContext: ShellCommandExecContext;
-    private _shellProgrammeResolver: ShellProgrammeResolver;
-    private _shellArgsRetriever: ShellArgsRetriever;
+    private readonly _childProcess: SpawnWrapper;
+    private readonly _processRunner: ProcessRunner;
+    private readonly _shellCommandExecContext: ShellCommandExecContext;
+    private readonly _shellProgrammeResolver: ShellProgrammeResolver;
+    private readonly _shellArgsRetriever: ShellArgsRetriever;
 
     constructor(processRunner: ProcessRunner,
                 shellProgrammeResolver: ShellProgrammeResolver,

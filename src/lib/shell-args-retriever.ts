@@ -3,8 +3,8 @@ import resolveOsKind from './resolve-os-kind';
 import Workspace from './adapters/workspace';
 
 export default class ShellArgsRetriever {
-    private _workspaceAdapter: Workspace;
-    private _platform: string;
+    private readonly _workspaceAdapter: Workspace;
+    private readonly _platform: string;
 
     constructor(workspaceAdapter: Workspace, platform: string) {
         this._workspaceAdapter = workspaceAdapter;

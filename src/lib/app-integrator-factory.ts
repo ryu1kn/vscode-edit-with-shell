@@ -17,7 +17,7 @@ import {EnvVars} from './types/env-vars';
 const childProcess = require('child_process');
 
 export default class AppIntegratorFactory {
-    private _cache: {
+    private readonly _cache: {
         workspaceAdapter?: WorkspaceAdapter;
         historyStore?: HistoryStore;
     };

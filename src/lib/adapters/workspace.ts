@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 const CONFIG_PATH_DELIMITER = '.';
 
 export default class Workspace {
-    private _vsWorkspace: typeof vscode.workspace;
+    private readonly _vsWorkspace: typeof vscode.workspace;
 
     constructor(vsWorkspace: typeof vscode.workspace) {
         this._vsWorkspace = vsWorkspace;
