@@ -1,7 +1,13 @@
+import {Position, Range, TextEditor as VsTextEditor} from 'vscode';
+
+export interface LocationFactory {
+    createPosition(line: number, character: number): Position;
+    createRange(start: Position, end: Position): Range;
+}
 
 export default class Editor {
-    private _vsEditor: any;
-    private _locationFactory: any;
+    private _vsEditor: VsTextEditor;
+    private _locationFactory: LocationFactory;
 
     constructor(vsEditor, locationFactory?) {
         this._vsEditor = vsEditor;

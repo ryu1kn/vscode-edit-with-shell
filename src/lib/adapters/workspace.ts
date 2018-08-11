@@ -1,8 +1,9 @@
+import * as vscode from 'vscode';
 
 const CONFIG_PATH_DELIMITER = '.';
 
 export default class Workspace {
-    private _vsWorkspace: any;
+    private _vsWorkspace: typeof vscode.workspace;
 
     constructor({vsWorkspace}) {
         this._vsWorkspace = vsWorkspace;

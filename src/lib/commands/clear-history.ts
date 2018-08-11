@@ -1,9 +1,11 @@
 import ErrorMessageFormatter from '../error-message-formatter';
+import HistoryStore from '../history-store';
+import {Logger} from '../logger';
 
 export default class ClearHistoryCommand {
-    private _historyStore: any;
-    private _logger: any;
-    private _showErrorMessage: any;
+    private _historyStore: HistoryStore;
+    private _logger: Logger;
+    private _showErrorMessage: (message: string) => Promise<void>;
     private _errorMessageFormatter: ErrorMessageFormatter;
 
     constructor(params) {

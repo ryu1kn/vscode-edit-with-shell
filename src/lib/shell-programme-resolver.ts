@@ -4,16 +4,16 @@ import Workspace from './adapters/workspace';
 
 export default class ShellProgrammeResolver {
     private _workspaceAdapter: Workspace;
-    private _platform: any;
+    private _platform: string;
 
     constructor(params) {
         this._workspaceAdapter = params.workspaceAdapter;
         this._platform = params.platform;
     }
 
-    resolve() {
+    resolve(): string {
         const osKind = resolveOsKind(this._platform);
-        return this._workspaceAdapter.getConfig(`${EXTENSION_NAME}.shell.${osKind}`);
+        return this._workspaceAdapter.getConfig(`${EXTENSION_NAME}.shell.${osKind}`) as string;
     }
 
 }

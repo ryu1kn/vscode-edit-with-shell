@@ -2,9 +2,10 @@ import ProcessRunner from './process-runner';
 import ShellCommandExecContext from './shell-command-exec-context';
 import ShellProgrammeResolver from './shell-programme-resolver';
 import ShellArgsRetriever from './shell-args-retriever';
+import {ChildProcess, SpawnOptions} from 'child_process';
 
 export default class ShellCommandService {
-    private _childProcess: any;
+    private _childProcess: {spawn: (command: string, args?: ReadonlyArray<string>, options?: SpawnOptions) => ChildProcess};
     private _processRunner: ProcessRunner;
     private _shellCommandExecContext: ShellCommandExecContext;
     private _shellProgrammeResolver: ShellProgrammeResolver;

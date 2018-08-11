@@ -6,4 +6,4 @@ const OS_KIND = {
 };
 const DEFAULT_OS_KIND = OS_KIND.linux;
 
-export default platform => OS_KIND[platform] || DEFAULT_OS_KIND;
+export default (platform: string) => OS_KIND[platform] || DEFAULT_OS_KIND;

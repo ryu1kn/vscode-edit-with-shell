@@ -1,15 +1,21 @@
 import ErrorMessageFormatter from '../error-message-formatter';
-
 import {EXTENSION_NAME} from '../const';
+import {Logger} from '../logger';
+import ShellCommandService from '../shell-command-service';
+import CommandReader from '../command-reader';
+import HistoryStore from '../history-store';
+import Workspace from '../adapters/workspace';
+import Editor, {LocationFactory} from '../adapters/editor';
+import {TextEditor as VsTextEditor} from 'vscode';
 
 export default class RunCommand {
-    private _logger: any;
-    private _shellCommandService: any;
-    private _commandReader: any;
-    private _historyStore: any;
-    private _showErrorMessage: any;
-    private _wrapEditor: any;
-    private _workspaceAdapter: any;
+    private _logger: Logger;
+    private _shellCommandService: ShellCommandService;
+    private _commandReader: CommandReader;
+    private _historyStore: HistoryStore;
+    private _showErrorMessage: (message: string) => Promise<void>;
+    private _wrapEditor: (editor: VsTextEditor, lf?: LocationFactory) => Editor;
+    private _workspaceAdapter: Workspace;
     private _errorMessageFormatter: ErrorMessageFormatter;
 
     constructor(params) {
