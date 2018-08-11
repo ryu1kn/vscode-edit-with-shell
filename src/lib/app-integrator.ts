@@ -1,14 +1,13 @@
 import {EXTENSION_NAME} from './const';
-import RunCommand from './commands/run';
-import ClearHistoryCommand from './commands/clear-history';
 import {ExecutionContextLike} from './types/vscode';
+import CommandWrap from './command-wrap';
 
 export default class AppIntegrator {
     private readonly vscode: any;
-    private readonly runCommand: RunCommand;
-    private readonly clearHistoryCommand: ClearHistoryCommand;
+    private readonly runCommand: CommandWrap;
+    private readonly clearHistoryCommand: CommandWrap;
 
-    constructor(runCommand: RunCommand, clearHistoryCommand: ClearHistoryCommand, vscode: any) {
+    constructor(runCommand: CommandWrap, clearHistoryCommand: CommandWrap, vscode: any) {
         this.vscode = vscode;
         this.runCommand = runCommand;
         this.clearHistoryCommand = clearHistoryCommand;

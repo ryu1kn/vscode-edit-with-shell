@@ -13,6 +13,8 @@ import WorkspaceAdapter from './adapters/workspace';
 import * as vscode from 'vscode';
 import {Position, Range, TextEditor as VsTextEditor} from 'vscode';
 import {EnvVars} from './types/env-vars';
+import {ExtensionCommand} from './commands/extension-command';
+import CommandWrap from './command-wrap';
 
 const childProcess = require('child_process');
 
@@ -27,24 +29,26 @@ export default class AppIntegratorFactory {
     }
 
     create() {
-        return new AppIntegrator(this._runCommand, this.clearHistoryCommand, vscode);
+        return new AppIntegrator(this.runCommand, this.clearHistoryCommand, vscode);
     }
 
-    private get _runCommand() {
-        return new RunCommand(
+    private get runCommand() {
+        return this.wrapCommand(new RunCommand(
             this.shellCommandService,
             new CommandReader(this.historyStore, vscode.window),
             this.historyStore,
-            (editor: VsTextEditor) => new Editor(editor, this.locationFactory),
-            this.workspaceAdapter,
-            (message: string) => vscode.window.showErrorMessage(message),
-            console
-        );
+            this.workspaceAdapter
+        ));
     }
 
     private get clearHistoryCommand() {
-        return new ClearHistoryCommand(
-            this.historyStore,
+        return this.wrapCommand(new ClearHistoryCommand(this.historyStore));
+    }
+
+    private wrapCommand(command: ExtensionCommand) {
+        return new CommandWrap(
+            command,
+            (editor: VsTextEditor) => new Editor(editor, this.locationFactory),
             (message: string) => vscode.window.showErrorMessage(message),
             console
         );

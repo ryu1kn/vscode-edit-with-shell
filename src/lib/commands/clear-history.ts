@@ -1,28 +1,15 @@
-import ErrorMessageFormatter from '../error-message-formatter';
 import HistoryStore from '../history-store';
-import {Logger} from '../logger';
-import {ShowErrorMessage} from '../types/vscode';
+import {ExtensionCommand} from './extension-command';
 
-export default class ClearHistoryCommand {
+export default class ClearHistoryCommand implements ExtensionCommand {
     private readonly historyStore: HistoryStore;
-    private readonly logger: Logger;
-    private readonly showErrorMessage: ShowErrorMessage;
-    private readonly errorMessageFormatter: ErrorMessageFormatter;
 
-    constructor(historyStore: HistoryStore, showErrorMessage: ShowErrorMessage, logger: Logger) {
+    constructor(historyStore: HistoryStore) {
         this.historyStore = historyStore;
-        this.logger = logger;
-        this.showErrorMessage = showErrorMessage;
-        this.errorMessageFormatter = new ErrorMessageFormatter();
     }
 
     async execute() {
-        try {
-            this.historyStore.clear();
-        } catch (e) {
-            this.logger.error(e.stack);
-            this.showErrorMessage(this.errorMessageFormatter.format(e.message));
-        }
+        this.historyStore.clear();
     }
 
 }
