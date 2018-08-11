@@ -11,10 +11,10 @@ export default class ErrorMessageFormatter {
 
     format(message: string) {
         const trimmedMessage = (message || '').trim();
-        return this._escapeText(trimmedMessage);
+        return this.escapeText(trimmedMessage);
     }
 
-    _escapeText(string: string) {
+    private escapeText(string: string) {
         return REPLACE_PAIRS.reduce(
             (s, pair) => replaceAll(s, pair[0], pair[1]),
             string

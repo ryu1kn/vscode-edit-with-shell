@@ -11,14 +11,14 @@ import CommandExecutionError from '../errors/command';
 import {ShowErrorMessage} from '../types/vscode';
 
 export default class RunCommand {
-    private readonly _logger: Logger;
-    private readonly _shellCommandService: ShellCommandService;
-    private readonly _commandReader: CommandReader;
-    private readonly _historyStore: HistoryStore;
-    private readonly _showErrorMessage: ShowErrorMessage;
-    private readonly _wrapEditor: (editor: VsTextEditor, lf?: LocationFactory) => Editor;
-    private readonly _workspaceAdapter: Workspace;
-    private readonly _errorMessageFormatter: ErrorMessageFormatter;
+    private readonly logger: Logger;
+    private readonly shellCommandService: ShellCommandService;
+    private readonly commandReader: CommandReader;
+    private readonly historyStore: HistoryStore;
+    private readonly showErrorMessage: ShowErrorMessage;
+    private readonly wrapEditor: (editor: VsTextEditor, lf?: LocationFactory) => Editor;
+    private readonly workspaceAdapter: Workspace;
+    private readonly errorMessageFormatter: ErrorMessageFormatter;
 
     constructor(shellCommandService: ShellCommandService,
                 commandReader: CommandReader,
@@ -27,34 +27,34 @@ export default class RunCommand {
                 workspaceAdapter: Workspace,
                 showErrorMessage: ShowErrorMessage,
                 logger: Logger) {
-        this._logger = logger;
-        this._shellCommandService = shellCommandService;
-        this._commandReader = commandReader;
-        this._historyStore = historyStore;
-        this._showErrorMessage = showErrorMessage;
-        this._wrapEditor = wrapEditor;
-        this._workspaceAdapter = workspaceAdapter;
-        this._errorMessageFormatter = new ErrorMessageFormatter();
+        this.logger = logger;
+        this.shellCommandService = shellCommandService;
+        this.commandReader = commandReader;
+        this.historyStore = historyStore;
+        this.showErrorMessage = showErrorMessage;
+        this.wrapEditor = wrapEditor;
+        this.workspaceAdapter = workspaceAdapter;
+        this.errorMessageFormatter = new ErrorMessageFormatter();
     }
 
     async execute(editor: VsTextEditor) {
-        const wrappedEditor = this._wrapEditor(editor);
+        const wrappedEditor = this.wrapEditor(editor);
         try {
-            const command = await this._commandReader.read();
+            const command = await this.commandReader.read();
             if (!command) return;
 
-            this._historyStore.add(command);
-            const processEntireText = this._workspaceAdapter
+            this.historyStore.add(command);
+            const processEntireText = this.workspaceAdapter
                 .getConfig(`${EXTENSION_NAME}.processEntireTextIfNoneSelected`);
             if (processEntireText) {
-                const commandOutput = await this._shellCommandService.runCommand({
+                const commandOutput = await this.shellCommandService.runCommand({
                     command,
                     input: wrappedEditor.entireText,
                     filePath: wrappedEditor.filePath
                 });
                 await wrappedEditor.replaceEntireTextWith(commandOutput);
             } else {
-                const commandOutput = await this._shellCommandService.runCommand({
+                const commandOutput = await this.shellCommandService.runCommand({
                     command,
                     input: wrappedEditor.selectedText,
                     filePath: wrappedEditor.filePath
@@ -62,16 +62,16 @@ export default class RunCommand {
                 await wrappedEditor.replaceSelectedTextWith(commandOutput);
             }
         } catch (e) {
-            await this._handleError(e);
+            await this.handleError(e);
         }
     }
 
-    async _handleError(e: Error | CommandExecutionError) {
-        this._logger.error(e.stack);
+    async handleError(e: Error | CommandExecutionError) {
+        this.logger.error(e.stack);
 
         const sourceMessage = e instanceof CommandExecutionError ? e.errorOutput : e.message;
-        const errorMessage = this._errorMessageFormatter.format(sourceMessage);
-        await this._showErrorMessage(errorMessage);
+        const errorMessage = this.errorMessageFormatter.format(sourceMessage);
+        await this.showErrorMessage(errorMessage);
     }
 
 }

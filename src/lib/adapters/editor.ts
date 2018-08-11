@@ -8,42 +8,42 @@ export interface LocationFactory {
 }
 
 export default class Editor {
-    private readonly _vsEditor: VsTextEditor;
-    private readonly _locationFactory: LocationFactory;
+    private readonly vsEditor: VsTextEditor;
+    private readonly locationFactory: LocationFactory;
 
     constructor(vsEditor: VsTextEditor, locationFactory: LocationFactory) {
-        this._vsEditor = vsEditor;
-        this._locationFactory = locationFactory;
+        this.vsEditor = vsEditor;
+        this.locationFactory = locationFactory;
     }
 
     get selectedText() {
-        const editor = this._vsEditor;
+        const editor = this.vsEditor;
         return editor.document.getText(editor.selection);
     }
 
     get entireText() {
-        return this._vsEditor.document.getText();
+        return this.vsEditor.document.getText();
     }
 
     get filePath(): string | undefined {
-        const uri = this._vsEditor.document.uri;
+        const uri = this.vsEditor.document.uri;
         return uri.scheme === 'file' ? uri.fsPath : undefined;
     }
 
     replaceSelectedTextWith(text: string) {
-        const editor = this._vsEditor;
+        const editor = this.vsEditor;
         return editor.edit(editBuilder => {
             editBuilder.replace(editor.selection, text);
         });
     }
 
     replaceEntireTextWith(text: string) {
-        const editor = this._vsEditor;
+        const editor = this.vsEditor;
         const document = editor.document;
         const lineCount = document.lineCount;
         const lastLine = document.lineAt(lineCount - 1);
-        const entireRange = this._locationFactory.createRange(
-            this._locationFactory.createPosition(0, 0),
+        const entireRange = this.locationFactory.createRange(
+            this.locationFactory.createPosition(0, 0),
             lastLine.range.end
         );
         return editor.edit(editBuilder => {

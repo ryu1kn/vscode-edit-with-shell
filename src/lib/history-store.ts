@@ -1,27 +1,27 @@
 
 export default class HistoryStore {
-    private _history: string[];
+    private history: string[];
 
     constructor() {
-        this._history = [];
+        this.history = [];
     }
 
     getAll() {
-        return this._history;
+        return this.history;
     }
 
     clear() {
-        this._history = [];
+        this.history = [];
     }
 
     add(command: string) {
-        const history = this._history;
+        const history = this.history;
         const index = history.indexOf(command);
         if (index === -1) {
-            this._history = [...history, command];
+            this.history = [...history, command];
             return;
         }
-        this._history = [...history.slice(0, index), ...history.slice(index + 1), command];
+        this.history = [...history.slice(0, index), ...history.slice(index + 1), command];
     }
 
 }

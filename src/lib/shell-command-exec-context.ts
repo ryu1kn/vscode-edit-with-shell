@@ -10,27 +10,27 @@ const CurrentDirectoryKind = {
 };
 
 export default class ShellCommandExecContext {
-    private readonly _workspaceAdapter: Workspace;
-    private readonly _process: EnvVars;
+    private readonly workspaceAdapter: Workspace;
+    private readonly process: EnvVars;
 
     constructor(workspaceAdapter: Workspace, process: EnvVars) {
-        this._process = process;
-        this._workspaceAdapter = workspaceAdapter;
+        this.process = process;
+        this.workspaceAdapter = workspaceAdapter;
     }
 
     get env() {
-        return this._process.env;
+        return this.process.env;
     }
 
     getCwd(filePath?: string) {
         const configPath = `${EXTENSION_NAME}.currentDirectoryKind`;
-        const currentDirectoryKind = this._workspaceAdapter.getConfig(configPath);
+        const currentDirectoryKind = this.workspaceAdapter.getConfig(configPath);
         switch (currentDirectoryKind) {
         case CurrentDirectoryKind.CURRENT_FILE:
             return filePath ? path.dirname(filePath) : this.env.HOME;
 
         case CurrentDirectoryKind.WORKSPACE_ROOT:
-            return this._workspaceAdapter.rootPath || this.env.HOME;
+            return this.workspaceAdapter.rootPath || this.env.HOME;
 
         default:
             throw new Error(`Unknown currentDirectoryKind: ${currentDirectoryKind}`);

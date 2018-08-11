@@ -17,46 +17,46 @@ import {EnvVars} from './types/env-vars';
 const childProcess = require('child_process');
 
 export default class AppIntegratorFactory {
-    private readonly _cache: {
+    private readonly cache: {
         workspaceAdapter?: WorkspaceAdapter;
         historyStore?: HistoryStore;
     };
 
     constructor() {
-        this._cache = {};
+        this.cache = {};
     }
 
     create() {
-        return new AppIntegrator(this._runCommand, this._clearHistoryCommand, vscode);
+        return new AppIntegrator(this._runCommand, this.clearHistoryCommand, vscode);
     }
 
-    get _runCommand() {
+    private get _runCommand() {
         return new RunCommand(
-            this._shellCommandService,
-            new CommandReader(this._historyStore, vscode.window),
-            this._historyStore,
-            (editor: VsTextEditor) => new Editor(editor, this._locationFactory),
-            this._workspaceAdapter,
+            this.shellCommandService,
+            new CommandReader(this.historyStore, vscode.window),
+            this.historyStore,
+            (editor: VsTextEditor) => new Editor(editor, this.locationFactory),
+            this.workspaceAdapter,
             (message: string) => vscode.window.showErrorMessage(message),
             console
         );
     }
 
-    get _clearHistoryCommand() {
+    private get clearHistoryCommand() {
         return new ClearHistoryCommand(
-            this._historyStore,
+            this.historyStore,
             (message: string) => vscode.window.showErrorMessage(message),
             console
         );
     }
 
-    get _historyStore() {
-        this._cache.historyStore = this._cache.historyStore || new HistoryStore();
-        return this._cache.historyStore;
+    private get historyStore() {
+        this.cache.historyStore = this.cache.historyStore || new HistoryStore();
+        return this.cache.historyStore;
     }
 
-    get _shellCommandService() {
-        const workspaceAdapter = this._workspaceAdapter;
+    private get shellCommandService() {
+        const workspaceAdapter = this.workspaceAdapter;
         return new ShellCommandService(
             new ProcessRunner(),
             new ShellProgrammeResolver(workspaceAdapter, process.platform),
@@ -66,17 +66,17 @@ export default class AppIntegratorFactory {
         );
     }
 
-    get _locationFactory() {
+    private get locationFactory() {
         return {
             createPosition: (line: number, character: number) => new Position(line, character),
             createRange: (p1: Position, p2: Position) => new Range(p1, p2)
         };
     }
 
-    get _workspaceAdapter() {
-        this._cache.workspaceAdapter = this._cache.workspaceAdapter ||
+    private get workspaceAdapter() {
+        this.cache.workspaceAdapter = this.cache.workspaceAdapter ||
             new WorkspaceAdapter(vscode.workspace);
-        return this._cache.workspaceAdapter;
+        return this.cache.workspaceAdapter;
     }
 
 }

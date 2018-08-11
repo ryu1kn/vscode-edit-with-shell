@@ -15,36 +15,36 @@ export interface CommandParams {
 }
 
 export default class ShellCommandService {
-    private readonly _childProcess: SpawnWrapper;
-    private readonly _processRunner: ProcessRunner;
-    private readonly _shellCommandExecContext: ShellCommandExecContext;
-    private readonly _shellProgrammeResolver: ShellProgrammeResolver;
-    private readonly _shellArgsRetriever: ShellArgsRetriever;
+    private readonly childProcess: SpawnWrapper;
+    private readonly processRunner: ProcessRunner;
+    private readonly shellCommandExecContext: ShellCommandExecContext;
+    private readonly shellProgrammeResolver: ShellProgrammeResolver;
+    private readonly shellArgsRetriever: ShellArgsRetriever;
 
     constructor(processRunner: ProcessRunner,
                 shellProgrammeResolver: ShellProgrammeResolver,
                 shellArgsRetriever: ShellArgsRetriever,
                 shellCommandExecContext: ShellCommandExecContext,
                 childProcess: SpawnWrapper) {
-        this._childProcess = childProcess;
-        this._processRunner = processRunner;
-        this._shellCommandExecContext = shellCommandExecContext;
-        this._shellProgrammeResolver = shellProgrammeResolver;
-        this._shellArgsRetriever = shellArgsRetriever;
+        this.childProcess = childProcess;
+        this.processRunner = processRunner;
+        this.shellCommandExecContext = shellCommandExecContext;
+        this.shellProgrammeResolver = shellProgrammeResolver;
+        this.shellArgsRetriever = shellArgsRetriever;
     }
 
     runCommand(params: CommandParams): Promise<string> {
-        const options = this._getOptions(params.filePath);
-        const shell = this._shellProgrammeResolver.resolve();
-        const shellArgs = this._shellArgsRetriever.retrieve();
-        const command = this._childProcess.spawn(shell, [...shellArgs, params.command], options);
-        return this._processRunner.run(command, params.input);
+        const options = this.getOptions(params.filePath);
+        const shell = this.shellProgrammeResolver.resolve();
+        const shellArgs = this.shellArgsRetriever.retrieve();
+        const command = this.childProcess.spawn(shell, [...shellArgs, params.command], options);
+        return this.processRunner.run(command, params.input);
     }
 
-    _getOptions(filePath?: string) {
+    private getOptions(filePath?: string) {
         return {
-            cwd: this._shellCommandExecContext.getCwd(filePath),
-            env: this._shellCommandExecContext.env
+            cwd: this.shellCommandExecContext.getCwd(filePath),
+            env: this.shellCommandExecContext.env
         };
     }
 

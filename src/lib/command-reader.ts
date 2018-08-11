@@ -2,38 +2,38 @@ import HistoryStore from './history-store';
 import * as vscode from 'vscode';
 
 export default class CommandReader {
-    private readonly _historyStore: HistoryStore;
-    private readonly _vsWindow: typeof vscode.window;
+    private readonly historyStore: HistoryStore;
+    private readonly vsWindow: typeof vscode.window;
 
     constructor(historyStore: HistoryStore, vsWindow: typeof vscode.window) {
-        this._historyStore = historyStore;
-        this._vsWindow = vsWindow;
+        this.historyStore = historyStore;
+        this.vsWindow = vsWindow;
     }
 
     async read() {
-        const history = this._historyStore.getAll();
+        const history = this.historyStore.getAll();
         if (history.length === 0) {
-            return this._vsWindow.showInputBox({
+            return this.vsWindow.showInputBox({
                 placeHolder: 'Enter a command',
                 prompt: 'No history available yet'
             });
         }
 
-        const pickedCommand = await this._letUserToPickCommand(history);
-        return this._letUserToModifyCommand(pickedCommand);
+        const pickedCommand = await this.letUserToPickCommand(history);
+        return this.letUserToModifyCommand(pickedCommand);
     }
 
-    _letUserToPickCommand(history: string[]): Thenable<string | undefined> {
+    private letUserToPickCommand(history: string[]): Thenable<string | undefined> {
         const options = {placeHolder: 'Select a command to reuse or Cancel (Esc) to write a new command'};
-        return this._vsWindow.showQuickPick(history.reverse(), options);
+        return this.vsWindow.showQuickPick(history.reverse(), options);
     }
 
-    _letUserToModifyCommand(pickedCommand?: string) {
-        const options = this._getInputBoxOption(pickedCommand);
-        return this._vsWindow.showInputBox(options);
+    private letUserToModifyCommand(pickedCommand?: string) {
+        const options = this.getInputBoxOption(pickedCommand);
+        return this.vsWindow.showInputBox(options);
     }
 
-    _getInputBoxOption(pickedCommand?: string) {
+    private getInputBoxOption(pickedCommand?: string) {
         if (!pickedCommand) {
             return {placeHolder: 'Enter a command'};
         }

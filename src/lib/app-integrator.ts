@@ -4,35 +4,35 @@ import ClearHistoryCommand from './commands/clear-history';
 import {ExecutionContextLike} from './types/vscode';
 
 export default class AppIntegrator {
-    private readonly _vscode: any;
-    private readonly _runCommand: RunCommand;
-    private readonly _clearHistoryCommand: ClearHistoryCommand;
+    private readonly vscode: any;
+    private readonly runCommand: RunCommand;
+    private readonly clearHistoryCommand: ClearHistoryCommand;
 
     constructor(runCommand: RunCommand, clearHistoryCommand: ClearHistoryCommand, vscode: any) {
-        this._vscode = vscode;
-        this._runCommand = runCommand;
-        this._clearHistoryCommand = clearHistoryCommand;
+        this.vscode = vscode;
+        this.runCommand = runCommand;
+        this.clearHistoryCommand = clearHistoryCommand;
     }
 
     integrate(context: ExecutionContextLike) {
-        this._registerCommands(context);
-        this._registerTextEditorCommands(context);
+        this.registerCommands(context);
+        this.registerTextEditorCommands(context);
     }
 
-    _registerCommands(context: ExecutionContextLike) {
-        const disposable = this._vscode.commands.registerCommand(
+    private registerCommands(context: ExecutionContextLike) {
+        const disposable = this.vscode.commands.registerCommand(
             `${EXTENSION_NAME}.clearCommandHistory`,
-            this._clearHistoryCommand.execute,
-            this._clearHistoryCommand
+            this.clearHistoryCommand.execute,
+            this.clearHistoryCommand
         );
         context.subscriptions.push(disposable);
     }
 
-    _registerTextEditorCommands(context: ExecutionContextLike) {
-        const disposable = this._vscode.commands.registerTextEditorCommand(
+    private registerTextEditorCommands(context: ExecutionContextLike) {
+        const disposable = this.vscode.commands.registerTextEditorCommand(
             `${EXTENSION_NAME}.runCommand`,
-            this._runCommand.execute,
-            this._runCommand
+            this.runCommand.execute,
+            this.runCommand
         );
         context.subscriptions.push(disposable);
     }
