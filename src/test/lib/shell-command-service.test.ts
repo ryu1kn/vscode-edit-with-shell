@@ -1,7 +1,8 @@
-import {expect, mockMethods, sinon, stubWithArgs, when} from '../helper';
+import {any, contains, expect, mock, mockMethods, mockType, when} from '../helper';
 import ShellCommandService, {SpawnWrapper} from '../../lib/shell-command-service';
 import ShellCommandExecContext from '../../lib/shell-command-exec-context';
 import ProcessRunner from '../../lib/process-runner';
+import {ChildProcess} from 'child_process';
 
 describe('ShellCommandService', () => {
 
@@ -11,19 +12,18 @@ describe('ShellCommandService', () => {
     let service: ShellCommandService;
 
     beforeEach(() => {
-        childProcess = {
-            spawn: stubWithArgs(
-                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING']], 'COMMAND',
-                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_ENVVARS'], sinon.match({env: {SOME_ENV_VAR: '...'}})], 'COMMAND',
-                ['SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_EXEC_DIR'], sinon.match({cwd: 'COMMAND_EXEC_DIR'})], 'COMMAND'
-            )
-        };
-        processRunner = {
-            run: stubWithArgs(
-                ['COMMAND', ''], Promise.resolve('COMMAND_OUTPUT'),
-                ['COMMAND', 'SELECTED_TEXT'], Promise.resolve('COMMAND_OUTPUT_TEST_WITH_INPUT')
-            )
-        };
+        const process = mockType<ChildProcess>();
+
+        childProcess = mockMethods(['spawn']);
+        when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING'], any())).thenReturn(process);
+        when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_ENVVARS'], contains({env: {SOME_ENV_VAR: '...'}}))).thenReturn(process);
+        when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_EXEC_DIR'], contains({cwd: 'COMMAND_EXEC_DIR'}))).thenReturn(process);
+
+        processRunner = mock(ProcessRunner);
+        when(processRunner.run(process, '')).thenResolve('COMMAND_OUTPUT');
+        when(processRunner.run(process, 'SELECTED_TEXT')).thenResolve('COMMAND_OUTPUT_TEST_WITH_INPUT');
+        when(processRunner.run(process, 'CAUSE_ERROR_INPUT')).thenReject(new Error('UNEXPECTED_ERROR'));
+
         shellCommandExecContext = mockMethods<ShellCommandExecContext>(['getCwd'], {
             env: {SOME_ENV_VAR: '...'}
         });
@@ -68,11 +68,6 @@ describe('ShellCommandService', () => {
     });
 
     it('throws an error if command failed', async () => {
-        // Cannot put this behaviour in the initial mock setup as it creates never
-        // handled promise rejections for other test cases...
-        const processRunner = {
-            run: stubWithArgs(['COMMAND', 'CAUSE_ERROR_INPUT'], Promise.reject(new Error('UNEXPECTED_ERROR')))
-        };
         const service = createShellCommandService({childProcess, processRunner, shellCommandExecContext});
         const params = {
             command: 'COMMAND_STRING',

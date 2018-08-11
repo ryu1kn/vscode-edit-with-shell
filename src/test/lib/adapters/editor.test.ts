@@ -1,4 +1,4 @@
-import {expect, mockMethods, mockType, sinon, verify} from '../../helper';
+import {expect, mockMethods, mockType, verify} from '../../helper';
 
 import Editor from '../../../lib/adapters/editor';
 import * as vscode from 'vscode';
@@ -63,7 +63,7 @@ describe('Editor', () => {
                 isEmpty: !selectedText
             },
             document: {
-                getText: sinon.stub().returns(selectedText || entireText),
+                getText: () => selectedText || entireText,
                 uri: {
                     scheme: uriScheme || 'untitled',
                     fsPath: 'FILE_PATH'
