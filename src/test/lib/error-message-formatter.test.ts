@@ -1,4 +1,4 @@
-import {expect} from '../helper';
+import * as assert from 'assert';
 import ErrorMessageFormatter from '../../lib/error-message-formatter';
 
 describe('ErrorMessageFormatter', () => {
@@ -7,32 +7,32 @@ describe('ErrorMessageFormatter', () => {
 
     it('pass through normal text', () => {
         const formattedText = formatter.format('normal text');
-        expect(formattedText).to.eql('normal text');
+        assert.deepEqual(formattedText, 'normal text');
     });
 
     it('escape newline characters to show all lines in one line', () => {
         const formattedText = formatter.format('MESSAGE\nCONTAINS\nNEWLINES\n');
-        expect(formattedText).to.eql('MESSAGE\\nCONTAINS\\nNEWLINES');
+        assert.deepEqual(formattedText, 'MESSAGE\\nCONTAINS\\nNEWLINES');
     });
 
     it('escape `*` character', () => {
         const formattedText = formatter.format('**bold**');
-        expect(formattedText).to.eql('\\*\\*bold\\*\\*');
+        assert.deepEqual(formattedText, '\\*\\*bold\\*\\*');
     });
 
     it('escape `_` character', () => {
         const formattedText = formatter.format('__italic__');
-        expect(formattedText).to.eql('\\_\\_italic\\_\\_');
+        assert.deepEqual(formattedText, '\\_\\_italic\\_\\_');
     });
 
     it('escape `[` character', () => {
         const formattedText = formatter.format('[[');
-        expect(formattedText).to.eql('\\[\\[');
+        assert.deepEqual(formattedText, '\\[\\[');
     });
 
     it('escape `]` character', () => {
         const formattedText = formatter.format(']]');
-        expect(formattedText).to.eql('\\]\\]');
+        assert.deepEqual(formattedText, '\\]\\]');
     });
 
 });

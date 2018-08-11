@@ -1,4 +1,5 @@
-import {expect, mock, when} from '../helper';
+import * as assert from 'assert';
+import {mock, when} from '../helper';
 
 import ShellArgsRetriever from '../../lib/shell-args-retriever';
 import Workspace from '../../lib/adapters/workspace';
@@ -12,22 +13,22 @@ describe('ShellArgsRetriever', () => {
 
     it('it returns Linux shell args user specified in their config when run on Linux', () => {
         const shellArgsRetriever = createShellArgsRetriever('linux');
-        expect(shellArgsRetriever.retrieve()).to.eql(['LINUX_SHELL_ARGS']);
+        assert.deepEqual(shellArgsRetriever.retrieve(), ['LINUX_SHELL_ARGS']);
     });
 
     it('it returns macOS shell args user specified in their config when run on macOS', () => {
         const shellArgsRetriever = createShellArgsRetriever('darwin');
-        expect(shellArgsRetriever.retrieve()).to.eql(['MACOS_SHELL_ARGS']);
+        assert.deepEqual(shellArgsRetriever.retrieve(), ['MACOS_SHELL_ARGS']);
     });
 
     it('it returns Windows shell args user specified in their config when run on Windows', () => {
         const shellArgsRetriever = createShellArgsRetriever('win32');
-        expect(shellArgsRetriever.retrieve()).to.eql(['WINDOWS_SHELL_ARGS']);
+        assert.deepEqual(shellArgsRetriever.retrieve(), ['WINDOWS_SHELL_ARGS']);
     });
 
     it('it returns Linux shell args user specified in their config when run on other OSs', () => {
         const shellArgsRetriever = createShellArgsRetriever('unknown_platform');
-        expect(shellArgsRetriever.retrieve()).to.eql(['LINUX_SHELL_ARGS']);
+        assert.deepEqual(shellArgsRetriever.retrieve(), ['LINUX_SHELL_ARGS']);
     });
 
     function createShellArgsRetriever(platform: string) {

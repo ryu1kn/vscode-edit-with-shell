@@ -1,4 +1,5 @@
-import {any, expect, mockMethods, verify, when} from '../helper';
+import * as assert from 'assert';
+import {any, mockMethods, verify, when} from '../helper';
 
 import CommandReader from '../../lib/command-reader';
 import * as vscode from 'vscode';
@@ -20,7 +21,7 @@ describe('CommandReader', () => {
         const reader = new CommandReader({historyStore, vsWindow: vscodeWindow});
         const command = await reader.read();
 
-        expect(command).to.eql('COMMAND_FINAL');
+        assert.deepEqual(command, 'COMMAND_FINAL');
     });
 
     it('shows inputBox right away if there is no commands recorded in the history', async () => {
@@ -33,7 +34,7 @@ describe('CommandReader', () => {
         const reader = new CommandReader({historyStore, vsWindow: vscodeWindow});
         const command = await reader.read();
 
-        expect(command).to.eql('COMMAND');
+        assert.deepEqual(command, 'COMMAND');
         verify(vscodeWindow.showQuickPick(any()), {times: 0, ignoreExtraArgs: true});
     });
 
@@ -47,7 +48,7 @@ describe('CommandReader', () => {
         const reader = new CommandReader({historyStore, vsWindow: vscodeWindow});
         const command = await reader.read();
 
-        expect(command).to.eql('COMMAND');
+        assert.deepEqual(command, 'COMMAND');
     });
 
 });

@@ -1,4 +1,5 @@
-import {expect, mockMethods, mockType, verify} from '../../helper';
+import * as assert from 'assert';
+import {mockMethods, mockType, verify} from '../../helper';
 
 import Editor from '../../../lib/adapters/editor';
 import * as vscode from 'vscode';
@@ -11,25 +12,25 @@ describe('Editor', () => {
     it('holds a selected text', () => {
         const vsEditor = fakeEditor({selectedText: 'SELECTED_TEXT'});
         const editor = new Editor(vsEditor, locationFactory);
-        expect(editor.selectedText).to.eql('SELECTED_TEXT');
+        assert.deepEqual(editor.selectedText, 'SELECTED_TEXT');
     });
 
     it('holds the entire text', () => {
         const vsEditor = fakeEditor({});
         const editor = new Editor(vsEditor, locationFactory);
-        expect(editor.entireText).to.eql('FOO\n\nBAR');
+        assert.deepEqual(editor.entireText, 'FOO\n\nBAR');
     });
 
     it('holds a file path', () => {
         const vsEditor = fakeEditor({uriScheme: 'file'});
         const editor = new Editor(vsEditor, locationFactory);
-        expect(editor.filePath).to.eql('FILE_PATH');
+        assert.deepEqual(editor.filePath, 'FILE_PATH');
     });
 
     it('does not hold a file path if editor content has never been saved', () => {
         const vsEditor = fakeEditor({});
         const editor = new Editor(vsEditor, locationFactory);
-        expect(editor.filePath).to.be.undefined;
+        assert.equal(typeof editor.filePath, 'undefined');
     });
 
     it('replaces the selected text with given text', async () => {

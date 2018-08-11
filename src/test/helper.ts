@@ -1,8 +1,5 @@
-import * as chai from 'chai';
 import * as td from 'testdouble';
 import * as assert from 'assert';
-
-export const expect = chai.expect;
 
 export function mock<T>(c: new (...args: any[]) => T): T {
     return new (td.constructor(c));
