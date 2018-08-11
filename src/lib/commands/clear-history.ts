@@ -8,7 +8,7 @@ export default class ClearHistoryCommand {
     private _showErrorMessage: (message: string) => Promise<void>;
     private _errorMessageFormatter: ErrorMessageFormatter;
 
-    constructor(params) {
+    constructor(params: any) {
         this._historyStore = params.historyStore;
         this._logger = params.logger;
         this._showErrorMessage = params.showErrorMessage;

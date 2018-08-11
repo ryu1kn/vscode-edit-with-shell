@@ -4,14 +4,24 @@ import ShellProgrammeResolver from './shell-programme-resolver';
 import ShellArgsRetriever from './shell-args-retriever';
 import {ChildProcess, SpawnOptions} from 'child_process';
 
+export interface SpawnWrapper {
+    spawn: (command: string, args?: ReadonlyArray<string>, options?: SpawnOptions) => ChildProcess;
+}
+
+export interface CommandParams {
+    command: string;
+    input: string;
+    filePath?: string;
+}
+
 export default class ShellCommandService {
-    private _childProcess: {spawn: (command: string, args?: ReadonlyArray<string>, options?: SpawnOptions) => ChildProcess};
+    private _childProcess: SpawnWrapper;
     private _processRunner: ProcessRunner;
     private _shellCommandExecContext: ShellCommandExecContext;
     private _shellProgrammeResolver: ShellProgrammeResolver;
     private _shellArgsRetriever: ShellArgsRetriever;
 
-    constructor(params) {
+    constructor(params: any) {
         this._childProcess = params.childProcess;
         this._processRunner = params.processRunner;
         this._shellCommandExecContext = params.shellCommandExecContext;
@@ -19,7 +29,7 @@ export default class ShellCommandService {
         this._shellArgsRetriever = params.shellArgsRetriever;
     }
 
-    runCommand(params) {
+    runCommand(params: CommandParams): Promise<string> {
         const options = this._getOptions(params.filePath);
         const shell = this._shellProgrammeResolver.resolve();
         const shellArgs = this._shellArgsRetriever.retrieve();
@@ -27,7 +37,7 @@ export default class ShellCommandService {
         return this._processRunner.run(command, params.input);
     }
 
-    _getOptions(filePath) {
+    _getOptions(filePath?: string) {
         return {
             cwd: this._shellCommandExecContext.getCwd(filePath),
             env: this._shellCommandExecContext.env

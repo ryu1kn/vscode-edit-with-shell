@@ -9,12 +9,12 @@ const REPLACE_PAIRS = [
 
 export default class ErrorMessageFormatter {
 
-    format(message) {
+    format(message: string) {
         const trimmedMessage = (message || '').trim();
         return this._escapeText(trimmedMessage);
     }
 
-    _escapeText(string) {
+    _escapeText(string: string) {
         return REPLACE_PAIRS.reduce(
             (s, pair) => replaceAll(s, pair[0], pair[1]),
             string
@@ -23,6 +23,6 @@ export default class ErrorMessageFormatter {
 
 }
 
-function replaceAll(string, fromStr, toStr) {
+function replaceAll(string: string, fromStr: string, toStr: string) {
     return string.split(fromStr).join(toStr);
 }

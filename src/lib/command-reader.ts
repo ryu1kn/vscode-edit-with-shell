@@ -5,7 +5,7 @@ export default class CommandReader {
     private _historyStore: HistoryStore;
     private _vsWindow: typeof vscode.window;
 
-    constructor(params) {
+    constructor(params: any) {
         this._historyStore = params.historyStore;
         this._vsWindow = params.vsWindow;
     }
@@ -23,17 +23,17 @@ export default class CommandReader {
         return this._letUserToModifyCommand(pickedCommand);
     }
 
-    _letUserToPickCommand(history) {
+    _letUserToPickCommand(history: string[]): Thenable<string | undefined> {
         const options = {placeHolder: 'Select a command to reuse or Cancel (Esc) to write a new command'};
         return this._vsWindow.showQuickPick(history.reverse(), options);
     }
 
-    _letUserToModifyCommand(pickedCommand) {
+    _letUserToModifyCommand(pickedCommand?: string) {
         const options = this._getInputBoxOption(pickedCommand);
         return this._vsWindow.showInputBox(options);
     }
 
-    _getInputBoxOption(pickedCommand) {
+    _getInputBoxOption(pickedCommand?: string) {
         if (!pickedCommand) {
             return {placeHolder: 'Enter a command'};
         }

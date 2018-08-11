@@ -1,21 +1,22 @@
-import {expect, sinon} from '../../helper';
-
 import ClearHistoryCommand from '../../../lib/commands/clear-history';
+import HistoryStore from '../../../lib/history-store';
+import {contains, mockFunction, mockMethods, verify} from '../../helper';
+import {Logger} from '../../../lib/logger';
 
 describe('ClearHistoryCommand', () => {
 
     it('clears command history', async () => {
-        const historyStore = {clear: sinon.spy()};
+        const historyStore = mockMethods<HistoryStore>(['clear']);
         const command = new ClearHistoryCommand({historyStore});
 
         await command.execute();
 
-        expect(historyStore.clear).to.have.been.called;
+        verify(historyStore.clear(), {times: 1});
     });
 
     it('reports an error', async () => {
-        const logger = {error: sinon.spy()};
-        const showErrorMessage = sinon.spy();
+        const logger = mockMethods<Logger>(['error']);
+        const showErrorMessage = mockFunction();
         const command = new ClearHistoryCommand({
             historyStore: {clear: () => { throw new Error('UNEXPECTED_ERROR'); }},
             logger,
@@ -24,8 +25,8 @@ describe('ClearHistoryCommand', () => {
 
         await command.execute();
 
-        expect(showErrorMessage).to.have.been.calledWith('UNEXPECTED\\_ERROR');
-        expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
+        verify(showErrorMessage(contains('UNEXPECTED\\_ERROR')));
+        verify(logger.error(contains('Error: UNEXPECTED_ERROR')));
     });
 
 });

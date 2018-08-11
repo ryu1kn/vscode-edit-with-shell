@@ -1,6 +1,7 @@
-import {expect} from '../helper';
+import {expect, mockType} from '../helper';
 
 import ShellProgrammeResolver from '../../lib/shell-programme-resolver';
+import Workspace from '../../lib/adapters/workspace';
 
 describe('ShellProgrammeResolver', () => {
 
@@ -8,8 +9,10 @@ describe('ShellProgrammeResolver', () => {
         'editWithShell.shell.linux': 'linux_SHELL_PATH',
         'editWithShell.shell.osx': 'osx_SHELL_PATH',
         'editWithShell.shell.windows': 'windows_SHELL_PATH'
-    };
-    const workspaceAdapter = {getConfig: path => config[path]};
+    } as {[key: string]: string | undefined};
+    const workspaceAdapter = mockType<Workspace>({
+        getConfig: (path: string) => config[path]
+    });
 
     it('it returns Linux shell path user specified in their config when run on Linux', () => {
         const shellProgrammeResolver = createShellProgrammeResolver('linux');
@@ -31,7 +34,7 @@ describe('ShellProgrammeResolver', () => {
         expect(shellProgrammeResolver.resolve()).to.eql('linux_SHELL_PATH');
     });
 
-    function createShellProgrammeResolver(platform) {
+    function createShellProgrammeResolver(platform: string) {
         return new ShellProgrammeResolver({workspaceAdapter, platform});
     }
 

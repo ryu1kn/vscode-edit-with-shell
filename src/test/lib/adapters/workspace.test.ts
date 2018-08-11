@@ -1,6 +1,7 @@
-import {expect} from '../../helper';
+import {expect, mockType} from '../../helper';
 
 import WorkspaceAdapter from '../../../lib/adapters/workspace';
+import * as vscode from 'vscode';
 
 describe('WorkspaceAdapter', () => {
 
@@ -22,20 +23,20 @@ describe('WorkspaceAdapter', () => {
         const config = {
             'A.B': 'VALUE1',
             'C.D.E.F': 'VALUE2'
-        };
-        return {
-            getConfiguration: oneAbove => {
+        } as {[key: string]: string | undefined};
+        return mockType<typeof vscode.workspace>({
+            getConfiguration: (oneAbove: any) => {
                 switch (oneAbove) {
                 case 'A':
-                    return {get: name => config[`A.${name}`]};
+                    return {get: (name: string) => config[`A.${name}`]};
                 case 'C.D.E':
-                    return {get: name => config[`C.D.E.${name}`]};
+                    return {get: (name: string) => config[`C.D.E.${name}`]};
                 default:
                     return {get: () => {}};
                 }
             },
             rootPath: 'PROJECT_ROOT_PATH'
-        };
+        });
     }
 
 });

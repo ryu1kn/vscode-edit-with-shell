@@ -1,6 +1,7 @@
-import {expect} from '../helper';
+import {expect, mockMethods, when} from '../helper';
 
 import ShellCommandExecContext from '../../lib/shell-command-exec-context';
+import Workspace from '../../lib/adapters/workspace';
 
 describe('ShellCommandExecContext', () => {
 
@@ -45,11 +46,10 @@ describe('ShellCommandExecContext', () => {
         expect(execContext.getCwd()).to.eql('USER_HOME_DIR');
     });
 
-    function fakeWorkspaceAdapter(currentDirectoryKind, rootPath?) {
-        return {
-            rootPath,
-            getConfig: path => path === 'editWithShell.currentDirectoryKind' && currentDirectoryKind
-        };
+    function fakeWorkspaceAdapter(currentDirectoryKind: string, rootPath?: string) {
+        const workspace = mockMethods<Workspace>(['getConfig'], {rootPath});
+        when(workspace.getConfig('editWithShell.currentDirectoryKind')).thenReturn(currentDirectoryKind);
+        return workspace;
     }
 
 });

@@ -1,20 +1,33 @@
-import {expect, sinon} from '../../helper';
 import RunCommand from '../../../lib/commands/run';
+import Workspace from '../../../lib/adapters/workspace';
+import * as vscode from 'vscode';
+import Editor from '../../../lib/adapters/editor';
+import ShellCommandService from '../../../lib/shell-command-service';
+import HistoryStore from '../../../lib/history-store';
+import {Logger} from '../../../lib/logger';
+import {any, contains, mock, mockFunction, mockMethods, mockType, verify, when} from '../../helper';
 
 describe('RunCommand', () => {
 
+    const rawEditor = mockType<vscode.TextEditor>();
+
     it('runs command with editor contents and add commands to the history', async () => {
-        const historyStore = {add: sinon.spy()};
-        const shellCommandService = {
-            runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
-        };
-        const replaceSelectedTextWith = sinon.stub().returns(Promise.resolve());
-        const wrapEditor = sinon.stub().returns({
+        const historyStore = mock(HistoryStore);
+        const shellCommandService = mock(ShellCommandService);
+        when(shellCommandService.runCommand({
+            command: 'COMMAND_STRING',
+            input: 'SELECTED_TEXT',
+            filePath: 'FILE_NAME'
+        })).thenResolve('COMMAND_OUTPUT');
+        const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
             selectedText: 'SELECTED_TEXT',
-            filePath: 'FILE_NAME',
-            replaceSelectedTextWith
+            filePath: 'FILE_NAME'
         });
-        const workspaceAdapter = {getConfig: key => key === 'editWithShell.processEntireTextIfNoneSelected' && false};
+        const wrapEditor = mockFunction();
+        when(wrapEditor(rawEditor)).thenReturn(editor);
+        const workspaceAdapter = mockType<Workspace>({
+            getConfig: (key: string) => key === 'editWithShell.processEntireTextIfNoneSelected' && false
+        });
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve('COMMAND_STRING')},
             historyStore,
@@ -23,30 +36,29 @@ describe('RunCommand', () => {
             workspaceAdapter
         });
 
-        await command.execute('EDITOR');
+        await command.execute(rawEditor);
 
-        expect(wrapEditor).to.have.been.calledWith('EDITOR');
-        expect(replaceSelectedTextWith).to.have.been.calledWith('COMMAND_OUTPUT');
-        expect(shellCommandService.runCommand).to.have.been.calledWith({
-            command: 'COMMAND_STRING',
-            input: 'SELECTED_TEXT',
-            filePath: 'FILE_NAME'
-        });
-        expect(historyStore.add).to.have.been.calledWith('COMMAND_STRING');
+        verify(editor.replaceSelectedTextWith('COMMAND_OUTPUT'));
+        verify(historyStore.add('COMMAND_STRING'));
     });
 
     it('processes the entire text', async () => {
-        const historyStore = {add: sinon.spy()};
-        const shellCommandService = {
-            runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
-        };
-        const replaceEntireTextWith = sinon.stub().returns(Promise.resolve());
-        const wrapEditor = sinon.stub().returns({
+        const historyStore = mockType<HistoryStore>({add: () => {}});
+        const shellCommandService = mock(ShellCommandService);
+        when(shellCommandService.runCommand({
+            command: 'COMMAND_STRING',
+            input: 'ENTIRE_TEXT',
+            filePath: 'FILE_NAME'
+        })).thenResolve('COMMAND_OUTPUT');
+        const wrapEditor = mockFunction();
+        const editor = mockMethods<Editor>(['replaceEntireTextWith'], {
             entireText: 'ENTIRE_TEXT',
-            filePath: 'FILE_NAME',
-            replaceEntireTextWith
+            filePath: 'FILE_NAME'
         });
-        const workspaceAdapter = {getConfig: key => key === 'editWithShell.processEntireTextIfNoneSelected'};
+        when(wrapEditor(rawEditor)).thenReturn(editor);
+        const workspaceAdapter = mockType<Workspace>({
+            getConfig: (key: string) => key === 'editWithShell.processEntireTextIfNoneSelected'
+        });
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve('COMMAND_STRING')},
             historyStore,
@@ -56,51 +68,50 @@ describe('RunCommand', () => {
             logger: console
         });
 
-        await command.execute('EDITOR');
+        await command.execute(rawEditor);
 
-        expect(shellCommandService.runCommand).to.have.been.calledWith({
-            command: 'COMMAND_STRING',
-            input: 'ENTIRE_TEXT',
-            filePath: 'FILE_NAME'
-        });
+        verify(editor.replaceEntireTextWith('COMMAND_OUTPUT'));
     });
 
     it('does not try to run a command if one is not given', async () => {
-        const historyStore = {add: sinon.spy()};
-        const shellCommandService = {
-            runCommand: sinon.stub().returns(Promise.resolve('COMMAND_OUTPUT'))
-        };
-        const replaceSelectedTextWith = sinon.stub().returns(Promise.resolve());
+        const historyStore = mock(HistoryStore);
+        const shellCommandService = mock(ShellCommandService);
+        const editor = mock(Editor);
+        const wrapEditor = mockFunction();
+        when(wrapEditor(rawEditor)).thenReturn(editor);
         const command = new RunCommand({
             commandReader: {read: () => Promise.resolve()},
             historyStore,
             shellCommandService,
-            wrapEditor: () => ({})
+            wrapEditor
         });
 
-        await command.execute('EDITOR');
+        await command.execute(rawEditor);
 
-        expect(replaceSelectedTextWith).to.have.been.not.called;
-        expect(shellCommandService.runCommand).to.have.been.not.called;
-        expect(historyStore.add).to.have.been.not.called;
+        verify(editor.replaceSelectedTextWith(any()), {times: 0});
+        verify(shellCommandService.runCommand(any()), {times: 0});
+        verify(historyStore.add(any()), {times: 0});
     });
 
     it('reports an error', async () => {
-        const logger = {error: sinon.spy()};
-        const showErrorMessage = sinon.spy();
+        const logger = mockMethods<Logger>(['error']);
+        const showErrorMessage = mockFunction();
+        const wrapEditor = mockFunction();
+        when(wrapEditor(rawEditor)).thenReturn(mock(Editor));
+
         const command = new RunCommand({
             commandReader: {
                 read: () => Promise.reject(new Error('UNEXPECTED_ERROR'))
             },
             logger,
             showErrorMessage,
-            wrapEditor: () => {}
+            wrapEditor
         });
 
-        await command.execute();
+        await command.execute(rawEditor);
 
-        expect(showErrorMessage).to.have.been.calledWith('UNEXPECTED\\_ERROR');
-        expect(logger.error.args[0][0]).to.have.string('Error: UNEXPECTED_ERROR');
+        verify(showErrorMessage(contains('UNEXPECTED\\_ERROR')));
+        verify(logger.error(contains('Error: UNEXPECTED_ERROR')));
     });
 
 });

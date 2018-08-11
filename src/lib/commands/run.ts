@@ -7,6 +7,7 @@ import HistoryStore from '../history-store';
 import Workspace from '../adapters/workspace';
 import Editor, {LocationFactory} from '../adapters/editor';
 import {TextEditor as VsTextEditor} from 'vscode';
+import CommandExecutionError from '../errors/command';
 
 export default class RunCommand {
     private _logger: Logger;
@@ -18,7 +19,7 @@ export default class RunCommand {
     private _workspaceAdapter: Workspace;
     private _errorMessageFormatter: ErrorMessageFormatter;
 
-    constructor(params) {
+    constructor(params: any) {
         this._logger = params.logger;
         this._shellCommandService = params.shellCommandService;
         this._commandReader = params.commandReader;
@@ -29,7 +30,7 @@ export default class RunCommand {
         this._errorMessageFormatter = new ErrorMessageFormatter();
     }
 
-    async execute(editor?) {
+    async execute(editor: VsTextEditor) {
         const wrappedEditor = this._wrapEditor(editor);
         try {
             const command = await this._commandReader.read();
@@ -58,10 +59,11 @@ export default class RunCommand {
         }
     }
 
-    async _handleError(e) {
+    async _handleError(e: Error | CommandExecutionError) {
         this._logger.error(e.stack);
 
-        const errorMessage = this._errorMessageFormatter.format(e.errorOutput || e.message);
+        const sourceMessage = e instanceof CommandExecutionError ? e.errorOutput : e.message;
+        const errorMessage = this._errorMessageFormatter.format(sourceMessage);
         await this._showErrorMessage(errorMessage);
     }
 

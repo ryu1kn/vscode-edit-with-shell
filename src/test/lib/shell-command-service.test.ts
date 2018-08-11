@@ -1,12 +1,14 @@
-import {expect, sinon, stubWithArgs} from '../helper';
-import ShellCommandService from '../../lib/shell-command-service';
+import {expect, mockMethods, sinon, stubWithArgs, when} from '../helper';
+import ShellCommandService, {SpawnWrapper} from '../../lib/shell-command-service';
+import ShellCommandExecContext from '../../lib/shell-command-exec-context';
+import ProcessRunner from '../../lib/process-runner';
 
 describe('ShellCommandService', () => {
 
-    let childProcess;
-    let processRunner;
-    let shellCommandExecContext;
-    let service;
+    let childProcess: SpawnWrapper;
+    let processRunner: ProcessRunner;
+    let shellCommandExecContext: ShellCommandExecContext;
+    let service: ShellCommandService;
 
     beforeEach(() => {
         childProcess = {
@@ -18,19 +20,20 @@ describe('ShellCommandService', () => {
         };
         processRunner = {
             run: stubWithArgs(
-                ['COMMAND', undefined], Promise.resolve('COMMAND_OUTPUT'),
+                ['COMMAND', ''], Promise.resolve('COMMAND_OUTPUT'),
                 ['COMMAND', 'SELECTED_TEXT'], Promise.resolve('COMMAND_OUTPUT_TEST_WITH_INPUT')
             )
         };
-        shellCommandExecContext = {
-            env: {SOME_ENV_VAR: '...'},
-            getCwd: stubWithArgs(['FILE_PATH'], 'COMMAND_EXEC_DIR')
-        };
+        shellCommandExecContext = mockMethods<ShellCommandExecContext>(['getCwd'], {
+            env: {SOME_ENV_VAR: '...'}
+        });
+        when(shellCommandExecContext.getCwd('FILE_PATH')).thenReturn('COMMAND_EXEC_DIR');
+
         service = createShellCommandService({childProcess, processRunner, shellCommandExecContext});
     });
 
     it('runs a given command on shell', async () => {
-        const params = {command: 'COMMAND_STRING'};
+        const params = {command: 'COMMAND_STRING', input: ''};
         const output = await service.runCommand(params);
 
         expect(output).to.eql('COMMAND_OUTPUT');
@@ -47,7 +50,7 @@ describe('ShellCommandService', () => {
     });
 
     it('inherits environment variables on executing a command', async () => {
-        const params = {command: 'COMMAND_TEST_WITH_ENVVARS'};
+        const params = {command: 'COMMAND_TEST_WITH_ENVVARS', input: ''};
         const output = await service.runCommand(params);
 
         expect(output).to.eql('COMMAND_OUTPUT');
@@ -56,6 +59,7 @@ describe('ShellCommandService', () => {
     it('executes a command on a specific directory', async () => {
         const params = {
             command: 'COMMAND_TEST_WITH_EXEC_DIR',
+            input: '',
             filePath: 'FILE_PATH'
         };
         const output = await service.runCommand(params);
@@ -83,7 +87,7 @@ describe('ShellCommandService', () => {
         }
     });
 
-    function createShellCommandService({childProcess, processRunner, shellCommandExecContext}) {
+    function createShellCommandService({childProcess, processRunner, shellCommandExecContext}: any) {
         return new ShellCommandService({
             childProcess,
             processRunner,

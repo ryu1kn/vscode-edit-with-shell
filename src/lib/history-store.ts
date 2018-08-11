@@ -1,6 +1,6 @@
 
 export default class HistoryStore {
-    private _history: any;
+    private _history: string[];
 
     constructor() {
         this._history = [];
@@ -14,7 +14,7 @@ export default class HistoryStore {
         this._history = [];
     }
 
-    add(command) {
+    add(command: string) {
         const history = this._history;
         const index = history.indexOf(command);
         if (index === -1) {

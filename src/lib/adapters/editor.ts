@@ -9,7 +9,7 @@ export default class Editor {
     private _vsEditor: VsTextEditor;
     private _locationFactory: LocationFactory;
 
-    constructor(vsEditor, locationFactory?) {
+    constructor(vsEditor: VsTextEditor, locationFactory: LocationFactory) {
         this._vsEditor = vsEditor;
         this._locationFactory = locationFactory;
     }
@@ -23,19 +23,19 @@ export default class Editor {
         return this._vsEditor.document.getText();
     }
 
-    get filePath() {
+    get filePath(): string | undefined {
         const uri = this._vsEditor.document.uri;
-        return uri.scheme === 'file' ? uri.fsPath : null;
+        return uri.scheme === 'file' ? uri.fsPath : undefined;
     }
 
-    replaceSelectedTextWith(text) {
+    replaceSelectedTextWith(text: string) {
         const editor = this._vsEditor;
         return editor.edit(editBuilder => {
             editBuilder.replace(editor.selection, text);
         });
     }
 
-    replaceEntireTextWith(text) {
+    replaceEntireTextWith(text: string) {
         const editor = this._vsEditor;
         const document = editor.document;
         const lineCount = document.lineCount;

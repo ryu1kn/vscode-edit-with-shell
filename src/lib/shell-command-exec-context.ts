@@ -1,5 +1,6 @@
 import {EXTENSION_NAME} from './const';
 import Workspace from './adapters/workspace';
+import {EnvVars} from './types/env-vars';
 
 const path = require('path');
 
@@ -10,9 +11,9 @@ const CurrentDirectoryKind = {
 
 export default class ShellCommandExecContext {
     private _workspaceAdapter: Workspace;
-    private _process: { env: { HOME: string } };
+    private _process: EnvVars;
 
-    constructor(params) {
+    constructor(params: any) {
         this._process = params.process;
         this._workspaceAdapter = params.workspaceAdapter;
     }
@@ -21,7 +22,7 @@ export default class ShellCommandExecContext {
         return this._process.env;
     }
 
-    getCwd(filePath?) {
+    getCwd(filePath?: string) {
         const configPath = `${EXTENSION_NAME}.currentDirectoryKind`;
         const currentDirectoryKind = this._workspaceAdapter.getConfig(configPath);
         switch (currentDirectoryKind) {
