@@ -1,7 +1,5 @@
 .codeclimate.yml
 .editorconfig
-.eslintignore
-.eslintrc.yaml
 .gitignore
 .idea/**/*
 .nvmrc
@@ -15,8 +13,10 @@ __*/**/*
 cli-test-mocha.opts
 coverage/**/*
 images/animations/**/*
-jsconfig.json
 package-lock.json
 tag-release.sh
-test/**/*
-typings/**/*
+src/**/*
+out/test/**/*
+out/**/*.map
+tsconfig.json
+tslint.json

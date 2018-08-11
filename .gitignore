@@ -3,7 +3,7 @@
 /.vscode
 /coverage
 /node_modules
-/typings
 npm-debug.log
+/out
 *.vsix
 __*
