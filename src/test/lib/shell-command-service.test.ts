@@ -3,11 +3,9 @@ import {any, contains, mock, mockMethods, mockType, when} from '../helper';
 import ShellCommandService, {SpawnWrapper} from '../../lib/shell-command-service';
 import ProcessRunner from '../../lib/process-runner';
 import {ChildProcess} from 'child_process';
-import ShellProgrammeResolver from '../../lib/shell-programme-resolver';
-import ShellArgsRetriever from '../../lib/shell-args-retriever';
 import Workspace from '../../lib/adapters/workspace';
 import {EXTENSION_NAME} from '../../lib/const';
-import ShellCommandExecContext from '../../lib/shell-command-exec-context';
+import Process = NodeJS.Process;
 
 describe('ShellCommandService', () => {
 
@@ -37,9 +35,11 @@ describe('ShellCommandService', () => {
 
         service = new ShellCommandService(
             processRunner,
-            new ShellProgrammeResolver(workspace, platform),
-            new ShellArgsRetriever(workspace, platform),
-            new ShellCommandExecContext(workspace, {env: {SOME_ENV_VAR: '...'}}),
+            workspace,
+            mockType<Process>({
+                platform,
+                env: {SOME_ENV_VAR: '...'}
+            }),
             childProcess,
         );
     });

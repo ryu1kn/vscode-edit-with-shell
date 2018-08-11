@@ -1,4 +1,4 @@
 
 export interface EnvVarWrap {
-    env: {[key: string]: string};
+    env: {[key: string]: string | undefined};
 }

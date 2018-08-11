@@ -1,9 +1,6 @@
 import AppIntegrator from './app-integrator';
 import Editor from './adapters/editor';
 import ShellCommandService from './shell-command-service';
-import ShellCommandExecContext from './shell-command-exec-context';
-import ShellProgrammeResolver from './shell-programme-resolver';
-import ShellArgsRetriever from './shell-args-retriever';
 import CommandReader from './command-reader';
 import HistoryStore from './history-store';
 import ProcessRunner from './process-runner';
@@ -12,7 +9,6 @@ import ClearHistoryCommand from './commands/clear-history';
 import WorkspaceAdapter from './adapters/workspace';
 import * as vscode from 'vscode';
 import {Position, Range, TextEditor as VsTextEditor} from 'vscode';
-import {EnvVarWrap} from './types/env-vars';
 import {ExtensionCommand} from './commands/extension-command';
 import CommandWrap from './command-wrap';
 
@@ -63,9 +59,8 @@ export default class AppIntegratorFactory {
         const workspaceAdapter = this.workspaceAdapter;
         return new ShellCommandService(
             new ProcessRunner(),
-            new ShellProgrammeResolver(workspaceAdapter, process.platform),
-            new ShellArgsRetriever(workspaceAdapter, process.platform),
-            new ShellCommandExecContext(workspaceAdapter, process as EnvVarWrap),
+            workspaceAdapter,
+            process,
             childProcess
         );
     }
