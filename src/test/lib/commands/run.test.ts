@@ -8,76 +8,129 @@ import CommandReader from '../../../lib/command-reader';
 
 describe('RunCommand', () => {
 
-    it('runs command with editor contents and add commands to the history', async () => {
-        const historyStore = mock(HistoryStore);
-        const shellCommandService = mock(ShellCommandService);
-        when(shellCommandService.runCommand({
-            command: 'COMMAND_STRING',
-            input: 'SELECTED_TEXT',
-            filePath: 'FILE_NAME'
-        })).thenResolve('COMMAND_OUTPUT');
-        const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
-            selectedText: 'SELECTED_TEXT',
-            filePath: 'FILE_NAME'
-        });
+    describe('When command is specified and "processEntireTextIfNoneSelected" is set to "false"', () => {
+        const commandReader = mockType<CommandReader>({read: () => Promise.resolve('COMMAND_STRING')});
         const workspaceAdapter = mockType<Workspace>({
             getConfig: (key: string) => key === 'editWithShell.processEntireTextIfNoneSelected' && false
         });
-        const command = new RunCommand(
-            shellCommandService,
-            mockType<CommandReader>({read: () => Promise.resolve('COMMAND_STRING')}),
-            historyStore,
-            workspaceAdapter
-        );
 
-        await command.execute(editor);
+        let shellCommandService: ShellCommandService;
+        let historyStore: HistoryStore;
+        let command: RunCommand;
 
-        verify(editor.replaceSelectedTextWith('COMMAND_OUTPUT'));
-        verify(historyStore.add('COMMAND_STRING'));
+        beforeEach(() => {
+            shellCommandService = mock(ShellCommandService);
+            when(shellCommandService.runCommand({
+                command: 'COMMAND_STRING',
+                input: 'SELECTED_TEXT',
+                filePath: 'FILE_NAME'
+            })).thenResolve('COMMAND_OUTPUT_1');
+            when(shellCommandService.runCommand({
+                command: 'COMMAND_STRING',
+                input: '',
+                filePath: 'FILE_NAME'
+            })).thenResolve('COMMAND_OUTPUT_2');
+
+            historyStore = mock(HistoryStore);
+            command = new RunCommand(shellCommandService, commandReader, historyStore, workspaceAdapter);
+        });
+
+        it('runs command with selected text and add commands to the history', async () => {
+            const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
+                selectedText: 'SELECTED_TEXT',
+                entireText: 'ENTIRE_TEXT',
+                filePath: 'FILE_NAME'
+            });
+
+            await command.execute(editor);
+
+            verify(editor.replaceSelectedTextWith('COMMAND_OUTPUT_1'));
+            verify(historyStore.add('COMMAND_STRING'));
+        });
+
+        it('runs command with no input text', async () => {
+            const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
+                selectedText: '',
+                entireText: 'ENTIRE_TEXT',
+                filePath: 'FILE_NAME'
+            });
+
+            await command.execute(editor);
+
+            verify(editor.replaceSelectedTextWith('COMMAND_OUTPUT_2'));
+        });
     });
 
-    it('processes the entire text', async () => {
-        const historyStore = mockType<HistoryStore>({add: () => {}});
-        const shellCommandService = mock(ShellCommandService);
-        when(shellCommandService.runCommand({
-            command: 'COMMAND_STRING',
-            input: 'ENTIRE_TEXT',
-            filePath: 'FILE_NAME'
-        })).thenResolve('COMMAND_OUTPUT');
-        const editor = mockMethods<Editor>(['replaceEntireTextWith'], {
-            entireText: 'ENTIRE_TEXT',
-            filePath: 'FILE_NAME'
-        });
+    describe('When command is specified and "processEntireTextIfNoneSelected" is set to "true"', () => {
+        const commandReader = mockType<CommandReader>({read: () => Promise.resolve('COMMAND_STRING')});
         const workspaceAdapter = mockType<Workspace>({
             getConfig: (key: string) => key === 'editWithShell.processEntireTextIfNoneSelected'
         });
-        const command = new RunCommand(
-            shellCommandService,
-            mockType<CommandReader>({read: () => Promise.resolve('COMMAND_STRING')}),
-            historyStore,
-            workspaceAdapter
-        );
 
-        await command.execute(editor);
+        let shellCommandService: ShellCommandService;
+        let historyStore: HistoryStore;
+        let command: RunCommand;
 
-        verify(editor.replaceEntireTextWith('COMMAND_OUTPUT'));
+        beforeEach(() => {
+            shellCommandService = mock(ShellCommandService);
+            when(shellCommandService.runCommand({
+                command: 'COMMAND_STRING',
+                input: 'SELECTED_TEXT',
+                filePath: 'FILE_NAME'
+            })).thenResolve('COMMAND_OUTPUT_1');
+            when(shellCommandService.runCommand({
+                command: 'COMMAND_STRING',
+                input: 'ENTIRE_TEXT',
+                filePath: 'FILE_NAME'
+            })).thenResolve('COMMAND_OUTPUT_2');
+
+            historyStore = mock(HistoryStore);
+            command = new RunCommand(shellCommandService, commandReader, historyStore, workspaceAdapter);
+        });
+
+        it('runs command with selected text', async () => {
+            const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
+                selectedText: 'SELECTED_TEXT',
+                entireText: 'ENTIRE_TEXT',
+                filePath: 'FILE_NAME'
+            });
+
+            await command.execute(editor);
+
+            verify(editor.replaceSelectedTextWith('COMMAND_OUTPUT_1'));
+        });
+
+        it('runs command with entire text', async () => {
+            const editor = mockMethods<Editor>(['replaceEntireTextWith'], {
+                selectedText: '',
+                entireText: 'ENTIRE_TEXT',
+                filePath: 'FILE_NAME'
+            });
+
+            await command.execute(editor);
+
+            verify(editor.replaceEntireTextWith('COMMAND_OUTPUT_2'));
+        });
     });
 
-    it('does not try to run a command if one is not given', async () => {
-        const historyStore = mock(HistoryStore);
-        const shellCommandService = mock(ShellCommandService);
-        const editor = mock(Editor);
-        const command = new RunCommand(
-            shellCommandService,
-            mockType<CommandReader>({read: () => Promise.resolve()}),
-            historyStore,
-            mockType<Workspace>()
-        );
+    describe('When command is NOT specified', () => {
 
-        await command.execute(editor);
+        it('does not try to run a command', async () => {
+            const historyStore = mock(HistoryStore);
+            const shellCommandService = mock(ShellCommandService);
+            const editor = mock(Editor);
+            const command = new RunCommand(
+                shellCommandService,
+                mockType<CommandReader>({read: () => Promise.resolve()}),
+                historyStore,
+                mockType<Workspace>()
+            );
 
-        verify(editor.replaceSelectedTextWith(any()), {times: 0});
-        verify(shellCommandService.runCommand(any()), {times: 0});
-        verify(historyStore.add(any()), {times: 0});
+            await command.execute(editor);
+
+            verify(editor.replaceSelectedTextWith(any()), {times: 0});
+            verify(shellCommandService.runCommand(any()), {times: 0});
+            verify(historyStore.add(any()), {times: 0});
+        });
     });
 });
