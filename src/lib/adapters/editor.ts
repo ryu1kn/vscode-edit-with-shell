@@ -16,13 +16,17 @@ export default class Editor {
         this.locationFactory = locationFactory;
     }
 
-    get selectedText() {
+    get selectedText(): string {
         const editor = this.vsEditor;
         return editor.document.getText(editor.selection);
     }
 
-    get entireText() {
+    get entireText(): string {
         return this.vsEditor.document.getText();
+    }
+
+    get isTextSelected(): boolean {
+        return this.selectedText !== '';
     }
 
     get filePath(): string | undefined {

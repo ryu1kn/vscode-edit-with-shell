@@ -27,22 +27,34 @@ export default class RunCommand implements ExtensionCommand {
         if (!command) return;
 
         this.historyStore.add(command);
-        const processEntireText = this.workspaceAdapter
-            .getConfig(`${EXTENSION_NAME}.processEntireTextIfNoneSelected`);
-        if (processEntireText) {
-            const commandOutput = await this.shellCommandService.runCommand({
-                command,
-                input: wrappedEditor.entireText,
-                filePath: wrappedEditor.filePath
-            });
-            await wrappedEditor.replaceEntireTextWith(commandOutput);
+
+        if (this.shouldPassEntireText(wrappedEditor)) {
+            await this.processEntireText(command, wrappedEditor);
         } else {
-            const commandOutput = await this.shellCommandService.runCommand({
-                command,
-                input: wrappedEditor.selectedText,
-                filePath: wrappedEditor.filePath
-            });
-            await wrappedEditor.replaceSelectedTextWith(commandOutput);
+            await this.processSelectedText(command, wrappedEditor);
         }
+    }
+
+    private async processSelectedText(command: string, wrappedEditor: Editor): Promise<void> {
+        const commandOutput = await this.shellCommandService.runCommand({
+            command,
+            input: wrappedEditor.selectedText,
+            filePath: wrappedEditor.filePath
+        });
+        await wrappedEditor.replaceSelectedTextWith(commandOutput);
+    }
+
+    private async processEntireText(command: string, wrappedEditor: Editor): Promise<void> {
+        const commandOutput = await this.shellCommandService.runCommand({
+            command,
+            input: wrappedEditor.entireText,
+            filePath: wrappedEditor.filePath
+        });
+        await wrappedEditor.replaceEntireTextWith(commandOutput);
+    }
+
+    private shouldPassEntireText(wrappedEditor: Editor) {
+        const processEntireText = this.workspaceAdapter.getConfig(`${EXTENSION_NAME}.processEntireTextIfNoneSelected`);
+        return !wrappedEditor.isTextSelected && processEntireText;
     }
 }

@@ -37,6 +37,7 @@ describe('RunCommand', () => {
 
         it('runs command with selected text and add commands to the history', async () => {
             const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
+                isTextSelected: true,
                 selectedText: 'SELECTED_TEXT',
                 entireText: 'ENTIRE_TEXT',
                 filePath: 'FILE_NAME'
@@ -50,6 +51,7 @@ describe('RunCommand', () => {
 
         it('runs command with no input text', async () => {
             const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
+                isTextSelected: false,
                 selectedText: '',
                 entireText: 'ENTIRE_TEXT',
                 filePath: 'FILE_NAME'
@@ -90,6 +92,7 @@ describe('RunCommand', () => {
 
         it('runs command with selected text', async () => {
             const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
+                isTextSelected: true,
                 selectedText: 'SELECTED_TEXT',
                 entireText: 'ENTIRE_TEXT',
                 filePath: 'FILE_NAME'
@@ -102,6 +105,7 @@ describe('RunCommand', () => {
 
         it('runs command with entire text', async () => {
             const editor = mockMethods<Editor>(['replaceEntireTextWith'], {
+                isTextSelected: false,
                 selectedText: '',
                 entireText: 'ENTIRE_TEXT',
                 filePath: 'FILE_NAME'
