@@ -2,7 +2,7 @@
   "name": "edit-with-shell",
   "displayName": "Edit with Shell Command",
   "description": "Leverage your favourite shell commands to edit text",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "ryu1kn",
   "license": "SEE LICENSE IN LICENSE.txt",
   "icon": "images/edit-with-shell.png",
