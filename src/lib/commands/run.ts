@@ -53,8 +53,8 @@ export default class RunCommand implements ExtensionCommand {
         await wrappedEditor.replaceEntireTextWith(commandOutput);
     }
 
-    private shouldPassEntireText(wrappedEditor: Editor) {
-        const processEntireText = this.workspaceAdapter.getConfig(`${EXTENSION_NAME}.processEntireTextIfNoneSelected`);
+    private shouldPassEntireText(wrappedEditor: Editor): boolean {
+        const processEntireText = this.workspaceAdapter.getConfig<boolean>(`${EXTENSION_NAME}.processEntireTextIfNoneSelected`);
         return !wrappedEditor.isTextSelected && processEntireText;
     }
 }

@@ -12,11 +12,11 @@ export default class ShellSettingsResolver {
     }
 
     shellProgramme(): string {
-        return this.workspaceAdapter.getConfig(`${EXTENSION_NAME}.shell.${this.osKind}`) as string;
+        return this.workspaceAdapter.getConfig<string>(`${EXTENSION_NAME}.shell.${this.osKind}`);
     }
 
     shellArgs(): string[] {
-        return this.workspaceAdapter.getConfig(`${EXTENSION_NAME}.shellArgs.${this.osKind}`) as string[];
+        return this.workspaceAdapter.getConfig<string[]>(`${EXTENSION_NAME}.shellArgs.${this.osKind}`);
     }
 
     private get osKind() {

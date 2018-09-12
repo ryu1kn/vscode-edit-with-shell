@@ -9,9 +9,9 @@ export default class Workspace {
         this.vsWorkspace = vsWorkspace;
     }
 
-    getConfig(configPath: string) {
+    getConfig<T>(configPath: string): T {
         const {basePath, leafName} = this.parseConfigPath(configPath);
-        return this.vsWorkspace.getConfiguration(basePath).get(leafName);
+        return this.vsWorkspace.getConfiguration(basePath).get(leafName) as T;
     }
 
     private parseConfigPath(configPath: string) {

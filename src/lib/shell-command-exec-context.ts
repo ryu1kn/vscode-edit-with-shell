@@ -23,7 +23,7 @@ export default class ShellCommandExecContext {
 
     getCwd(filePath?: string) {
         const configPath = `${EXTENSION_NAME}.currentDirectoryKind`;
-        const currentDirectoryKind = this.workspaceAdapter.getConfig(configPath) as CurrentDirectoryKind;
+        const currentDirectoryKind = this.workspaceAdapter.getConfig<CurrentDirectoryKind>(configPath);
         switch (currentDirectoryKind) {
         case CurrentDirectoryKind.CURRENT_FILE:
             return filePath ? dirname(filePath) : this.env.HOME;
