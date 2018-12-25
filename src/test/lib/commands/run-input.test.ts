@@ -1,4 +1,4 @@
-import RunCommand from '../../../lib/commands/run';
+import RunInputCommand from '../../../lib/commands/run-input';
 import Workspace from '../../../lib/adapters/workspace';
 import Editor from '../../../lib/adapters/editor';
 import ShellCommandService from '../../../lib/shell-command-service';
@@ -6,7 +6,7 @@ import HistoryStore from '../../../lib/history-store';
 import {any, mock, mockMethods, mockType, verify, when} from '../../helper';
 import CommandReader from '../../../lib/command-reader';
 
-describe('RunCommand', () => {
+describe('RunInputCommand', () => {
 
     describe('When command is specified and "processEntireTextIfNoneSelected" is set to "false"', () => {
         const commandReader = mockType<CommandReader>({read: () => Promise.resolve('COMMAND_STRING')});
@@ -16,7 +16,7 @@ describe('RunCommand', () => {
 
         let shellCommandService: ShellCommandService;
         let historyStore: HistoryStore;
-        let command: RunCommand;
+        let command: RunInputCommand;
 
         beforeEach(() => {
             shellCommandService = mock(ShellCommandService);
@@ -32,7 +32,7 @@ describe('RunCommand', () => {
             })).thenResolve('COMMAND_OUTPUT_2');
 
             historyStore = mock(HistoryStore);
-            command = new RunCommand(shellCommandService, commandReader, historyStore, workspaceAdapter);
+            command = new RunInputCommand(shellCommandService, commandReader, historyStore, workspaceAdapter);
         });
 
         it('runs command with selected text and add commands to the history', async () => {
@@ -71,7 +71,7 @@ describe('RunCommand', () => {
 
         let shellCommandService: ShellCommandService;
         let historyStore: HistoryStore;
-        let command: RunCommand;
+        let command: RunInputCommand;
 
         beforeEach(() => {
             shellCommandService = mock(ShellCommandService);
@@ -87,7 +87,7 @@ describe('RunCommand', () => {
             })).thenResolve('COMMAND_OUTPUT_2');
 
             historyStore = mock(HistoryStore);
-            command = new RunCommand(shellCommandService, commandReader, historyStore, workspaceAdapter);
+            command = new RunInputCommand(shellCommandService, commandReader, historyStore, workspaceAdapter);
         });
 
         it('runs command with selected text', async () => {
@@ -123,7 +123,7 @@ describe('RunCommand', () => {
             const historyStore = mock(HistoryStore);
             const shellCommandService = mock(ShellCommandService);
             const editor = mock(Editor);
-            const command = new RunCommand(
+            const command = new RunInputCommand(
                 shellCommandService,
                 mockType<CommandReader>({read: () => Promise.resolve()}),
                 historyStore,

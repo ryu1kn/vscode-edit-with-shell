@@ -4,7 +4,7 @@ import ShellCommandService from './shell-command-service';
 import CommandReader from './command-reader';
 import HistoryStore from './history-store';
 import ProcessRunner from './process-runner';
-import RunCommand from './commands/run';
+import RunInputCommand from './commands/run-input';
 import ClearHistoryCommand from './commands/clear-history';
 import WorkspaceAdapter from './adapters/workspace';
 import * as vscode from 'vscode';
@@ -30,7 +30,7 @@ export default class AppIntegratorFactory {
     }
 
     private get runCommand() {
-        return this.wrapCommand(new RunCommand(
+        return this.wrapCommand(new RunInputCommand(
             this.shellCommandService,
             new CommandReader(this.historyStore, vscode.window),
             this.historyStore,

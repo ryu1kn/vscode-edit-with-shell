@@ -1,29 +1,27 @@
 import {EXTENSION_NAME} from '../const';
 import ShellCommandService from '../shell-command-service';
-import CommandReader from '../command-reader';
 import HistoryStore from '../history-store';
 import Workspace from '../adapters/workspace';
 import Editor from '../adapters/editor';
 import {ExtensionCommand} from './extension-command';
 
-export default class RunCommand implements ExtensionCommand {
+export abstract class RunCommand implements ExtensionCommand {
     private readonly shellCommandService: ShellCommandService;
-    private readonly commandReader: CommandReader;
     private readonly historyStore: HistoryStore;
     private readonly workspaceAdapter: Workspace;
 
     constructor(shellCommandService: ShellCommandService,
-                commandReader: CommandReader,
                 historyStore: HistoryStore,
                 workspaceAdapter: Workspace) {
         this.shellCommandService = shellCommandService;
-        this.commandReader = commandReader;
         this.historyStore = historyStore;
         this.workspaceAdapter = workspaceAdapter;
     }
 
+    protected abstract getCommandText(): Promise<string|undefined>;
+
     async execute(wrappedEditor: Editor) {
-        const command = await this.commandReader.read();
+        const command = await this.getCommandText();
         if (!command) return;
 
         this.historyStore.add(command);
