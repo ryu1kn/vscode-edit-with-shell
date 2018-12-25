@@ -5,11 +5,13 @@ import CommandWrap from './command-wrap';
 export default class AppIntegrator {
     private readonly vscode: any;
     private readonly runCommand: CommandWrap;
+    private readonly runQuickCommand: CommandWrap;
     private readonly clearHistoryCommand: CommandWrap;
 
-    constructor(runCommand: CommandWrap, clearHistoryCommand: CommandWrap, vscode: any) {
+    constructor(runCommand: CommandWrap, runQuickCommand: CommandWrap, clearHistoryCommand: CommandWrap, vscode: any) {
         this.vscode = vscode;
         this.runCommand = runCommand;
+        this.runQuickCommand = runQuickCommand;
         this.clearHistoryCommand = clearHistoryCommand;
     }
 
@@ -34,6 +36,13 @@ export default class AppIntegrator {
             this.runCommand
         );
         context.subscriptions.push(disposable);
+
+        const disposable1 = this.vscode.commands.registerTextEditorCommand(
+            `${EXTENSION_NAME}.runQuickCommand1`,
+            this.runQuickCommand.execute,
+            this.runQuickCommand
+        );
+        context.subscriptions.push(disposable1);
     }
 
 }

@@ -11,6 +11,7 @@ import * as vscode from 'vscode';
 import {Position, Range, TextEditor as VsTextEditor} from 'vscode';
 import {ExtensionCommand} from './commands/extension-command';
 import CommandWrap from './command-wrap';
+import RunQuickCommand from './commands/run-quick';
 
 const childProcess = require('child_process');
 
@@ -25,13 +26,21 @@ export default class AppIntegratorFactory {
     }
 
     create() {
-        return new AppIntegrator(this.runCommand, this.clearHistoryCommand, vscode);
+        return new AppIntegrator(this.runCommand, this.runQuickCommand1, this.clearHistoryCommand, vscode);
     }
 
     private get runCommand() {
         return this.wrapCommand(new RunCommand(
             this.shellCommandService,
             new CommandReader(this.historyStore, vscode.window),
+            this.historyStore,
+            this.workspaceAdapter
+        ));
+    }
+
+    private get runQuickCommand1() {
+        return this.wrapCommand(new RunQuickCommand(
+            this.shellCommandService,
             this.historyStore,
             this.workspaceAdapter
         ));

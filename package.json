@@ -27,7 +27,8 @@
   ],
   "activationEvents": [
     "onCommand:editWithShell.clearCommandHistory",
-    "onCommand:editWithShell.runCommand"
+    "onCommand:editWithShell.runCommand",
+    "onCommand:editWithShell.runQuickCommand1"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -40,6 +41,11 @@
       {
         "command": "editWithShell.runCommand",
         "title": "Run command",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand1",
+        "title": "Run quick command 1",
         "category": "EditWithShell"
       }
     ],
@@ -55,6 +61,30 @@
             "workspaceRoot"
           ],
           "default": "currentFile"
+        },
+        "editWithShell.quickCommand1": {
+          "description": "Quick command 1",
+          "type": "string"
+        },
+        "editWithShell.favoriteCommands": {
+          "description": "Commands that can be activated via quick commands",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "command": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "command"
+            ]
+          },
+          "default": []
         },
         "editWithShell.processEntireTextIfNoneSelected": {
           "description": "Pipe the entire text to the shell command if no text is selected",
