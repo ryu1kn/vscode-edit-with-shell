@@ -10,6 +10,7 @@ Leverage your favourite shell commands to edit text.
 * Insert the output of shell commands at the cursor position.
 * Records command history: you can edit and reuse past commands.
 * Use the shell you like. For example, if you have Bash on Windows, you can specify Bash as your shell for this extension.
+* Register up to 5 quick commands that can be invoked by keyboard shortcuts.
 
 ![Edit with Shell Command](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/public.gif)
 
@@ -35,6 +36,10 @@ A couple of requests from me when you raise an github issue.
 * `EditWithShell: Clear Command History` (**Command ID:** `editWithShell.clearCommandHistory`)
 
     Clear command history
+    
+* `EditWithShell: Run quick command 1` (**Command ID:** `editWithShell.runQuickCommand1`)
+
+    Run quick command 1. **You have quick commands up to 5**, i.e. `editWithShell.runQuickCommand5`
 
 ## Configurations
 
@@ -45,6 +50,30 @@ A couple of requests from me when you raise an github issue.
 * `editWithShell.processEntireTextIfNoneSelected` (default: `false`)
 
     Pipe the entire text to the shell command if no text is selected
+
+* `editWithShell.favoriteCommands` (default: `[]`)
+
+    List of commands that can be activated by quick commands. Each element must have a command ID and command. e.g:
+    
+    ```
+    "editWithShell.favoriteCommands": [
+      {
+        "id": "extract-email-and-sort-on-address-book",
+        "command": "cut -d, -f3 | sort"
+      },
+      {
+        "id": "insert-melbourne-time",
+        "command": "TZ=Australia/Melbourne date '+%Y-%m-%dT%H:%M:%S'"
+      },
+      ...
+    ]
+    ```
+
+* `editWithShell.quickCommand1` (default: `""`)
+
+    ID of a favorite command triggered with quick command 1. e.g. `"insert-melbourne-time"` of `favoriteCommands` config value example.
+    
+    **You have quick commands up to 5**, i.e. `editWithShell.quickCommand5`.
 
 * `editWithShell.shell.linux` (default: `"/bin/sh"`)
 
@@ -74,9 +103,11 @@ A couple of requests from me when you raise an github issue.
 
 You can quickly open a command input box by registering the extension command to your keyboard shortcut settings. For example:
 
-```json
+```
   { "key": "ctrl+r ctrl+r", "command": "editWithShell.runCommand",
-                            "when": "editorTextFocus" }
+                            "when": "editorTextFocus" },
+  { "key": "ctrl+r ctrl+1", "command": "editWithShell.quickCommand1",
+                            "when": "editorTextFocus" },
 ```
 
 ## Changelog

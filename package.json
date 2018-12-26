@@ -87,27 +87,27 @@
           "default": "currentFile"
         },
         "editWithShell.quickCommand1": {
-          "description": "Quick command 1",
+          "description": "ID of a favorite command triggered by quick command 1",
           "type": "string"
         },
         "editWithShell.quickCommand2": {
-          "description": "Quick command 2",
+          "description": "ID of a favorite command triggered by quick command 2",
           "type": "string"
         },
         "editWithShell.quickCommand3": {
-          "description": "Quick command 3",
+          "description": "ID of a favorite command triggered by quick command 3",
           "type": "string"
         },
         "editWithShell.quickCommand4": {
-          "description": "Quick command 4",
+          "description": "ID of a favorite command triggered by quick command 4",
           "type": "string"
         },
         "editWithShell.quickCommand5": {
-          "description": "Quick command 5",
+          "description": "ID of a favorite command triggered by quick command 5",
           "type": "string"
         },
         "editWithShell.favoriteCommands": {
-          "description": "Commands that can be activated via quick commands",
+          "description": "Commands that can be activated by quick commands",
           "type": "array",
           "items": {
             "type": "object",
