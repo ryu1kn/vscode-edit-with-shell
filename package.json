@@ -28,7 +28,11 @@
   "activationEvents": [
     "onCommand:editWithShell.clearCommandHistory",
     "onCommand:editWithShell.runCommand",
-    "onCommand:editWithShell.runQuickCommand1"
+    "onCommand:editWithShell.runQuickCommand1",
+    "onCommand:editWithShell.runQuickCommand2",
+    "onCommand:editWithShell.runQuickCommand3",
+    "onCommand:editWithShell.runQuickCommand4",
+    "onCommand:editWithShell.runQuickCommand5"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -47,6 +51,26 @@
         "command": "editWithShell.runQuickCommand1",
         "title": "Run quick command 1",
         "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand2",
+        "title": "Run quick command 2",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand3",
+        "title": "Run quick command 3",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand4",
+        "title": "Run quick command 4",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand5",
+        "title": "Run quick command 5",
+        "category": "EditWithShell"
       }
     ],
     "configuration": {
@@ -64,6 +88,22 @@
         },
         "editWithShell.quickCommand1": {
           "description": "Quick command 1",
+          "type": "string"
+        },
+        "editWithShell.quickCommand2": {
+          "description": "Quick command 2",
+          "type": "string"
+        },
+        "editWithShell.quickCommand3": {
+          "description": "Quick command 3",
+          "type": "string"
+        },
+        "editWithShell.quickCommand4": {
+          "description": "Quick command 4",
+          "type": "string"
+        },
+        "editWithShell.quickCommand5": {
+          "description": "Quick command 5",
           "type": "string"
         },
         "editWithShell.favoriteCommands": {
