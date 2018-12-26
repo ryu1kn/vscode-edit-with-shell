@@ -11,16 +11,19 @@ interface FavoriteCommand {
 
 export default class RunQuickCommand extends RunCommand {
     private readonly workspace: Workspace;
+    private readonly commandNumber: number;
 
     constructor(shellCommandService: ShellCommandService,
                 historyStore: HistoryStore,
-                workspaceAdapter: Workspace) {
+                workspaceAdapter: Workspace,
+                commandNumber: number) {
         super(shellCommandService, historyStore, workspaceAdapter);
         this.workspace = workspaceAdapter;
+        this.commandNumber = commandNumber;
     }
 
     protected getCommandText(): Promise<string|undefined> {
-        const commandId = this.workspace.getConfig<string>(`${EXTENSION_NAME}.quickCommand1`);
+        const commandId = this.workspace.getConfig<string>(`${EXTENSION_NAME}.quickCommand${this.commandNumber}`);
         const favoriteCommands = this.workspace.getConfig<FavoriteCommand[]>(`${EXTENSION_NAME}.favoriteCommands`);
         const command = favoriteCommands.find(c => c.id === commandId);
         return Promise.resolve(command && command.command);

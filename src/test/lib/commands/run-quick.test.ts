@@ -33,7 +33,7 @@ describe('RunQuickCommand', () => {
             })).thenResolve('COMMAND_OUTPUT_2');
 
             historyStore = mock(HistoryStore);
-            command = new RunQuickCommand(shellCommandService, historyStore, workspaceAdapter);
+            command = new RunQuickCommand(shellCommandService, historyStore, workspaceAdapter, 1);
         });
 
         it('runs command with selected text and add commands to the history', async () => {
@@ -90,7 +90,7 @@ describe('RunQuickCommand', () => {
             })).thenResolve('COMMAND_OUTPUT_2');
 
             historyStore = mock(HistoryStore);
-            command = new RunQuickCommand(shellCommandService, historyStore, workspaceAdapter);
+            command = new RunQuickCommand(shellCommandService, historyStore, workspaceAdapter, 1);
         });
 
         it('runs command with selected text', async () => {
@@ -129,11 +129,7 @@ describe('RunQuickCommand', () => {
             const historyStore = mock(HistoryStore);
             const shellCommandService = mock(ShellCommandService);
             const editor = mock(Editor);
-            const command = new RunQuickCommand(
-                shellCommandService,
-                historyStore,
-                workspaceAdapter
-            );
+            const command = new RunQuickCommand(shellCommandService, historyStore, workspaceAdapter, 1);
 
             await command.execute(editor);
 

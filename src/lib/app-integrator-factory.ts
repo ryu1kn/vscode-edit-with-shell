@@ -42,7 +42,8 @@ export default class AppIntegratorFactory {
         return this.wrapCommand(new RunQuickCommand(
             this.shellCommandService,
             this.historyStore,
-            this.workspaceAdapter
+            this.workspaceAdapter,
+            1
         ));
     }
 
