@@ -26,7 +26,7 @@ export default class AppIntegratorFactory {
     }
 
     create() {
-        return new AppIntegrator(this.runCommand, this.runQuickCommand1, this.clearHistoryCommand, vscode);
+        return new AppIntegrator(this.runCommand, this.clearHistoryCommand, this.createQuickCommand, vscode);
     }
 
     private get runCommand() {
@@ -38,12 +38,12 @@ export default class AppIntegratorFactory {
         ));
     }
 
-    private get runQuickCommand1() {
-        return this.wrapCommand(new RunQuickCommand(
+    private get createQuickCommand() {
+        return (commandNumber: number) => this.wrapCommand(new RunQuickCommand(
             this.shellCommandService,
             this.historyStore,
             this.workspaceAdapter,
-            1
+            commandNumber
         ));
     }
 
