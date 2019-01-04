@@ -105,9 +105,9 @@ You can quickly open a command input box by registering the extension command to
 
 ```
   { "key": "ctrl+r ctrl+r", "command": "editWithShell.runCommand",
-                            "when": "editorTextFocus" },
-  { "key": "ctrl+r ctrl+1", "command": "editWithShell.quickCommand1",
-                            "when": "editorTextFocus" },
+                            "when": "editorTextFocus && !editorReadonly" },
+  { "key": "ctrl+r ctrl+1", "command": "editWithShell.runQuickCommand1",
+                            "when": "editorTextFocus && !editorReadonly" },
 ```
 
 ## Changelog
