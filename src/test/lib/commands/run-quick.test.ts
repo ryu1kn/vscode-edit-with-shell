@@ -37,30 +37,30 @@ describe('RunQuickCommand', () => {
         });
 
         it('runs command with selected text and add commands to the history', async () => {
-            const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
+            const editor = mockMethods<Editor>(['replaceSelectedTextsWith'], {
                 isTextSelected: true,
-                selectedText: 'SELECTED_TEXT',
+                selectedTexts: ['SELECTED_TEXT'],
                 entireText: 'ENTIRE_TEXT',
                 filePath: 'FILE_NAME'
             });
 
             await command.execute(editor);
 
-            verify(editor.replaceSelectedTextWith('COMMAND_OUTPUT_1'));
+            verify(editor.replaceSelectedTextsWith(['COMMAND_OUTPUT_1']));
             verify(historyStore.add('COMMAND_STRING'));
         });
 
         it('runs command with no input text', async () => {
-            const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
+            const editor = mockMethods<Editor>(['replaceSelectedTextsWith'], {
                 isTextSelected: false,
-                selectedText: '',
+                selectedTexts: [''],
                 entireText: 'ENTIRE_TEXT',
                 filePath: 'FILE_NAME'
             });
 
             await command.execute(editor);
 
-            verify(editor.replaceSelectedTextWith('COMMAND_OUTPUT_2'));
+            verify(editor.replaceSelectedTextsWith(['COMMAND_OUTPUT_2']));
         });
     });
 
@@ -94,22 +94,22 @@ describe('RunQuickCommand', () => {
         });
 
         it('runs command with selected text', async () => {
-            const editor = mockMethods<Editor>(['replaceSelectedTextWith'], {
+            const editor = mockMethods<Editor>(['replaceSelectedTextsWith'], {
                 isTextSelected: true,
-                selectedText: 'SELECTED_TEXT',
+                selectedTexts: ['SELECTED_TEXT'],
                 entireText: 'ENTIRE_TEXT',
                 filePath: 'FILE_NAME'
             });
 
             await command.execute(editor);
 
-            verify(editor.replaceSelectedTextWith('COMMAND_OUTPUT_1'));
+            verify(editor.replaceSelectedTextsWith(['COMMAND_OUTPUT_1']));
         });
 
         it('runs command with entire text', async () => {
             const editor = mockMethods<Editor>(['replaceEntireTextWith'], {
                 isTextSelected: false,
-                selectedText: '',
+                selectedTexts: [''],
                 entireText: 'ENTIRE_TEXT',
                 filePath: 'FILE_NAME'
             });
@@ -133,7 +133,7 @@ describe('RunQuickCommand', () => {
 
             await command.execute(editor);
 
-            verify(editor.replaceSelectedTextWith(any()), {times: 0});
+            verify(editor.replaceSelectedTextsWith(any()), {times: 0});
             verify(shellCommandService.runCommand(any()), {times: 0});
             verify(historyStore.add(any()), {times: 0});
         });

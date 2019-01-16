@@ -29,17 +29,16 @@ export abstract class RunCommand implements ExtensionCommand {
         if (this.shouldPassEntireText(wrappedEditor)) {
             await this.processEntireText(command, wrappedEditor);
         } else {
-            await this.processSelectedText(command, wrappedEditor);
+            await this.processSelectedTexts(command, wrappedEditor);
         }
     }
 
-    private async processSelectedText(command: string, wrappedEditor: Editor): Promise<void> {
-        const commandOutput = await this.shellCommandService.runCommand({
-            command,
-            input: wrappedEditor.selectedText,
-            filePath: wrappedEditor.filePath
-        });
-        await wrappedEditor.replaceSelectedTextWith(commandOutput);
+    private async processSelectedTexts(command: string, wrappedEditor: Editor): Promise<void> {
+        const filePath = wrappedEditor.filePath;
+        const promiseOfCommandOutputs = wrappedEditor.selectedTexts
+            .map(input => this.shellCommandService.runCommand({command, input, filePath}));
+        const commandOutputs = await Promise.all(promiseOfCommandOutputs);
+        await wrappedEditor.replaceSelectedTextsWith(commandOutputs);
     }
 
     private async processEntireText(command: string, wrappedEditor: Editor): Promise<void> {

@@ -10,9 +10,9 @@ describe('Editor', () => {
     const locationFactory = {createPosition, createRange};
 
     it('holds a selected text', () => {
-        const vsEditor = fakeEditor({selectedText: 'SELECTED_TEXT'});
+        const vsEditor = fakeEditor({selectedTexts: ['SELECTED_TEXT']});
         const editor = new Editor(vsEditor, locationFactory);
-        assert.deepEqual(editor.selectedText, 'SELECTED_TEXT');
+        assert.deepEqual(editor.selectedTexts, ['SELECTED_TEXT']);
     });
 
     it('holds the entire text', () => {
@@ -35,12 +35,12 @@ describe('Editor', () => {
 
     it('replaces the selected text with given text', async () => {
         const editBuilder = mockMethods<vscode.TextEditorEdit>(['replace']);
-        const vsEditor = fakeEditor({selectedText: 'SELECTED_TEXT', editBuilder});
+        const vsEditor = fakeEditor({selectedTexts: ['SELECTED_TEXT'], editBuilder});
         const editor = new Editor(vsEditor, locationFactory);
 
-        await editor.replaceSelectedTextWith('NEW_TEXT');
+        await editor.replaceSelectedTextsWith(['NEW_TEXT']);
 
-        verify(editBuilder.replace(vsEditor.selection, 'NEW_TEXT'));
+        verify(editBuilder.replace(vsEditor.selections[0], 'NEW_TEXT'));
     });
 
     it('replaces the entire text with the command output', async () => {
@@ -55,16 +55,16 @@ describe('Editor', () => {
     });
 
     function fakeEditor(params: any) {
-        const selectedText = params.selectedText;
-        const entireText = `FOO\n${selectedText || ''}\nBAR`;
+        const selectedTexts = params.selectedTexts || [];
+        const entireText = `FOO\n${selectedTexts[0] || ''}\nBAR`;
         const uriScheme = params.uriScheme;
         return mockType<vscode.TextEditor>({
-            selection: {
-                text: selectedText,
-                isEmpty: !selectedText
-            },
+            selections: selectedTexts.map((text: string) => ({
+                text,
+                isEmpty: !text
+            })),
             document: {
-                getText: () => selectedText || entireText,
+                getText: () => selectedTexts[0] || entireText,
                 uri: {
                     scheme: uriScheme || 'untitled',
                     fsPath: 'FILE_PATH'

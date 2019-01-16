@@ -16,9 +16,10 @@ export default class Editor {
         this.locationFactory = locationFactory;
     }
 
-    get selectedText(): string {
+    get selectedTexts(): string[] {
         const editor = this.vsEditor;
-        return editor.document.getText(editor.selection);
+        return editor.selections
+            .map(selection => editor.document.getText(selection));
     }
 
     get entireText(): string {
@@ -26,7 +27,7 @@ export default class Editor {
     }
 
     get isTextSelected(): boolean {
-        return this.selectedText !== '';
+        return this.selectedTexts.length > 1 || this.selectedTexts[0] !== '';
     }
 
     get filePath(): string | undefined {
@@ -34,10 +35,12 @@ export default class Editor {
         return uri.scheme === 'file' ? uri.fsPath : undefined;
     }
 
-    replaceSelectedTextWith(text: string) {
+    replaceSelectedTextsWith(texts: string[]) {
         const editor = this.vsEditor;
         return editor.edit(editBuilder => {
-            editBuilder.replace(editor.selection, text);
+            editor.selections.forEach((selection, index) => {
+                editBuilder.replace(selection, texts[index]);
+            });
         });
     }
 
