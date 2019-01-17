@@ -5,6 +5,10 @@ All notable changes to "Edit with Shell Command" extension will be documented in
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2019-01-17
+### Added
+- Support multi cursors. [#11](https://github.com/ryu1kn/vscode-edit-with-shell/issues/11)
+
 ## [1.1.0] - 2018-12-26
 ### Added
 - Introduced **Quick Command**. You can quickly run a pre-registered shell command with a keyboard shortcut. [#7](https://github.com/ryu1kn/vscode-edit-with-shell/issues/7)

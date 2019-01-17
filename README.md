@@ -11,6 +11,7 @@ Leverage your favourite shell commands to edit text.
 * Records command history: you can edit and reuse past commands.
 * Use the shell you like. For example, if you have Bash on Windows, you can specify Bash as your shell for this extension.
 * Register up to 5 quick commands that can be invoked by keyboard shortcuts.
+* Support multi cursors.
 
 ![Edit with Shell Command](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/public.gif)
 
