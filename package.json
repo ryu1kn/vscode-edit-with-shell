@@ -183,7 +183,7 @@
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "coverage": "nyc yarn test",
+    "coverage": "nyc mocha --opts cli-test-mocha.opts",
     "lint": "tslint -p .",
     "test": "mocha --opts cli-test-mocha.opts",
     "test-mode": "mocha --opts cli-test-mocha.opts --watch",
