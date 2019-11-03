@@ -10,14 +10,11 @@ interface FavoriteCommand {
 }
 
 export default class RunQuickCommand extends RunCommand {
-    private readonly workspace: Workspace;
-
     constructor(shellCommandService: ShellCommandService,
                 historyStore: HistoryStore,
-                workspaceAdapter: Workspace,
+                private readonly workspace: Workspace,
                 private readonly commandNumber: number) {
-        super(shellCommandService, historyStore, workspaceAdapter);
-        this.workspace = workspaceAdapter;
+        super(shellCommandService, historyStore, workspace);
     }
 
     protected getCommandText(): Promise<string|undefined> {
