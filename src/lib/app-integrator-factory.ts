@@ -15,7 +15,7 @@ import RunQuickCommand from './commands/run-quick';
 
 const childProcess = require('child_process');
 
-export default class AppIntegratorFactory {
+export class AppIntegratorFactory {
     private readonly cache: {
         workspaceAdapter?: WorkspaceAdapter;
         historyStore?: HistoryStore;

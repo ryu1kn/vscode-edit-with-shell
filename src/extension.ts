@@ -1,4 +1,4 @@
-import AppIntegratorFactory from './lib/app-integrator-factory';
+import {AppIntegratorFactory} from './lib/app-integrator-factory';
 import {ExecutionContextLike} from './lib/types/vscode';
 
 exports.activate = (context: ExecutionContextLike) => {
