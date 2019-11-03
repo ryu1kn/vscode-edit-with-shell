@@ -2,7 +2,7 @@ import ProcessRunner from './process-runner';
 import ShellCommandExecContext from './shell-command-exec-context';
 import ShellSettingsResolver from './shell-settings-resolver';
 import {ChildProcess, SpawnOptions} from 'child_process';
-import Workspace from './adapters/workspace';
+import {Workspace} from './adapters/workspace';
 import Process = NodeJS.Process;
 
 export interface SpawnWrapper {

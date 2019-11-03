@@ -1,5 +1,5 @@
 import {EXTENSION_NAME} from './const';
-import Workspace from './adapters/workspace';
+import {Workspace} from './adapters/workspace';
 import {EnvVarWrap} from './types/node';
 import {dirname} from 'path';
 

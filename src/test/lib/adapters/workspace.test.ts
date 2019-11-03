@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import {mockType} from '../../helper';
 
-import WorkspaceAdapter from '../../../lib/adapters/workspace';
+import {Workspace as WorkspaceAdapter} from '../../../lib/adapters/workspace';
 import * as vscode from 'vscode';
 import {ObjectMap} from '../../../lib/types/collection';
 

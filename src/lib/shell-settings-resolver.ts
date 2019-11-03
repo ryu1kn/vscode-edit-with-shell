@@ -1,6 +1,6 @@
 import {EXTENSION_NAME} from './const';
 import resolveOsKind from './resolve-os-kind';
-import Workspace from './adapters/workspace';
+import {Workspace} from './adapters/workspace';
 
 export default class ShellSettingsResolver {
     constructor(private readonly workspaceAdapter: Workspace,

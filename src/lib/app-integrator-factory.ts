@@ -6,7 +6,7 @@ import {HistoryStore} from './history-store';
 import ProcessRunner from './process-runner';
 import RunInputCommand from './commands/run-input';
 import ClearHistoryCommand from './commands/clear-history';
-import WorkspaceAdapter from './adapters/workspace';
+import {Workspace as WorkspaceAdapter} from './adapters/workspace';
 import * as vscode from 'vscode';
 import {Position, Range, TextEditor as VsTextEditor} from 'vscode';
 import {ExtensionCommand} from './commands/extension-command';
