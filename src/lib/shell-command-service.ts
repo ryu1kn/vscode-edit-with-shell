@@ -16,17 +16,13 @@ export interface CommandParams {
 }
 
 export default class ShellCommandService {
-    private readonly childProcess: SpawnWrapper;
-    private readonly processRunner: ProcessRunner;
     private readonly shellCommandExecContext: ShellCommandExecContext;
     private readonly shellSettingsResolver: ShellSettingsResolver;
 
-    constructor(processRunner: ProcessRunner,
+    constructor(private readonly processRunner: ProcessRunner,
                 workspace: Workspace,
                 process: Process,
-                childProcess: SpawnWrapper) {
-        this.childProcess = childProcess;
-        this.processRunner = processRunner;
+                private readonly childProcess: SpawnWrapper) {
         this.shellCommandExecContext = new ShellCommandExecContext(workspace, {env: process.env});
         this.shellSettingsResolver = new ShellSettingsResolver(workspace, process.platform);
     }

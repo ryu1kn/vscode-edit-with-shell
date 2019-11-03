@@ -5,14 +5,11 @@ import Workspace from '../adapters/workspace';
 import {RunCommand} from './run';
 
 export default class RunInputCommand extends RunCommand {
-    private readonly commandReader: CommandReader;
-
     constructor(shellCommandService: ShellCommandService,
-                commandReader: CommandReader,
+                private readonly commandReader: CommandReader,
                 historyStore: HistoryStore,
                 workspaceAdapter: Workspace) {
         super(shellCommandService, historyStore, workspaceAdapter);
-        this.commandReader = commandReader;
     }
 
     protected getCommandText(): Promise<string|undefined> {

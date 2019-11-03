@@ -8,13 +8,8 @@ export interface LocationFactory {
 }
 
 export default class Editor {
-    private readonly vsEditor: VsTextEditor;
-    private readonly locationFactory: LocationFactory;
-
-    constructor(vsEditor: VsTextEditor, locationFactory: LocationFactory) {
-        this.vsEditor = vsEditor;
-        this.locationFactory = locationFactory;
-    }
+    constructor(private readonly vsEditor: VsTextEditor,
+                private readonly locationFactory: LocationFactory) {}
 
     get selectedTexts(): string[] {
         const editor = this.vsEditor;

@@ -2,13 +2,8 @@ import HistoryStore from './history-store';
 import * as vscode from 'vscode';
 
 export default class CommandReader {
-    private readonly historyStore: HistoryStore;
-    private readonly vsWindow: typeof vscode.window;
-
-    constructor(historyStore: HistoryStore, vsWindow: typeof vscode.window) {
-        this.historyStore = historyStore;
-        this.vsWindow = vsWindow;
-    }
+    constructor(private readonly historyStore: HistoryStore,
+                private readonly vsWindow: typeof vscode.window) {}
 
     async read() {
         const history = this.historyStore.getAll();

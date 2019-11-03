@@ -3,11 +3,7 @@ import * as vscode from 'vscode';
 const CONFIG_PATH_DELIMITER = '.';
 
 export default class Workspace {
-    private readonly vsWorkspace: typeof vscode.workspace;
-
-    constructor(vsWorkspace: typeof vscode.workspace) {
-        this.vsWorkspace = vsWorkspace;
-    }
+    constructor(private readonly vsWorkspace: typeof vscode.workspace) {}
 
     getConfig<T>(configPath: string): T {
         const {basePath, leafName} = this.parseConfigPath(configPath);

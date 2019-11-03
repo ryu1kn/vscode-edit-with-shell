@@ -6,17 +6,9 @@ import Editor from '../adapters/editor';
 import {ExtensionCommand} from './extension-command';
 
 export abstract class RunCommand implements ExtensionCommand {
-    private readonly shellCommandService: ShellCommandService;
-    private readonly historyStore: HistoryStore;
-    private readonly workspaceAdapter: Workspace;
-
-    constructor(shellCommandService: ShellCommandService,
-                historyStore: HistoryStore,
-                workspaceAdapter: Workspace) {
-        this.shellCommandService = shellCommandService;
-        this.historyStore = historyStore;
-        this.workspaceAdapter = workspaceAdapter;
-    }
+    constructor(private readonly shellCommandService: ShellCommandService,
+                private readonly historyStore: HistoryStore,
+                private readonly workspaceAdapter: Workspace) {}
 
     protected abstract getCommandText(): Promise<string|undefined>;
 

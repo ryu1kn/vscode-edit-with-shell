@@ -7,17 +7,12 @@ import ErrorMessageFormatter from './error-message-formatter';
 import {ExtensionCommand} from './commands/extension-command';
 
 export default class CommandWrap {
-    private readonly command: ExtensionCommand;
-    private readonly showErrorMessage: ShowErrorMessage;
-    private readonly logger: Logger;
     private readonly errorMessageFormatter: ErrorMessageFormatter;
-    private readonly wrapEditor: WrapEditor;
 
-    constructor(command: ExtensionCommand, wrapEditor: WrapEditor, showErrorMessage: ShowErrorMessage, logger: Logger) {
-        this.command = command;
-        this.wrapEditor = wrapEditor;
-        this.showErrorMessage = showErrorMessage;
-        this.logger = logger;
+    constructor(private readonly command: ExtensionCommand,
+                private readonly wrapEditor: WrapEditor,
+                private readonly showErrorMessage: ShowErrorMessage,
+                private readonly logger: Logger) {
         this.errorMessageFormatter = new ErrorMessageFormatter();
     }
 

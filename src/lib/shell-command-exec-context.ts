@@ -9,13 +9,8 @@ enum CurrentDirectoryKind {
 }
 
 export default class ShellCommandExecContext {
-    private readonly workspaceAdapter: Workspace;
-    private readonly process: EnvVarWrap;
-
-    constructor(workspaceAdapter: Workspace, process: EnvVarWrap) {
-        this.process = process;
-        this.workspaceAdapter = workspaceAdapter;
-    }
+    constructor(private readonly workspaceAdapter: Workspace,
+                private readonly process: EnvVarWrap) {}
 
     get env() {
         return this.process.env;

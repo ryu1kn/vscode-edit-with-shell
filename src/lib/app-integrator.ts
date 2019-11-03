@@ -8,17 +8,10 @@ interface CommandHandlerInfo {
 }
 
 export default class AppIntegrator {
-    private readonly vscode: any;
-    private readonly runCommand: CommandWrap;
-    private readonly createQuickCommand: (n: number) => CommandWrap;
-    private readonly clearHistoryCommand: CommandWrap;
-
-    constructor(runCommand: CommandWrap, clearHistoryCommand: CommandWrap, createQuickCommand: (n: number) => CommandWrap, vscode: any) {
-        this.vscode = vscode;
-        this.runCommand = runCommand;
-        this.createQuickCommand = createQuickCommand;
-        this.clearHistoryCommand = clearHistoryCommand;
-    }
+    constructor(private readonly runCommand: CommandWrap,
+                private readonly clearHistoryCommand: CommandWrap,
+                private readonly createQuickCommand: (n: number) => CommandWrap,
+                private readonly vscode: any) {}
 
     integrate(context: ExecutionContextLike) {
         this.registerCommands(context);

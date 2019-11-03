@@ -3,13 +3,8 @@ import resolveOsKind from './resolve-os-kind';
 import Workspace from './adapters/workspace';
 
 export default class ShellSettingsResolver {
-    private readonly workspaceAdapter: Workspace;
-    private readonly platform: string;
-
-    constructor(workspaceAdapter: Workspace, platform: string) {
-        this.workspaceAdapter = workspaceAdapter;
-        this.platform = platform;
-    }
+    constructor(private readonly workspaceAdapter: Workspace,
+                private readonly platform: string) {}
 
     shellProgramme(): string {
         return this.workspaceAdapter.getConfig<string>(`${EXTENSION_NAME}.shell.${this.osKind}`);
