@@ -1,5 +1,5 @@
 
-export default class HistoryStore {
+export class HistoryStore {
     private history: string[];
 
     constructor() {

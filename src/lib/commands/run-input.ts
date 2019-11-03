@@ -1,6 +1,6 @@
 import ShellCommandService from '../shell-command-service';
 import CommandReader from '../command-reader';
-import HistoryStore from '../history-store';
+import {HistoryStore} from '../history-store';
 import Workspace from '../adapters/workspace';
 import {RunCommand} from './run';
 

@@ -1,5 +1,5 @@
 import ClearHistoryCommand from '../../../lib/commands/clear-history';
-import HistoryStore from '../../../lib/history-store';
+import {HistoryStore} from '../../../lib/history-store';
 import {mockMethods, verify} from '../../helper';
 
 describe('ClearHistoryCommand', () => {

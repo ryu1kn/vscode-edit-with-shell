@@ -1,4 +1,4 @@
-import HistoryStore from './history-store';
+import {HistoryStore} from './history-store';
 import * as vscode from 'vscode';
 
 export default class CommandReader {

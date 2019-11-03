@@ -3,7 +3,7 @@ import {any, mockMethods, mockType, verify, when} from '../helper';
 
 import CommandReader from '../../lib/command-reader';
 import * as vscode from 'vscode';
-import HistoryStore from '../../lib/history-store';
+import {HistoryStore} from '../../lib/history-store';
 
 describe('CommandReader', () => {
 

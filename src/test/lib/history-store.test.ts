@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import HistoryStore from '../../lib/history-store';
+import {HistoryStore} from '../../lib/history-store';
 
 describe('HistoryStore', () => {
 
