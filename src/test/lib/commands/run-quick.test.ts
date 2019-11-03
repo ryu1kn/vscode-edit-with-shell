@@ -1,7 +1,7 @@
 import RunQuickCommand from '../../../lib/commands/run-quick';
 import Workspace from '../../../lib/adapters/workspace';
 import {Editor} from '../../../lib/adapters/editor';
-import ShellCommandService from '../../../lib/shell-command-service';
+import {ShellCommandService} from '../../../lib/shell-command-service';
 import {HistoryStore} from '../../../lib/history-store';
 import {any, mock, mockMethods, verify, when} from '../../helper';
 

@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import {any, contains, mock, mockMethods, mockType, when} from '../helper';
-import ShellCommandService, {SpawnWrapper} from '../../lib/shell-command-service';
+import {ShellCommandService, SpawnWrapper} from '../../lib/shell-command-service';
 import ProcessRunner from '../../lib/process-runner';
 import {ChildProcess} from 'child_process';
 import Workspace from '../../lib/adapters/workspace';

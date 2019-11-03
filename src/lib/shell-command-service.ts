@@ -15,7 +15,7 @@ export interface CommandParams {
     filePath?: string;
 }
 
-export default class ShellCommandService {
+export class ShellCommandService {
     private readonly shellCommandExecContext: ShellCommandExecContext;
     private readonly shellSettingsResolver: ShellSettingsResolver;
 

@@ -1,6 +1,6 @@
 import AppIntegrator from './app-integrator';
 import {Editor} from './adapters/editor';
-import ShellCommandService from './shell-command-service';
+import {ShellCommandService} from './shell-command-service';
 import CommandReader from './command-reader';
 import {HistoryStore} from './history-store';
 import ProcessRunner from './process-runner';

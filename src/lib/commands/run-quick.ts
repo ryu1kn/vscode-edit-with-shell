@@ -1,5 +1,5 @@
 import {EXTENSION_NAME} from '../const';
-import ShellCommandService from '../shell-command-service';
+import {ShellCommandService} from '../shell-command-service';
 import {HistoryStore} from '../history-store';
 import Workspace from '../adapters/workspace';
 import {RunCommand} from './run';
