@@ -1,5 +1,5 @@
 import {contains, mock, mockFunction, mockMethods, mockType, verify, when} from '../helper';
-import Editor, {WrapEditor} from '../../lib/adapters/editor';
+import {Editor, WrapEditor} from '../../lib/adapters/editor';
 import {Logger} from '../../lib/logger';
 import {ShowErrorMessage} from '../../lib/types/vscode';
 import * as vscode from 'vscode';

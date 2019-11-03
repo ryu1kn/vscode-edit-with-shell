@@ -7,7 +7,7 @@ export interface LocationFactory {
     createRange(start: Position, end: Position): Range;
 }
 
-export default class Editor {
+export class Editor {
     constructor(private readonly vsEditor: VsTextEditor,
                 private readonly locationFactory: LocationFactory) {}
 

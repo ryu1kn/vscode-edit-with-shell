@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import {mockMethods, mockType, verify} from '../../helper';
 
-import Editor from '../../../lib/adapters/editor';
+import {Editor} from '../../../lib/adapters/editor';
 import * as vscode from 'vscode';
 import {Position, Range} from 'vscode';
 
