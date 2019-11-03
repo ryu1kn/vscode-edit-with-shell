@@ -22,7 +22,7 @@ export class AppIntegratorFactory {
     };
 
     constructor() {
-        this.cache = {};
+        this.cache = Object.create(null);
     }
 
     create() {
@@ -66,10 +66,9 @@ export class AppIntegratorFactory {
     }
 
     private get shellCommandService() {
-        const workspaceAdapter = this.workspaceAdapter;
         return new ShellCommandService(
             new ProcessRunner(),
-            workspaceAdapter,
+            this.workspaceAdapter,
             process,
             childProcess
         );
@@ -87,5 +86,4 @@ export class AppIntegratorFactory {
             new WorkspaceAdapter(vscode.workspace);
         return this.cache.workspaceAdapter;
     }
-
 }
