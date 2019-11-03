@@ -1,5 +1,5 @@
 
-export default class CommandExecutionError extends Error {
+export class CommandExecutionError extends Error {
     constructor(message: string,
                 public readonly code: number,
                 public readonly command: string,

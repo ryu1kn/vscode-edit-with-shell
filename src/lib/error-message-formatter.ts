@@ -7,7 +7,7 @@ const REPLACE_PAIRS = [
     [']', '\\]']
 ];
 
-export default class ErrorMessageFormatter {
+export class ErrorMessageFormatter {
 
     format(message: string) {
         const trimmedMessage = (message || '').trim();

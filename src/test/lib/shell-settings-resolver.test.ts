@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import {mock, when} from '../helper';
 
-import ShellSettingsResolver from '../../lib/shell-settings-resolver';
+import {ShellSettingsResolver} from '../../lib/shell-settings-resolver';
 import {Workspace} from '../../lib/adapters/workspace';
 
 describe('ShellSettingsResolver', () => {

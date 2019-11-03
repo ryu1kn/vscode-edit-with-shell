@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import ErrorMessageFormatter from '../../lib/error-message-formatter';
+import {ErrorMessageFormatter} from '../../lib/error-message-formatter';
 
 describe('ErrorMessageFormatter', () => {
 

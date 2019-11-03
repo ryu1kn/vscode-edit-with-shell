@@ -1,7 +1,7 @@
 import {HistoryStore} from './history-store';
 import * as vscode from 'vscode';
 
-export default class CommandReader {
+export class CommandReader {
     constructor(private readonly historyStore: HistoryStore,
                 private readonly vsWindow: typeof vscode.window) {}
 

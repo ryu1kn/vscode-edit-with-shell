@@ -3,7 +3,7 @@ import {Editor, WrapEditor} from '../../lib/adapters/editor';
 import {Logger} from '../../lib/logger';
 import {ShowErrorMessage} from '../../lib/types/vscode';
 import * as vscode from 'vscode';
-import CommandWrap from '../../lib/command-wrap';
+import {CommandWrap} from '../../lib/command-wrap';
 import {ExtensionCommand} from '../../lib/commands/extension-command';
 
 describe('CommandWrap', () => {

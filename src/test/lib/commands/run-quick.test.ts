@@ -1,4 +1,4 @@
-import RunQuickCommand from '../../../lib/commands/run-quick';
+import {RunQuickCommand} from '../../../lib/commands/run-quick';
 import {Workspace} from '../../../lib/adapters/workspace';
 import {Editor} from '../../../lib/adapters/editor';
 import {ShellCommandService} from '../../../lib/shell-command-service';

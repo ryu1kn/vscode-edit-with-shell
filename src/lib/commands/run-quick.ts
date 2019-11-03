@@ -9,7 +9,7 @@ interface FavoriteCommand {
     command: string;
 }
 
-export default class RunQuickCommand extends RunCommand {
+export class RunQuickCommand extends RunCommand {
     constructor(shellCommandService: ShellCommandService,
                 historyStore: HistoryStore,
                 private readonly workspace: Workspace,

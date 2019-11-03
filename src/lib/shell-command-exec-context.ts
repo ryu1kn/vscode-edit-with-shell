@@ -8,7 +8,7 @@ enum CurrentDirectoryKind {
     WORKSPACE_ROOT = 'workspaceRoot'
 }
 
-export default class ShellCommandExecContext {
+export class ShellCommandExecContext {
     constructor(private readonly workspaceAdapter: Workspace,
                 private readonly process: EnvVarWrap) {}
 

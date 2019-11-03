@@ -1,17 +1,17 @@
-import AppIntegrator from './app-integrator';
+import {AppIntegrator} from './app-integrator';
 import {Editor} from './adapters/editor';
 import {ShellCommandService} from './shell-command-service';
-import CommandReader from './command-reader';
+import {CommandReader} from './command-reader';
 import {HistoryStore} from './history-store';
-import ProcessRunner from './process-runner';
-import RunInputCommand from './commands/run-input';
-import ClearHistoryCommand from './commands/clear-history';
+import {ProcessRunner} from './process-runner';
+import {RunInputCommand} from './commands/run-input';
+import {ClearHistoryCommand} from './commands/clear-history';
 import {Workspace as WorkspaceAdapter} from './adapters/workspace';
 import * as vscode from 'vscode';
 import {Position, Range, TextEditor as VsTextEditor} from 'vscode';
 import {ExtensionCommand} from './commands/extension-command';
-import CommandWrap from './command-wrap';
-import RunQuickCommand from './commands/run-quick';
+import {CommandWrap} from './command-wrap';
+import {RunQuickCommand} from './commands/run-quick';
 
 const childProcess = require('child_process');
 

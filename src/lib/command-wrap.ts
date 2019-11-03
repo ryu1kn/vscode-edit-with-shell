@@ -2,11 +2,11 @@ import {ShowErrorMessage} from './types/vscode';
 import {Logger} from './logger';
 import {WrapEditor} from './adapters/editor';
 import {TextEditor as VsTextEditor} from 'vscode';
-import CommandExecutionError from './errors/command';
-import ErrorMessageFormatter from './error-message-formatter';
+import {CommandExecutionError} from './errors/command';
+import {ErrorMessageFormatter} from './error-message-formatter';
 import {ExtensionCommand} from './commands/extension-command';
 
-export default class CommandWrap {
+export class CommandWrap {
     private readonly errorMessageFormatter: ErrorMessageFormatter;
 
     constructor(private readonly command: ExtensionCommand,

@@ -1,13 +1,13 @@
 import {EXTENSION_NAME} from './const';
 import {ExecutionContextLike} from './types/vscode';
-import CommandWrap from './command-wrap';
+import {CommandWrap} from './command-wrap';
 
 interface CommandHandlerInfo {
     id: string;
     command: CommandWrap;
 }
 
-export default class AppIntegrator {
+export class AppIntegrator {
     constructor(private readonly runCommand: CommandWrap,
                 private readonly clearHistoryCommand: CommandWrap,
                 private readonly createQuickCommand: (n: number) => CommandWrap,

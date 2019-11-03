@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import {any, mockMethods, mockType, verify, when} from '../helper';
 
-import CommandReader from '../../lib/command-reader';
+import {CommandReader} from '../../lib/command-reader';
 import * as vscode from 'vscode';
 import {HistoryStore} from '../../lib/history-store';
 
