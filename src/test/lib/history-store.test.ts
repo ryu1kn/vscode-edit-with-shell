@@ -7,14 +7,14 @@ describe('HistoryStore', () => {
         const historyStore = new HistoryStore();
         historyStore.add('COMMAND_1');
         historyStore.add('COMMAND_2');
-        assert.deepEqual(historyStore.getAll(), ['COMMAND_1', 'COMMAND_2']);
+        assert.deepStrictEqual(historyStore.getAll(), ['COMMAND_1', 'COMMAND_2']);
     });
 
     it('does not record the same command twice', () => {
         const historyStore = new HistoryStore();
         historyStore.add('COMMAND_1');
         historyStore.add('COMMAND_1');
-        assert.deepEqual(historyStore.getAll(), ['COMMAND_1']);
+        assert.deepStrictEqual(historyStore.getAll(), ['COMMAND_1']);
     });
 
     it('returns the last used command at the end', () => {
@@ -22,12 +22,12 @@ describe('HistoryStore', () => {
         historyStore.add('COMMAND_1');
         historyStore.add('COMMAND_2');
         historyStore.add('COMMAND_1');
-        assert.deepEqual(historyStore.getAll(), ['COMMAND_2', 'COMMAND_1']);
+        assert.deepStrictEqual(historyStore.getAll(), ['COMMAND_2', 'COMMAND_1']);
     });
 
     it('returns an empty list if no commands are recorded yet', () => {
         const historyStore = new HistoryStore();
-        assert.deepEqual(historyStore.getAll(), []);
+        assert.deepStrictEqual(historyStore.getAll(), []);
     });
 
     it('clears all history', () => {
@@ -35,7 +35,7 @@ describe('HistoryStore', () => {
         historyStore.add('COMMAND_1');
         historyStore.add('COMMAND_2');
         historyStore.clear();
-        assert.deepEqual(historyStore.getAll(), []);
+        assert.deepStrictEqual(historyStore.getAll(), []);
     });
 
 });

@@ -12,25 +12,25 @@ describe('Editor', () => {
     it('holds a selected text', () => {
         const vsEditor = fakeEditor({selectedTexts: ['SELECTED_TEXT']});
         const editor = new Editor(vsEditor, locationFactory);
-        assert.deepEqual(editor.selectedTexts, ['SELECTED_TEXT']);
+        assert.deepStrictEqual(editor.selectedTexts, ['SELECTED_TEXT']);
     });
 
     it('holds the entire text', () => {
         const vsEditor = fakeEditor({});
         const editor = new Editor(vsEditor, locationFactory);
-        assert.deepEqual(editor.entireText, 'FOO\n\nBAR');
+        assert.deepStrictEqual(editor.entireText, 'FOO\n\nBAR');
     });
 
     it('holds a file path', () => {
         const vsEditor = fakeEditor({uriScheme: 'file'});
         const editor = new Editor(vsEditor, locationFactory);
-        assert.deepEqual(editor.filePath, 'FILE_PATH');
+        assert.deepStrictEqual(editor.filePath, 'FILE_PATH');
     });
 
     it('does not hold a file path if editor content has never been saved', () => {
         const vsEditor = fakeEditor({});
         const editor = new Editor(vsEditor, locationFactory);
-        assert.equal(typeof editor.filePath, 'undefined');
+        assert.strictEqual(typeof editor.filePath, 'undefined');
     });
 
     it('replaces the selected text with given text', async () => {

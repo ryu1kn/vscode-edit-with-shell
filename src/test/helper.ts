@@ -34,7 +34,7 @@ export function wrapVerify(invokeCallback: (...args: any[]) => void, expectedCal
         const callIndex = toIndex(key);
         (value as any[]).forEach((expectedArg, argIndex) => {
             const failureMessage = `Check argument ${argIndex} of call ${callIndex}`;
-            assert.deepEqual(captors[argIndex].values![callIndex], expectedArg, failureMessage);
+            assert.deepStrictEqual(captors[argIndex].values![callIndex], expectedArg, failureMessage);
         });
     });
 }

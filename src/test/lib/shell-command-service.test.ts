@@ -48,7 +48,7 @@ describe('ShellCommandService', () => {
         const params = {command: 'COMMAND_STRING', input: ''};
         const output = await service.runCommand(params);
 
-        assert.deepEqual(output, 'COMMAND_OUTPUT');
+        assert.deepStrictEqual(output, 'COMMAND_OUTPUT');
     });
 
     it('passes selected text in the editor to the command', async () => {
@@ -58,14 +58,14 @@ describe('ShellCommandService', () => {
         };
         const output = await service.runCommand(params);
 
-        assert.deepEqual(output, 'COMMAND_OUTPUT_TEST_WITH_INPUT');
+        assert.deepStrictEqual(output, 'COMMAND_OUTPUT_TEST_WITH_INPUT');
     });
 
     it('inherits environment variables on executing a command', async () => {
         const params = {command: 'COMMAND_TEST_WITH_ENVVARS', input: ''};
         const output = await service.runCommand(params);
 
-        assert.deepEqual(output, 'COMMAND_OUTPUT');
+        assert.deepStrictEqual(output, 'COMMAND_OUTPUT');
     });
 
     it('executes a command on a specific directory', async () => {
@@ -76,7 +76,7 @@ describe('ShellCommandService', () => {
         };
         const output = await service.runCommand(params);
 
-        assert.deepEqual(output, 'COMMAND_OUTPUT');
+        assert.deepStrictEqual(output, 'COMMAND_OUTPUT');
     });
 
     it('throws an error if command failed', async () => {
@@ -89,7 +89,7 @@ describe('ShellCommandService', () => {
             await service.runCommand(params);
             throw new Error('Should not have been called');
         } catch (e) {
-            assert.deepEqual(e.message, 'UNEXPECTED_ERROR');
+            assert.deepStrictEqual(e.message, 'UNEXPECTED_ERROR');
         }
     });
 });

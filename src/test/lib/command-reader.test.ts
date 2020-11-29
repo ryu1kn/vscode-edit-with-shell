@@ -22,7 +22,7 @@ describe('CommandReader', () => {
         const reader = new CommandReader(historyStore, vscodeWindow);
         const command = await reader.read();
 
-        assert.deepEqual(command, 'COMMAND_FINAL');
+        assert.deepStrictEqual(command, 'COMMAND_FINAL');
     });
 
     it('shows inputBox right away if there is no commands recorded in the history', async () => {
@@ -35,7 +35,7 @@ describe('CommandReader', () => {
         const reader = new CommandReader(historyStore, vscodeWindow);
         const command = await reader.read();
 
-        assert.deepEqual(command, 'COMMAND');
+        assert.deepStrictEqual(command, 'COMMAND');
         verify(vscodeWindow.showQuickPick(any()), {times: 0, ignoreExtraArgs: true});
     });
 
@@ -49,7 +49,7 @@ describe('CommandReader', () => {
         const reader = new CommandReader(historyStore, vscodeWindow);
         const command = await reader.read();
 
-        assert.deepEqual(command, 'COMMAND');
+        assert.deepStrictEqual(command, 'COMMAND');
     });
 
 });

@@ -10,15 +10,15 @@ describe('WorkspaceAdapter', () => {
     const workspaceAdapter = new WorkspaceAdapter(fakeVscodeWorkspace());
 
     it('gets config value of specified 2 level path', () => {
-        assert.deepEqual(workspaceAdapter.getConfig('A.B'), 'VALUE1');
+        assert.deepStrictEqual(workspaceAdapter.getConfig('A.B'), 'VALUE1');
     });
 
     it('gets config value of specified 4 level path', () => {
-        assert.deepEqual(workspaceAdapter.getConfig('C.D.E.F'), 'VALUE2');
+        assert.deepStrictEqual(workspaceAdapter.getConfig('C.D.E.F'), 'VALUE2');
     });
 
     it('returns the project root path', () => {
-        assert.deepEqual(workspaceAdapter.rootPath, 'PROJECT_ROOT_PATH');
+        assert.deepStrictEqual(workspaceAdapter.rootPath, 'PROJECT_ROOT_PATH');
     });
 
     function fakeVscodeWorkspace() {
