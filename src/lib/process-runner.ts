@@ -7,13 +7,13 @@ export class ProcessRunner {
         let stdoutString = '';
         let stderrString = '';
 
-        command.stdin.write(inputString);
-        command.stdin.end();
+        command.stdin?.write(inputString);
+        command.stdin?.end();
 
-        command.stdout.on('data', data => {
+        command.stdout?.on('data', data => {
             stdoutString += data.toString();
         });
-        command.stderr.on('data', data => {
+        command.stderr?.on('data', data => {
             stderrString += data.toString();
         });
 
