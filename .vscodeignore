@@ -10,7 +10,7 @@
 __*
 __*/**/*
 *.vsix
-cli-test-mocha.opts
+.mocharc.json
 coverage/**/*
 images/animations/**/*
 yarn.lock
