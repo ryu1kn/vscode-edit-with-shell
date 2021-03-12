@@ -95,10 +95,16 @@ A couple of requests from me when you raise an github issue.
 * `editWithShell.shell.windows` (default: `"cmd.exe"`)
 
     The path of the shell that this extension uses on Windows
+    
+    * For PowerShell, you may set this to `"pwsh"`
+    * For Bash on WSL (Windows Subsystem for Linux), you may set this to `"wsl"`
 
 * `editWithShell.shellArgs.windows` (default: `["/d", "/s", "/c"]`)
 
     Arguments to the shell to be used on Winows
+    
+    * For PowerShell, you may set this to `["-NoLogo", "-NoProfile", "-Command"]`
+    * For Bash on WSL (Windows Subsystem for Linux), you may set this to `["bash", "-c"]`
 
 ## Keyboard Shortcuts
 
