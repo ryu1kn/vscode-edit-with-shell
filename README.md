@@ -7,6 +7,7 @@ Leverage your favourite shell commands to edit text.
 ## Features
 
 * Edit the selected text by piping it through shell commands.
+  The same text is also available as an environment variable, `ES_SELECTED`.
 * Insert the output of shell commands at the cursor position.
 * Records command history: you can edit and reuse past commands.
 * Use the shell you like. For example, if you have Bash on Windows, you can specify Bash as your shell for this extension.
@@ -37,7 +38,7 @@ A couple of requests from me when you raise an github issue.
 * `EditWithShell: Clear Command History` (**Command ID:** `editWithShell.clearCommandHistory`)
 
     Clear command history
-    
+
 * `EditWithShell: Run quick command 1` (**Command ID:** `editWithShell.runQuickCommand1`)
 
     Run quick command 1. **You have quick commands up to 5**, i.e. `editWithShell.runQuickCommand5`
@@ -47,7 +48,7 @@ A couple of requests from me when you raise an github issue.
 * `editWithShell.currentDirectoryKind` (default: `"currentFile"`)
 
     Current directory for shell commands. If the target directory is not available, HOME directory will be used. Possible values: `currentFile` or `workspaceRoot`
-    
+
 * `editWithShell.processEntireTextIfNoneSelected` (default: `false`)
 
     Pipe the entire text to the shell command if no text is selected
@@ -55,7 +56,7 @@ A couple of requests from me when you raise an github issue.
 * `editWithShell.favoriteCommands` (default: `[]`)
 
     List of commands that can be activated by quick commands. Each element must have a command ID and command. e.g:
-    
+
     ```
     "editWithShell.favoriteCommands": [
       {
@@ -73,7 +74,7 @@ A couple of requests from me when you raise an github issue.
 * `editWithShell.quickCommand1` (default: `""`)
 
     ID of a favorite command triggered with quick command 1. e.g. `"insert-melbourne-time"` of `favoriteCommands` config value example.
-    
+
     **You have quick commands up to 5**, i.e. `editWithShell.quickCommand5`.
 
 * `editWithShell.shell.linux` (default: `"/bin/sh"`)
@@ -95,14 +96,14 @@ A couple of requests from me when you raise an github issue.
 * `editWithShell.shell.windows` (default: `"cmd.exe"`)
 
     The path of the shell that this extension uses on Windows
-    
+
     * For PowerShell, you may set this to `"pwsh"`
     * For Bash on WSL (Windows Subsystem for Linux), you may set this to `"wsl"`
 
 * `editWithShell.shellArgs.windows` (default: `["/d", "/s", "/c"]`)
 
     Arguments to the shell to be used on Winows
-    
+
     * For PowerShell, you may set this to `["-NoLogo", "-NoProfile", "-Command"]`
     * For Bash on WSL (Windows Subsystem for Linux), you may set this to `["bash", "-c"]`
 

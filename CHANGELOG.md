@@ -5,6 +5,11 @@ All notable changes to "Edit with Shell Command" extension will be documented in
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2021-05-26
+### Added
+- Made a selected text also available as an environment variable, `ES_SELECTED`.
+  [#18](https://github.com/ryu1kn/vscode-edit-with-shell/issues/18)
+
 ## [1.2.0] - 2019-01-17
 ### Added
 - Support multi cursors. [#11](https://github.com/ryu1kn/vscode-edit-with-shell/issues/11)
