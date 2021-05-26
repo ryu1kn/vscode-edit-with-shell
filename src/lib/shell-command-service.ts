@@ -28,17 +28,20 @@ export class ShellCommandService {
     }
 
     runCommand(params: CommandParams): Promise<string> {
-        const options = this.getOptions(params.filePath);
+        const options = this.getOptions(params);
         const shell = this.shellSettingsResolver.shellProgramme();
         const shellArgs = this.shellSettingsResolver.shellArgs();
         const command = this.childProcess.spawn(shell, [...shellArgs, params.command], options);
         return this.processRunner.run(command, params.input);
     }
 
-    private getOptions(filePath?: string) {
+    private getOptions(params: CommandParams) {
         return {
-            cwd: this.shellCommandExecContext.getCwd(filePath),
-            env: this.shellCommandExecContext.env
+            cwd: this.shellCommandExecContext.getCwd(params.filePath),
+            env: {
+                ...this.shellCommandExecContext.env,
+                ES_SELECTED: params.input
+            }
         };
     }
 }

@@ -21,6 +21,7 @@ describe('ShellCommandService', () => {
         childProcess = mockMethods(['spawn']);
         when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_STRING'], any())).thenReturn(process);
         when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_ENVVARS'], contains({env: {SOME_ENV_VAR: '...'}}))).thenReturn(process);
+        when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_EXPOSE_INPUT_AS_ENVVAR'], contains({env: {ES_SELECTED: 'SELECTED_TEXT'}}))).thenReturn(process);
         when(childProcess.spawn('SHELL_PATH', ['SHELL_ARG', 'COMMAND_TEST_WITH_EXEC_DIR'], contains({cwd: 'CURRENT_DIR'}))).thenReturn(process);
 
         processRunner = mock(ProcessRunner);
@@ -66,6 +67,16 @@ describe('ShellCommandService', () => {
         const output = await service.runCommand(params);
 
         assert.deepStrictEqual(output, 'COMMAND_OUTPUT');
+    });
+
+    it('also exposes a selected text as an environment variable', async () => {
+        const params = {
+            command: 'COMMAND_TEST_WITH_EXPOSE_INPUT_AS_ENVVAR',
+            input: 'SELECTED_TEXT'
+        };
+        const output = await service.runCommand(params);
+
+        assert.deepStrictEqual(output, 'COMMAND_OUTPUT_TEST_WITH_INPUT');
     });
 
     it('executes a command on a specific directory', async () => {
