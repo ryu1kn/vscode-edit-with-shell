@@ -35,12 +35,16 @@ export class ShellCommandService {
         // Why Proxy Object?
         const shellEnv = this.shellSettingsResolver.shellEnv();
         const pathSeparator = this.shellSettingsResolver.pathSeparator();
+        const system_env_path = options.env.Path || options.env.PATH;
+        const env_path = shellEnv.Path || shellEnv.PATH;
+        const env:ObjectMap<string> = {};
 
+        // linux&win use 'PATH'
+        options.env.PATH = options.env.Path;
+        delete options.env.Path;
         // Can't delete member
         // delete shellEnv.Path
-
-        const env_path = shellEnv.Path;
-        const env:ObjectMap<string> = {};
+        // delete shellEnv.PATH
 
         // skip env:Path
         for (let key in shellEnv){
@@ -52,7 +56,7 @@ export class ShellCommandService {
         Object.assign(options.env, env)
 
         if(env_path) {
-            options.env.Path = env_path + pathSeparator + options.env.Path
+            options.env.PATH = env_path + pathSeparator + system_env_path;
         }
 
         const command = this.childProcess.spawn(shell, [...shellArgs, params.command], options);
