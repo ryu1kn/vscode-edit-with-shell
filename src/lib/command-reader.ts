@@ -6,7 +6,7 @@ export class CommandReader {
                 private readonly vsWindow: typeof vscode.window) {}
 
     async read() {
-        const history = this.historyStore.getAll();
+        const history = await this.historyStore.getAll();
         if (history.length === 0) {
             return this.vsWindow.showInputBox({
                 placeHolder: 'Enter a command',

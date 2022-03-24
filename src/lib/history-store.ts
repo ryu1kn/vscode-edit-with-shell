@@ -1,12 +1,12 @@
 
 export class HistoryStore {
-    private history: string[];
+    protected history: string[];
 
     constructor() {
         this.history = [];
     }
 
-    getAll() {
+    async getAll() {
         return this.history;
     }
 
