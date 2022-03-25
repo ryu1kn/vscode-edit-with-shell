@@ -40,7 +40,7 @@ export class ShellCommandService {
         const env:ObjectMap<string> = {};
 
         // linux&win use 'PATH'
-        options.env.PATH = options.env.Path;
+        options.env.PATH = system_env_path;
         delete options.env.Path;
         // Can't delete member
         // delete shellEnv.Path
