@@ -1,9 +1,18 @@
+import {EXTENSION_NAME} from './const';
+import {Workspace} from './adapters/workspace';
+
+interface FavoriteCommand {
+    id: string;
+    command: string;
+}
 
 export class HistoryStore {
     private history: string[];
 
-    constructor() {
-        this.history = [];
+    constructor(private readonly workspaceAdapter: Workspace) {
+        this.workspaceAdapter = workspaceAdapter;
+        const favoriteCommands = this.workspaceAdapter.getConfig<FavoriteCommand[]>(`${EXTENSION_NAME}.favoriteCommands`);
+        this.history = favoriteCommands.filter(o => o.command).map(o => o.command);
     }
 
     getAll() {

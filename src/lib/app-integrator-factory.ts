@@ -61,7 +61,7 @@ export class AppIntegratorFactory {
     }
 
     private get historyStore() {
-        this.cache.historyStore = this.cache.historyStore || new HistoryStore();
+        this.cache.historyStore = this.cache.historyStore || new HistoryStore(this.workspaceAdapter);
         return this.cache.historyStore;
     }
 
