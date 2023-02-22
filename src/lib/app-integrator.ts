@@ -9,6 +9,7 @@ interface CommandHandlerInfo {
 
 export class AppIntegrator {
     constructor(private readonly runCommand: CommandWrap,
+                private readonly runLocalCommand: CommandWrap,
                 private readonly clearHistoryCommand: CommandWrap,
                 private readonly createQuickCommand: (n: number) => CommandWrap,
                 private readonly vscode: any) {}
@@ -43,6 +44,10 @@ export class AppIntegrator {
             {
                 id: `${EXTENSION_NAME}.runCommand`,
                 command: this.runCommand
+            },
+            {
+                id: `${EXTENSION_NAME}.runLocalCommand`,
+                command: this.runLocalCommand
             },
             ...[1, 2, 3, 4, 5].map(n => ({
                 id: `${EXTENSION_NAME}.runQuickCommand${n}`,

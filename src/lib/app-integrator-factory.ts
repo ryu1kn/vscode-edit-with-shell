@@ -3,6 +3,7 @@ import {Editor} from './adapters/editor';
 import {ShellCommandService} from './shell-command-service';
 import {CommandReader} from './command-reader';
 import {HistoryStore} from './history-store';
+import {LocalCommandStore} from './local-command-store';
 import {ProcessRunner} from './process-runner';
 import {RunInputCommand} from './commands/run-input';
 import {ClearHistoryCommand} from './commands/clear-history';
@@ -19,6 +20,7 @@ export class AppIntegratorFactory {
     private readonly cache: {
         workspaceAdapter?: WorkspaceAdapter;
         historyStore?: HistoryStore;
+        localCommandStore?: LocalCommandStore;
     };
 
     constructor() {
@@ -26,7 +28,7 @@ export class AppIntegratorFactory {
     }
 
     create() {
-        return new AppIntegrator(this.runCommand, this.clearHistoryCommand, this.createQuickCommand, vscode);
+        return new AppIntegrator(this.runCommand,this.runLocalCommand, this.clearHistoryCommand, this.createQuickCommand, vscode);
     }
 
     private get runCommand() {
@@ -34,6 +36,15 @@ export class AppIntegratorFactory {
             this.shellCommandService,
             new CommandReader(this.historyStore, vscode.window),
             this.historyStore,
+            this.workspaceAdapter
+        ));
+    }
+
+    private get runLocalCommand() {
+        return this.wrapCommand(new RunInputCommand(
+            this.shellCommandService,
+            new CommandReader(this.localCommandStore, vscode.window),
+            this.localCommandStore, // Actually no need to store local commands
             this.workspaceAdapter
         ));
     }
@@ -63,6 +74,11 @@ export class AppIntegratorFactory {
     private get historyStore() {
         this.cache.historyStore = this.cache.historyStore || new HistoryStore();
         return this.cache.historyStore;
+    }
+
+    private get localCommandStore() {
+        this.cache.localCommandStore = this.cache.localCommandStore || new LocalCommandStore(this.workspaceAdapter);
+        return this.cache.localCommandStore;
     }
 
     private get shellCommandService() {
