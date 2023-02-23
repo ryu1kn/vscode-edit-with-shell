@@ -23,7 +23,7 @@ export class CommandReader {
         }
 
         const pickedCommand = await this.letUserToPickCommand(history);
-        return this.displayPrompt ? this.letUserToModifyCommand(pickedCommand) : pickedCommand;
+        return (!pickedCommand || this.displayPrompt) ? this.letUserToModifyCommand(pickedCommand) : pickedCommand;
     }
 
     private letUserToPickCommand(history: string[]): Thenable<string | undefined> {
