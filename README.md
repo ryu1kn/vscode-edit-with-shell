@@ -60,18 +60,17 @@ A couple of requests from me when you raise an github issue.
 
 * `editWithShell.favoriteCommands` (default: `[]`)
 
-    Commands listed in the history and activable by quick commands. Each element must have a command ID and command, and it can optionally have the boolean property `processEntireTextIfNoneSelected` (it'll override the extension setting `editWithShell.processEntireTextIfNoneSelected`).
+    Commands listed by default in the history and activable by quick commands. Each element must have a property `command`. In order to be used as a quick command, the property `id` must be set. Also, it can optionally have the boolean property `processEntireTextIfNoneSelected` (it'll override the extension setting `editWithShell.processEntireTextIfNoneSelected`).
 
     ```
     "editWithShell.favoriteCommands": [
       {
-        "id": "extract-email-and-sort-on-address-book",
-        "command": "cut -d, -f3 | sort"
+        "command": "cut -d, -f3 | sort",
+        "processEntireTextIfNoneSelected": true
       },
       {
         "id": "insert-melbourne-time",
-        "command": "TZ=Australia/Melbourne date '+%Y-%m-%dT%H:%M:%S'",
-        "processEntireTextIfNoneSelected": true
+        "command": "TZ=Australia/Melbourne date '+%Y-%m-%dT%H:%M:%S'"
       },
       ...
     ]
