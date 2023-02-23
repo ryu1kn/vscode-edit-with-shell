@@ -12,7 +12,7 @@ export class HistoryStore {
     constructor(private readonly workspaceAdapter: Workspace) {
         this.workspaceAdapter = workspaceAdapter;
         const favoriteCommands = this.workspaceAdapter.getConfig<FavoriteCommand[]>(`${EXTENSION_NAME}.favoriteCommands`);
-        this.history = favoriteCommands.filter(o => o.command).map(o => o.command);
+        this.history = favoriteCommands.filter(o => o.command).map(o => o.command).sort().reverse();
     }
 
     getAll() {
