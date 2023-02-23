@@ -328,6 +328,11 @@
           },
           "default": []
         },
+        "editWithShell.clearFavoriteCommands": {
+          "description": "When clearing command history, clear also favorite commands",
+          "type": "boolean",
+          "default": true
+        },
         "editWithShell.promptModifyCommand": {
           "description": "Display a prompt to modify the selected command",
           "type": "boolean",

@@ -82,6 +82,10 @@ A couple of requests from me when you raise an github issue.
 
     **You have quick commands up to 25**, i.e. `editWithShell.quickCommand25`.
 
+* `editWithShell.clearFavoriteCommands` (default: `true`)
+
+    When clearing command history, clear also favorite commands
+
 * `editWithShell.shell.linux` (default: `"/bin/sh"`)
 
     The path of the shell that this extension uses on Linux
