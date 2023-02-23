@@ -4,6 +4,7 @@ import {Workspace} from './adapters/workspace';
 interface FavoriteCommand {
     id: string;
     command: string;
+    processEntireTextIfNoneSelected: boolean;
 }
 
 export class HistoryStore {

@@ -8,6 +8,7 @@ Leverage your favourite shell commands to edit text.
 
 * Edit the selected text by piping it through shell commands.
   The same text is also available as an environment variable, `ES_SELECTED`.
+* The path of the current file is available as an environment variable, `ES_FILEPATH`.
 * Insert the output of shell commands at the cursor position.
 * Records command history: you can edit and reuse past commands.
 * Use the shell you like. For example, if you have Bash on Windows, you can specify Bash as your shell for this extension.
@@ -51,11 +52,15 @@ A couple of requests from me when you raise an github issue.
 
 * `editWithShell.processEntireTextIfNoneSelected` (default: `false`)
 
-    Pipe the entire text to the shell command if no text is selected
+    Pipe the entire text to the shell command if no text is selected (it can be overridden on a per command basis)
+
+* `editWithShell.promptModifyCommand` (default: `true`)
+
+    Display a prompt to modify the selected command
 
 * `editWithShell.favoriteCommands` (default: `[]`)
 
-    List of commands that can be activated by quick commands. Each element must have a command ID and command. e.g:
+    Commands listed in the history and activable by quick commands. Each element must have a command ID and command, and it can optionally have the boolean property `processEntireTextIfNoneSelected` (it'll override the extension setting `editWithShell.processEntireTextIfNoneSelected`).
 
     ```
     "editWithShell.favoriteCommands": [
@@ -65,7 +70,8 @@ A couple of requests from me when you raise an github issue.
       },
       {
         "id": "insert-melbourne-time",
-        "command": "TZ=Australia/Melbourne date '+%Y-%m-%dT%H:%M:%S'"
+        "command": "TZ=Australia/Melbourne date '+%Y-%m-%dT%H:%M:%S'",
+        "processEntireTextIfNoneSelected": true
       },
       ...
     ]

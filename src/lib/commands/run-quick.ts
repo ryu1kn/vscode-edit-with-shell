@@ -7,6 +7,7 @@ import {RunCommand} from './run';
 interface FavoriteCommand {
     id: string;
     command: string;
+    processEntireTextIfNoneSelected: boolean;
 }
 
 export class RunQuickCommand extends RunCommand {
