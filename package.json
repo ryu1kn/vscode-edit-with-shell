@@ -126,6 +126,11 @@
           },
           "default": []
         },
+        "editWithShell.promptModifyCommand": {
+          "description": "Display a prompt to modify the selected command",
+          "type": "boolean",
+          "default": true
+        },
         "editWithShell.processEntireTextIfNoneSelected": {
           "description": "Pipe the entire text to the shell command if no text is selected",
           "type": "boolean",

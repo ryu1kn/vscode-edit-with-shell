@@ -32,7 +32,7 @@ export class AppIntegratorFactory {
     private get runCommand() {
         return this.wrapCommand(new RunInputCommand(
             this.shellCommandService,
-            new CommandReader(this.historyStore, vscode.window),
+            new CommandReader(this.historyStore, vscode.window, this.workspaceAdapter),
             this.historyStore,
             this.workspaceAdapter
         ));

@@ -1,9 +1,17 @@
 import {HistoryStore} from './history-store';
 import * as vscode from 'vscode';
+import {EXTENSION_NAME} from './const';
+import {Workspace} from './adapters/workspace';
 
 export class CommandReader {
+    private displayPrompt: boolean;
+    
     constructor(private readonly historyStore: HistoryStore,
-                private readonly vsWindow: typeof vscode.window) {}
+                private readonly vsWindow: typeof vscode.window,
+                private readonly workspaceAdapter: Workspace) {
+                    this.workspaceAdapter = workspaceAdapter;
+                    this.displayPrompt = this.workspaceAdapter.getConfig<boolean>(`${EXTENSION_NAME}.promptModifyCommand`);
+                }
 
     async read() {
         const history = this.historyStore.getAll();
@@ -15,7 +23,7 @@ export class CommandReader {
         }
 
         const pickedCommand = await this.letUserToPickCommand(history);
-        return this.letUserToModifyCommand(pickedCommand);
+        return this.displayPrompt ? this.letUserToModifyCommand(pickedCommand) : pickedCommand;
     }
 
     private letUserToPickCommand(history: string[]): Thenable<string | undefined> {
