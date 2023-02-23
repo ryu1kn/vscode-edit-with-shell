@@ -15,11 +15,12 @@ export class HistoryStore {
         this.workspaceAdapter = workspaceAdapter;
         const favoriteCommands = this.workspaceAdapter.getConfig<FavoriteCommand[]>(`${EXTENSION_NAME}.favoriteCommands`);
         this.favoriteCommands = favoriteCommands.filter(o => o.command).map(o => o.command).sort();
+        this.favoriteCommands.unshift('-----Favorite commands');
         this.history = [];
     }
 
     getAll() {
-        return [...new Set([...this.history.reverse(),...this.favoriteCommands])];
+        return this.history.reverse().concat(this.favoriteCommands);
     }
 
     clear() {
@@ -32,13 +33,8 @@ export class HistoryStore {
     }
 
     add(command: string) {
-        const history = this.history;
-        const index = history.indexOf(command);
-        if (index === -1) {
-            this.history = [...history, command];
-            return;
-        }
-        this.history = [...history.slice(0, index), ...history.slice(index + 1), command];
+        this.history = this.history.filter(cmd => cmd !== command);
+        this.history.unshift(command);
     }
 
 }

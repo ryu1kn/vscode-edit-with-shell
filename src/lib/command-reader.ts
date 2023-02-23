@@ -11,7 +11,8 @@ interface FavoriteCommand {
 
 interface PickItem {
     label: string,
-    description?: string
+    description?: string,
+    kind?: vscode.QuickPickItemKind
 }
 
 export class CommandReader {
@@ -41,9 +42,14 @@ export class CommandReader {
         const favoriteCommands = this.workspaceAdapter.getConfig<FavoriteCommand[]>(`${EXTENSION_NAME}.favoriteCommands`);
         const quickPickItems = history.map(function (cmd) {
             let item: PickItem = { label: cmd };
-            const cmdData = favoriteCommands.find(fav => fav.command === cmd);
-            if (cmdData && cmdData.id) {
-                item.description = '(' + cmdData.id + ')';
+            if (cmd.startsWith('-----')) {
+                item.label = cmd.slice(5);
+                item.kind = vscode.QuickPickItemKind.Separator;
+            } else {
+                const cmdData = favoriteCommands.find(fav => fav.command === cmd);
+                if (cmdData && cmdData.id) {
+                    item.description = '(' + cmdData.id + ')';
+                }
             }
             return item;
         });
