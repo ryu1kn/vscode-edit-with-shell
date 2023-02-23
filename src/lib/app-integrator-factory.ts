@@ -32,7 +32,7 @@ export class AppIntegratorFactory {
     private get runCommand() {
         return this.wrapCommand(new RunInputCommand(
             this.shellCommandService,
-            new CommandReader(this.historyStore, vscode.window),
+            new CommandReader(this.historyStore, vscode.window, this.workspaceAdapter),
             this.historyStore,
             this.workspaceAdapter
         ));
@@ -61,7 +61,7 @@ export class AppIntegratorFactory {
     }
 
     private get historyStore() {
-        this.cache.historyStore = this.cache.historyStore || new HistoryStore();
+        this.cache.historyStore = this.cache.historyStore || new HistoryStore(this.workspaceAdapter);
         return this.cache.historyStore;
     }
 

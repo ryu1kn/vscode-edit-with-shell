@@ -44,7 +44,7 @@ export class AppIntegrator {
                 id: `${EXTENSION_NAME}.runCommand`,
                 command: this.runCommand
             },
-            ...[1, 2, 3, 4, 5].map(n => ({
+            ...Array.from({length: 25}, (_, i) => i + 1).map(n => ({
                 id: `${EXTENSION_NAME}.runQuickCommand${n}`,
                 command: this.createQuickCommand(n)
             }))

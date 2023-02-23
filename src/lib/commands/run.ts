@@ -5,6 +5,12 @@ import {Workspace} from '../adapters/workspace';
 import {Editor} from '../adapters/editor';
 import {ExtensionCommand} from './extension-command';
 
+interface FavoriteCommand {
+    id: string;
+    command: string;
+    processEntireTextIfNoneSelected: boolean;
+}
+
 export abstract class RunCommand implements ExtensionCommand {
     constructor(private readonly shellCommandService: ShellCommandService,
                 private readonly historyStore: HistoryStore,
@@ -18,7 +24,7 @@ export abstract class RunCommand implements ExtensionCommand {
 
         this.historyStore.add(command);
 
-        if (this.shouldPassEntireText(wrappedEditor)) {
+        if (this.shouldPassEntireText(wrappedEditor, command)) {
             await this.processEntireText(command, wrappedEditor);
         } else {
             await this.processSelectedTexts(command, wrappedEditor);
@@ -42,8 +48,15 @@ export abstract class RunCommand implements ExtensionCommand {
         await wrappedEditor.replaceEntireTextWith(commandOutput);
     }
 
-    private shouldPassEntireText(wrappedEditor: Editor): boolean {
+    private shouldPassEntireText(wrappedEditor: Editor, command: string): boolean {
         const processEntireText = this.workspaceAdapter.getConfig<boolean>(`${EXTENSION_NAME}.processEntireTextIfNoneSelected`);
-        return !wrappedEditor.isTextSelected && processEntireText;
+        
+        const favoriteCommands = this.workspaceAdapter.getConfig<FavoriteCommand[]>(`${EXTENSION_NAME}.favoriteCommands`);
+        const commandData = favoriteCommands.find(c => c.command === command);
+        const commandProcessEntireText = (commandData && typeof commandData.processEntireTextIfNoneSelected === 'boolean')
+            ? commandData.processEntireTextIfNoneSelected
+            : processEntireText;
+        
+        return !wrappedEditor.isTextSelected && commandProcessEntireText;
     }
 }

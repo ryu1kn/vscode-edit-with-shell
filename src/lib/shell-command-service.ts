@@ -40,7 +40,8 @@ export class ShellCommandService {
             cwd: this.shellCommandExecContext.getCwd(params.filePath),
             env: {
                 ...this.shellCommandExecContext.env,
-                ES_SELECTED: params.input
+                ES_SELECTED: params.input,
+                ES_FILEPATH: params.filePath
             }
         };
     }

@@ -8,10 +8,11 @@ Leverage your favourite shell commands to edit text.
 
 * Edit the selected text by piping it through shell commands.
   The same text is also available as an environment variable, `ES_SELECTED`.
+* The path of the current file is available as an environment variable, `ES_FILEPATH`.
 * Insert the output of shell commands at the cursor position.
 * Records command history: you can edit and reuse past commands.
 * Use the shell you like. For example, if you have Bash on Windows, you can specify Bash as your shell for this extension.
-* Register up to 5 quick commands that can be invoked by keyboard shortcuts.
+* Register up to 25 quick commands that can be invoked by keyboard shortcuts.
 * Support multi cursors.
 
 ![Edit with Shell Command](https://raw.githubusercontent.com/ryu1kn/vscode-edit-with-shell/master/images/animations/public.gif)
@@ -41,7 +42,7 @@ A couple of requests from me when you raise an github issue.
 
 * `EditWithShell: Run quick command 1` (**Command ID:** `editWithShell.runQuickCommand1`)
 
-    Run quick command 1. **You have quick commands up to 5**, i.e. `editWithShell.runQuickCommand5`
+    Run quick command 1. **You have quick commands up to 25**, i.e. `editWithShell.runQuickCommand25`
 
 ## Configurations
 
@@ -51,17 +52,21 @@ A couple of requests from me when you raise an github issue.
 
 * `editWithShell.processEntireTextIfNoneSelected` (default: `false`)
 
-    Pipe the entire text to the shell command if no text is selected
+    Pipe the entire text to the shell command if no text is selected (it can be overridden on a per command basis)
+
+* `editWithShell.promptModifyCommand` (default: `true`)
+
+    Display a prompt to modify the selected command
 
 * `editWithShell.favoriteCommands` (default: `[]`)
 
-    List of commands that can be activated by quick commands. Each element must have a command ID and command. e.g:
+    Commands listed by default in the history and activable by quick commands. Each element must have a property `command`. In order to be used as a quick command, the property `id` must be set. Also, it can optionally have the boolean property `processEntireTextIfNoneSelected` (it'll override the extension setting `editWithShell.processEntireTextIfNoneSelected`).
 
     ```
     "editWithShell.favoriteCommands": [
       {
-        "id": "extract-email-and-sort-on-address-book",
-        "command": "cut -d, -f3 | sort"
+        "command": "cut -d, -f3 | sort",
+        "processEntireTextIfNoneSelected": true
       },
       {
         "id": "insert-melbourne-time",
@@ -75,7 +80,11 @@ A couple of requests from me when you raise an github issue.
 
     ID of a favorite command triggered with quick command 1. e.g. `"insert-melbourne-time"` of `favoriteCommands` config value example.
 
-    **You have quick commands up to 5**, i.e. `editWithShell.quickCommand5`.
+    **You have quick commands up to 25**, i.e. `editWithShell.quickCommand25`.
+
+* `editWithShell.clearFavoriteCommands` (default: `true`)
+
+    When clearing command history, clear also favorite commands
 
 * `editWithShell.shell.linux` (default: `"/bin/sh"`)
 
