@@ -27,8 +27,27 @@ export class CommandReader {
     }
 
     private letUserToPickCommand(history: string[]): Thenable<string | undefined> {
-        const options = {placeHolder: 'Select a command to reuse or Cancel (Esc) to write a new command'};
-        return this.vsWindow.showQuickPick(history.reverse(), options);
+        if (this.displayPrompt) {
+            const options = {placeHolder: 'Select a command to reuse or Cancel (Esc) to write a new command'};
+            return this.vsWindow.showQuickPick(history.reverse(), options);
+        } else {
+            return new Promise((resolve) => {
+                const quickPick = this.vsWindow.createQuickPick();
+                quickPick.items = history.map(cmd => ({ label: cmd }));
+                quickPick.title = 'Select a command or type a new one:';
+                quickPick.onDidChangeValue(() => {
+                    if (!history.includes(quickPick.value)) {
+                        quickPick.items = [quickPick.value, ...history].map(label => ({ label }));
+                    }
+                })
+                quickPick.onDidAccept(() => {
+                    const activeItem = quickPick.activeItems[0];
+                    resolve(activeItem.label);
+                    quickPick.hide();
+                })
+                quickPick.show();
+            });
+        }
     }
 
     private letUserToModifyCommand(pickedCommand?: string) {
