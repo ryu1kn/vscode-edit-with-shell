@@ -32,7 +32,27 @@
     "onCommand:editWithShell.runQuickCommand2",
     "onCommand:editWithShell.runQuickCommand3",
     "onCommand:editWithShell.runQuickCommand4",
-    "onCommand:editWithShell.runQuickCommand5"
+    "onCommand:editWithShell.runQuickCommand5",
+    "onCommand:editWithShell.runQuickCommand6",
+    "onCommand:editWithShell.runQuickCommand7",
+    "onCommand:editWithShell.runQuickCommand8",
+    "onCommand:editWithShell.runQuickCommand9",
+    "onCommand:editWithShell.runQuickCommand10",
+    "onCommand:editWithShell.runQuickCommand11",
+    "onCommand:editWithShell.runQuickCommand12",
+    "onCommand:editWithShell.runQuickCommand13",
+    "onCommand:editWithShell.runQuickCommand14",
+    "onCommand:editWithShell.runQuickCommand15",
+    "onCommand:editWithShell.runQuickCommand16",
+    "onCommand:editWithShell.runQuickCommand17",
+    "onCommand:editWithShell.runQuickCommand18",
+    "onCommand:editWithShell.runQuickCommand19",
+    "onCommand:editWithShell.runQuickCommand20",
+    "onCommand:editWithShell.runQuickCommand21",
+    "onCommand:editWithShell.runQuickCommand22",
+    "onCommand:editWithShell.runQuickCommand23",
+    "onCommand:editWithShell.runQuickCommand24",
+    "onCommand:editWithShell.runQuickCommand25"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -71,6 +91,106 @@
         "command": "editWithShell.runQuickCommand5",
         "title": "Run quick command 5",
         "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand6",
+        "title": "Run quick command 6",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand7",
+        "title": "Run quick command 7",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand8",
+        "title": "Run quick command 8",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand9",
+        "title": "Run quick command 9",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand10",
+        "title": "Run quick command 10",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand11",
+        "title": "Run quick command 11",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand12",
+        "title": "Run quick command 12",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand13",
+        "title": "Run quick command 13",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand14",
+        "title": "Run quick command 14",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand15",
+        "title": "Run quick command 15",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand16",
+        "title": "Run quick command 16",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand17",
+        "title": "Run quick command 17",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand18",
+        "title": "Run quick command 18",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand19",
+        "title": "Run quick command 19",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand20",
+        "title": "Run quick command 20",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand21",
+        "title": "Run quick command 21",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand22",
+        "title": "Run quick command 22",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand23",
+        "title": "Run quick command 23",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand24",
+        "title": "Run quick command 24",
+        "category": "EditWithShell"
+      },
+      {
+        "command": "editWithShell.runQuickCommand25",
+        "title": "Run quick command 25",
+        "category": "EditWithShell"
       }
     ],
     "configuration": {
@@ -104,6 +224,86 @@
         },
         "editWithShell.quickCommand5": {
           "description": "ID of a favorite command triggered by quick command 5",
+          "type": "string"
+        },
+        "editWithShell.quickCommand6": {
+          "description": "ID of a favorite command triggered by quick command 6",
+          "type": "string"
+        },
+        "editWithShell.quickCommand7": {
+          "description": "ID of a favorite command triggered by quick command 7",
+          "type": "string"
+        },
+        "editWithShell.quickCommand8": {
+          "description": "ID of a favorite command triggered by quick command 8",
+          "type": "string"
+        },
+        "editWithShell.quickCommand9": {
+          "description": "ID of a favorite command triggered by quick command 9",
+          "type": "string"
+        },
+        "editWithShell.quickCommand10": {
+          "description": "ID of a favorite command triggered by quick command 10",
+          "type": "string"
+        },
+        "editWithShell.quickCommand11": {
+          "description": "ID of a favorite command triggered by quick command 11",
+          "type": "string"
+        },
+        "editWithShell.quickCommand12": {
+          "description": "ID of a favorite command triggered by quick command 12",
+          "type": "string"
+        },
+        "editWithShell.quickCommand13": {
+          "description": "ID of a favorite command triggered by quick command 13",
+          "type": "string"
+        },
+        "editWithShell.quickCommand14": {
+          "description": "ID of a favorite command triggered by quick command 14",
+          "type": "string"
+        },
+        "editWithShell.quickCommand15": {
+          "description": "ID of a favorite command triggered by quick command 15",
+          "type": "string"
+        },
+        "editWithShell.quickCommand16": {
+          "description": "ID of a favorite command triggered by quick command 16",
+          "type": "string"
+        },
+        "editWithShell.quickCommand17": {
+          "description": "ID of a favorite command triggered by quick command 17",
+          "type": "string"
+        },
+        "editWithShell.quickCommand18": {
+          "description": "ID of a favorite command triggered by quick command 18",
+          "type": "string"
+        },
+        "editWithShell.quickCommand19": {
+          "description": "ID of a favorite command triggered by quick command 19",
+          "type": "string"
+        },
+        "editWithShell.quickCommand20": {
+          "description": "ID of a favorite command triggered by quick command 20",
+          "type": "string"
+        },
+        "editWithShell.quickCommand21": {
+          "description": "ID of a favorite command triggered by quick command 21",
+          "type": "string"
+        },
+        "editWithShell.quickCommand22": {
+          "description": "ID of a favorite command triggered by quick command 22",
+          "type": "string"
+        },
+        "editWithShell.quickCommand23": {
+          "description": "ID of a favorite command triggered by quick command 23",
+          "type": "string"
+        },
+        "editWithShell.quickCommand24": {
+          "description": "ID of a favorite command triggered by quick command 24",
+          "type": "string"
+        },
+        "editWithShell.quickCommand25": {
+          "description": "ID of a favorite command triggered by quick command 25",
           "type": "string"
         },
         "editWithShell.favoriteCommands": {
